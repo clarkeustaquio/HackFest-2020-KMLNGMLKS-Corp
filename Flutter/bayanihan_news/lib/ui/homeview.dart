@@ -7,14 +7,17 @@ import 'package:bayanihan_news/ui/news_view.dart';
 import 'package:bayanihan_news/ui/about_us.dart';
 
 class HomePage extends StatefulWidget {
-  HomePage();
+  final bool _isAuthorized;
+
+  HomePage(this._isAuthorized);
   @override
-  _HomePageState createState() => _HomePageState();
+  _HomePageState createState() => _HomePageState(_isAuthorized);
 }
 
 class _HomePageState extends State<HomePage> {
   int _currentIndex = 0;
   MenuItem active;
+  final bool _isAuthorized;
 
   List items = [
     MenuItem(
@@ -47,12 +50,16 @@ class _HomePageState extends State<HomePage> {
     ),
   ];
 
-  _HomePageState();
+  _HomePageState(this._isAuthorized);
 
   @override
   void initState() {
     super.initState();
     active = items[0]; // <-- 1. Activate a menu item
+  }
+
+  bool getIsAuthorized() {
+    return _isAuthorized;
   }
 
   Widget getCurrentScreen() {
@@ -64,7 +71,7 @@ class _HomePageState extends State<HomePage> {
         return AddSubscriberView();
         break;
       case 2:
-        return MenuView();
+        return MenuView(getIsAuthorized);
         break;
       default:
         return AboutUsView();
