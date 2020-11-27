@@ -7,7 +7,7 @@ from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
-from twilio.rest import Client
+from twilio.rest import Client, TwilioException
 from twilio.twiml.messaging_response import MessagingResponse
 from django.conf import settings
 
@@ -40,19 +40,20 @@ def send_sms(request):
 
     if request.method == 'POST':
         if(request.data):
-            if(request.data['title'] == 'Subscribe'):
-                daily_news = client.messages.create(
-                    body=subscribe_body[:1600], 
-                    from_=settings.TWILIO_NUMBER, to=request.data['phoneNumber']
-                )
-            elif (request.data['title'] == 'Unsubscribe'):
-                daily_news = client.messages.create(
-                    body=unsubscribe_body, 
-                    from_=settings.TWILIO_NUMBER, to=request.data['phoneNumber']
-                )
-            isSuccess = True
-        else:
-            isSuccess = False
+            try:
+                if(request.data['title'] == 'Subscribe'):
+                    daily_news = client.messages.create(
+                        body=subscribe_body[:1600], 
+                        from_=settings.TWILIO_NUMBER, to=request.data['phoneNumber']
+                    )
+                elif (request.data['title'] == 'Unsubscribe'):
+                    daily_news = client.messages.create(
+                        body=unsubscribe_body, 
+                        from_=settings.TWILIO_NUMBER, to=request.data['phoneNumber']
+                    )
+                isSuccess = True
+            except TwilioException as E:
+                print(E) # Should fail silently
         
         # response['twilio_sid'] = daily_news.sid
         

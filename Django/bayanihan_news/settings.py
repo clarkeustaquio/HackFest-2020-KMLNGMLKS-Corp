@@ -146,10 +146,10 @@ CORS_ALLOW_HEADERS = ['content-type']
 
 TWILIO_SID = os.environ.get('TWILIO_SID')
 TWILIO_TOKEN = os.environ.get('TWILIO_TOKEN')
-TWILIO_NUMBER = '+17156381253' # Default Number, Trial Account
+TWILIO_NUMBER = os.environ.get('TWILIO_NUMBER')
 
 CELERY_TIMEZONE = 'Asia/Manila'
-CELERY_BROKER_URL = 'redis://:p6ae64a2ec1aa16055281142b0603b9107fd6dd84dc075ab62b087d9770569636@ec2-54-211-135-172.compute-1.amazonaws.com:7029'
+CELERY_BROKER_URL = os.environ.get('CELERY_BROKER_URL')
 CELERY_ACCEPT_CONTENT = ['json']
 CELERY_RESULT_BACKEND = 'django-db'
 CELERY_TASK_SERIALIZER = 'json'
