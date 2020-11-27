@@ -10,7 +10,8 @@ import CardComponent from './Card_Component';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 function DailyNewsComponent({ isPhone }) {
-    const url = 'http://newsapi.org/v2/top-headlines?country=ph&apiKey=a3befdaa830b4a0595fa9b145c17929e'
+    // They don't allowed hosted applications
+    const url = 'https://newsapi.org/v2/top-headlines?country=ph&apiKey=a3befdaa830b4a0595fa9b145c17929e'
     const [isLoading, setIsLoading] = React.useState(true)
     const [news, setNews] = React.useState({})
 
@@ -50,13 +51,15 @@ function DailyNewsComponent({ isPhone }) {
                     container 
                     spacing={3}
                 >
-                    {news.articles.map((data, index) => {
+                    {
+                    news ? news.articles.map((data, index) => {
                         return (
                             <Grid item key={index} >
                                 <CardComponent {...data} isPhone={isPhone}/>
                             </Grid>
                         )
-                    })}
+                    }) : <CircularProgress />
+                    }
                 </Grid>
             }
         </React.Fragment>

@@ -117,3 +117,11 @@ def bot_sms(request):
     response.message('Hello World this is a bot.')
 
     return Response({ 'response': str(response) })
+
+@api_view(['POST'])
+def request_news(request):
+    url = 'http://newsapi.org/v2/top-headlines?country=ph&apiKey=a3befdaa830b4a0595fa9b145c17929e'
+    request_news = requests.get(url)
+    response_data = request_news.json()
+
+    return Response(response_data)
