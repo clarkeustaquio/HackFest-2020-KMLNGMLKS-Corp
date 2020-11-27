@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/3.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.1/ref/settings/
 """
-
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -20,7 +20,13 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '6nb$=4*1kz_&g44dpc21jaal4qx^s++(5q-4w_)kqmv&oyme-&'
+try:
+    with open('secret_key.txt') as read_file:
+        SECRET_KEY = read_file.read().strip()
+
+except FileNotFoundError:
+    # Random Generated Key
+    SECRET_KEY = '5#x*tlllup)a7zrcofsp)zv_%18!a#9j)2^p-w28%3)=kmvotl'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -31,6 +37,18 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    # Apps
+    'api',
+
+    # Installed
+    'rest_framework',
+    'corsheaders',
+    'twilio',
+    'bootstrap4',
+    'django_celery_results',
+    'django_celery_beat',
+
+    # Default
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -47,6 +65,9 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
+    # Cors
+    'corsheaders.middleware.CorsMiddleware',
 ]
 
 ROOT_URLCONF = 'bayanihan_news.urls'
@@ -118,3 +139,25 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
+
+CORS_ALLOWED_ORIGINS = ["http://localhost:3000"]
+CORS_ALLOW_METHODS = ['POST']
+CORS_ALLOW_HEADERS = ['content-type']
+
+TWILIO_SID = os.environ.get('TWILIO_SID')
+TWILIO_TOKEN = os.environ.get('TWILIO_TOKEN')
+TWILIO_NUMBER = '+17156381253' # Default Number, Trial Account
+
+CELERY_TIMEZONE = 'Asia/Manila'
+CELERY_BROKER_URL = 'redis://:p6ae64a2ec1aa16055281142b0603b9107fd6dd84dc075ab62b087d9770569636@ec2-54-211-135-172.compute-1.amazonaws.com:7029'
+CELERY_ACCEPT_CONTENT = ['json']
+CELERY_RESULT_BACKEND = 'django-db'
+CELERY_TASK_SERIALIZER = 'json'
+
+if(os.environ.get('DEBUG') == 'True'):
+    DEBUG = True
+elif(os.environ.get('DEBUG') == 'False'):
+    DEBUG = False   
+
+import django_heroku
+django_heroku.settings(locals())
