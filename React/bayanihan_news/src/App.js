@@ -4,7 +4,9 @@ import HeroComponent from './components/hero_component/Hero_Component';
 import NavbarComponent from './components/navbar_component/Navbar_Component';
 import FooterComponent from './components/footer_component/Footer_Component';
 import SubscribeComponent from './navigations/subscribe_navigation/Subscribe_Component';
-// import YesterdayNewsComponent from './navigations/yesterday_news_navigation/Yesterday_News_Component';
+import AboutComponent from './navigations/about_us_navigation/About_Component'
+import ContactComponent from './navigations/contact_us_navigation/Contact_Component'
+
 // import AdminComponent from './navigations/admin_navigation/Admin_Component'
 // import AdminDisplayComponent from './navigations/admin_navigation/Admin_Display_Component'
 import UnsubscribeComponent from './navigations/unsubscribe_navigation/Unsubscribe_Component'
@@ -43,9 +45,12 @@ function App(){
           <Route path="/unsubscribe">
             <UnsubscribeNavigation />
           </Route>
-          {/* <Route path="/yesterday-news">
-            <YesterdayNavigation />
-          </Route> */}
+          <Route path="/about">
+            <AboutNavigation />
+          </Route>
+          <Route path="/contact">
+            <ContactNavigation />
+          </Route>
           {/* <Route path='/admin'>
             <AdminComponent />
           </Route>
@@ -82,6 +87,24 @@ function UnsubscribeNavigation(){
     <React.Fragment>
       <NavbarComponent />
       <UnsubscribeComponent />
+      <FooterComponent />
+    </React.Fragment>
+  )
+}
+function AboutNavigation(){
+  return (
+    <React.Fragment>
+      <NavbarComponent />
+      <AboutComponent />
+      <FooterComponent />
+    </React.Fragment>
+  )
+}
+function ContactNavigation(){
+  return (
+    <React.Fragment>
+      <NavbarComponent />
+      <ContactComponent />
       <FooterComponent />
     </React.Fragment>
   )

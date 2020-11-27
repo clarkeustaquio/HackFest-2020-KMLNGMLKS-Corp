@@ -1,6 +1,6 @@
 import React from 'react'
 import { Container } from 'react-bootstrap'
-
+import { Link } from 'react-router-dom'
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 
@@ -13,20 +13,20 @@ function FooterComponent(){
         window.scrollTo(0, 0)
     }
 
-    // const footer_stick = {
-    //     position:'absolute',
-    //     left:'0',
-    //     bottom:'0',
-    //     right:'0',
-    // }
+    const footerStyle = {
+        display: 'block',
+        padding: '20px',
+        height: '60px',
+        width: '100%',
+    }
 
     return (
         <React.Fragment>
             <Container>          
-                <footer className="mb-5">
+                <footer className="mb-5" style={footerStyle}>
                     <hr style={featurette}></hr>
-                    <a href="/" className="float-right" onClick={scrollTop} style={{ textDecoration: 'none'}}>Back to top</a>
-                    <p>&copy; 2020 KMLNGMLKS Corp. &middot; Privacy &middot; Terms</p>
+                    <Link to='/' className="float-right" onClick={scrollTop} style={{ textDecoration: 'none'}}>Back to top</Link>
+                    <p className="mb-3">&copy; 2020 KMLNGMLKS Corp. &middot; Privacy &middot; Terms</p>
                 </footer>
             </Container>
         </React.Fragment>

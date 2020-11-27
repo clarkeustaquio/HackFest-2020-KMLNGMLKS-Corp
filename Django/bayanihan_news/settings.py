@@ -140,9 +140,19 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-CORS_ALLOWED_ORIGINS = ["http://localhost:3000"]
+CORS_ALLOW_ALL_ORIGINS = True
 CORS_ALLOW_METHODS = ['POST']
-CORS_ALLOW_HEADERS = ['content-type']
+CORS_ALLOW_HEADERS = [   
+    'accept',
+    'accept-encoding',
+    'authorization',
+    'content-type',
+    'dnt',
+    'origin',
+    'user-agent',
+    'x-csrftoken',
+    'x-requested-with',
+]
 
 TWILIO_SID = os.environ.get('TWILIO_SID')
 TWILIO_TOKEN = os.environ.get('TWILIO_TOKEN')

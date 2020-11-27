@@ -14,12 +14,14 @@ import Select from '@material-ui/core/Select';
 import firebaseConfig from '../../firebaseConfig'
 import { Link } from 'react-router-dom'
 
+import locations from  '../../list_location.json'
+
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 const useStyles = makeStyles((theme) => ({
     formControl: {
       margin: theme.spacing(1),
-      minWidth: 200,
+      minWidth: 300,
     },
     selectEmpty: {
       marginTop: theme.spacing(2),
@@ -73,7 +75,7 @@ function CardLocationComponent({ phoneNumber, setIsSuccess, userID }){
             body: JSON.stringify({title: 'Subscribe', phoneNumber: phoneNumber})
         }
 
-        fetch('https://bayanihan-news.herokuapp.com/api/sendSMS/', requestSMS)
+        fetch('https://bayanihan-news.herokuapp.com/api/send-sms/', requestSMS)
             .then((response) => {
                 return response.json()
             }).then((data) => {
@@ -92,6 +94,7 @@ function CardLocationComponent({ phoneNumber, setIsSuccess, userID }){
             })
         }
     }
+
     return (
         <React.Fragment>
             <Container style={{
@@ -106,16 +109,18 @@ function CardLocationComponent({ phoneNumber, setIsSuccess, userID }){
                     </Typography>
 
                     <FormControl className={classes.formControl}>
-                        <InputLabel id="demo-simple-select-label">Region</InputLabel>
+                        <InputLabel id="demo-simple-select-label">Province</InputLabel>
                         <Select
                         labelId="demo-simple-select-label"
                         id="demo-simple-select"
                         value={location}
                         onChange={handleChange}
                         >
-                            <MenuItem value={10}>Ten</MenuItem>
-                            <MenuItem value={20}>Twenty</MenuItem>
-                            <MenuItem value={30}>Thirty</MenuItem>
+                            {locations.map((location, index) => {
+                                return (
+                                    <MenuItem key={index} value={location}>{location}</MenuItem>
+                                )
+                            })}
                         </Select>
                     </FormControl>
                     <Container >
