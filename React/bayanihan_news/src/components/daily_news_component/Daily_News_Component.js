@@ -11,7 +11,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 function DailyNewsComponent({ isPhone }) {
     // They don't allowed hosted applications
-    const url = 'https://newsapi.org/v2/top-headlines?country=ph&apiKey=a3befdaa830b4a0595fa9b145c17929e'
+    const url = 'https://bayanihan-news.herokuapp.com/api/request-news/'
     const [isLoading, setIsLoading] = React.useState(true)
     const [news, setNews] = React.useState({})
 
@@ -29,6 +29,10 @@ function DailyNewsComponent({ isPhone }) {
             setIsLoading(false)
         })
     }, [])
+
+    if(news){
+        console.log(news)
+    }
 
     return (
         <React.Fragment>
@@ -51,7 +55,7 @@ function DailyNewsComponent({ isPhone }) {
                     container 
                     spacing={3}
                 >
-                    {
+                    {/* {
                     news ? news.articles.map((data, index) => {
                         return (
                             <Grid item key={index} >
@@ -59,7 +63,7 @@ function DailyNewsComponent({ isPhone }) {
                             </Grid>
                         )
                     }) : <CircularProgress />
-                    }
+                    } */}
                 </Grid>
             }
         </React.Fragment>

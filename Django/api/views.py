@@ -118,7 +118,7 @@ def bot_sms(request):
 
     return Response({ 'response': str(response) })
 
-@api_view(['POST'])
+@api_view(['POST', 'GET'])
 def request_news(request):
     url = 'http://newsapi.org/v2/top-headlines?country=ph&apiKey=a3befdaa830b4a0595fa9b145c17929e'
     request_news = requests.get(url)
