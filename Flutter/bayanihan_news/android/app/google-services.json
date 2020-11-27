@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "130380717704",
+    "firebase_url": "https://bayanihan-news.firebaseio.com",
+    "project_id": "bayanihan-news",
+    "storage_bucket": "bayanihan-news.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:130380717704:android:5007989685c005f8ae893d",
+        "android_client_info": {
+          "package_name": "com.example.bayanihan_news"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "130380717704-8ndg12n73ssn2s41c1i7nrmntjboia2b.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCfFa2dORxJRovj15HV5y-jucmiAkIa0A8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "130380717704-8ndg12n73ssn2s41c1i7nrmntjboia2b.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "130380717704-8smg3dsqahs2r3k85sau19ckf07gsptk.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.bayanihanNews"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
