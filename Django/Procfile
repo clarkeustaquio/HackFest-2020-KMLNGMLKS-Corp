@@ -1,1 +1,3 @@
 web: gunicorn bayanihan_news.wsgi --log-file -
+worker: celery -A bayanihan_news worker -l info
+beat: celery -A bayanihan_news beat
