@@ -30,7 +30,7 @@ def send_sms(request):
     response_data = request_news.json()
 
     subscribe_body = 'Thank you for subscribing to Bayanihan News. You will receive daily news from us. \n\n'
-    unsubscribe_body = 'You unsubscribe to Bayanihan News. You will no longer receives daily news. Thank you!'
+    unsubscribe_body = 'You unsubscribe to Bayanihan News. You will no longer receive daily news. Thank you!'
     response = dict()
     isSuccess = False
     if(request_news.status_code >= 200 and request_news.status_code < 300):

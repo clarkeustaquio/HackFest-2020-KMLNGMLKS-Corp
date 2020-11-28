@@ -12,15 +12,26 @@ import Typography from '@material-ui/core/Typography';
 
 const useStyles = makeStyles({
     root: {
-        maxWidth: 345,
+        minxWidth: 345,
     },
     media: {
         height: 140,
     },
 });
 
+const desktopStyles = makeStyles({
+    root: {
+        width: 350,
+        height: 380,
+    },
+    media: {
+        height: 140,
+    },
+})
+
 function CardComponent({ title, description, url, urlToImage, isPhone}){
-    const classes = useStyles();
+    const classes = useStyles()
+    const desktop = desktopStyles()
 
     let isComplete = false
     if(title && description && url && urlToImage){
@@ -38,17 +49,15 @@ function CardComponent({ title, description, url, urlToImage, isPhone}){
     }else{
         isComplete = false
     }
-
     return(
         <React.Fragment>
             {isComplete ? 
-                <Container>
-                <Card className={classes.root}>
-                    <CardActionArea>
+                <Container className="mt-2">
+                <Card className={isPhone ? classes.root : desktop.root}>
+                    <CardActionArea href={url} style={{ textDecoration: "none"}}>
                         <CardMedia
                             className={classes.media}
                             image={ urlToImage }
-                            title="Contemplative Reptile"
                         />
 
                         <CardContent>
@@ -62,10 +71,7 @@ function CardComponent({ title, description, url, urlToImage, isPhone}){
                     </CardActionArea>
 
                     <CardActions>
-                        <Button size="small" color="primary">
-                            Share
-                        </Button>
-                        <Button size="small" color="primary">
+                        <Button href={url} size="small" color="primary">
                             Learn More
                         </Button>
                     </CardActions>

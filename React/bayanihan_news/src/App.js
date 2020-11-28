@@ -12,6 +12,11 @@ import ContactComponent from './navigations/contact_us_navigation/Contact_Compon
 import UnsubscribeComponent from './navigations/unsubscribe_navigation/Unsubscribe_Component'
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 
+import news_hero_image from './static/images/news_hero_image.jpg'
+import farmers from './static/images/farmers.jpg'
+import contact_us from './static/images/contact_us.jpg'
+
+import './App.css'
 
 function App(){
   const [size, setSize] = React.useState(window.innerWidth)
@@ -34,42 +39,40 @@ function App(){
 
   return (
     <React.Fragment>
-      <Router>
-        <Switch>
-          <Route exact path="/">
-            <IndexNavigation isPhone={isPhone} />
-          </Route>
-          <Route path="/subscribe">
-            <SubscribeNavigation />
-          </Route>
-          <Route path="/unsubscribe">
-            <UnsubscribeNavigation />
-          </Route>
-          <Route path="/about">
-            <AboutNavigation />
-          </Route>
-          <Route path="/contact">
-            <ContactNavigation />
-          </Route>
-          {/* <Route path='/admin'>
-            <AdminComponent />
-          </Route>
-          <Route path='/admin-panel'>
-            <AdminDisplayComponent />
-          </Route> */}
-        </Switch>
-      </Router>
+      <div className="content">
+        <Router>
+          <Switch>
+            <Route exact path="/">
+              <IndexNavigation isPhone={isPhone} />
+            </Route>
+            <Route path="/subscribe">
+              <SubscribeNavigation />
+            </Route>
+            <Route path="/unsubscribe">
+              <UnsubscribeNavigation />
+            </Route>
+            <Route path="/about">
+              <AboutNavigation isPhone={isPhone} />
+            </Route>
+            <Route path="/contact">
+              <ContactNavigation isPhone={isPhone}/>
+            </Route>
+          </Switch>
+          <FooterComponent isPhone={isPhone} className="footer-sticky"/>
+        </Router>
+      </div>
     </React.Fragment>
   )
 }
 
+// Intened for Admin - Workin with this spaghetti
 function IndexNavigation({ isPhone }){
   return (
     <React.Fragment>
       <NavbarComponent />
-      <HeroComponent isPhone={isPhone}/>
+      <HeroComponent isPhone={isPhone} hero_image={news_hero_image}/>
       <DailyNews isPhone={isPhone}/>
-      <FooterComponent />
+      
     </React.Fragment>
   )
 }
@@ -78,7 +81,7 @@ function SubscribeNavigation(){
     <React.Fragment>
       <NavbarComponent />
       <SubscribeComponent />
-      <FooterComponent />
+      {/* <FooterComponent  className="footer-sticky"/> */}
     </React.Fragment>
   )
 }
@@ -87,35 +90,29 @@ function UnsubscribeNavigation(){
     <React.Fragment>
       <NavbarComponent />
       <UnsubscribeComponent />
-      <FooterComponent />
+      {/* <FooterComponent className="footer-sticky"/> */}
     </React.Fragment>
   )
 }
-function AboutNavigation(){
+function AboutNavigation({ isPhone }){
   return (
     <React.Fragment>
       <NavbarComponent />
-      <AboutComponent />
-      <FooterComponent />
+      <HeroComponent isPhone={isPhone} hero_image={farmers}/>
+      <AboutComponent isPhone={isPhone}/>
+      {/* <FooterComponent className="footer-sticky"/> */}
     </React.Fragment>
   )
 }
-function ContactNavigation(){
+function ContactNavigation({ isPhone }){
   return (
     <React.Fragment>
       <NavbarComponent />
+      <HeroComponent isPhone={isPhone} hero_image={contact_us}/>
       <ContactComponent />
-      <FooterComponent />
+      {/* <FooterComponent className="footer-sticky" /> */}
     </React.Fragment>
   )
 }
-// function YesterdayNavigation(){
-//   return (
-//     <React.Fragment>
-//       <NavbarComponent />
-//       <YesterdayNewsComponent />
-//       <FooterComponent />
-//     </React.Fragment>
-//   )
-// }
+
 export default App

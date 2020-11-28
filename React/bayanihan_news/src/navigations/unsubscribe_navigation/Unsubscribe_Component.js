@@ -33,6 +33,10 @@ function UnsubscribeComponent() {
     const [phoneNumber, setPhoneNumber] = React.useState('')
     const [isSuccess, setIsSuccess] = React.useState(false)
     const [userID, setUserID] = React.useState('')
+    
+    React.useEffect(() => {
+      document.title = 'Subscribe'
+    })
 
     return (
         <React.Fragment>

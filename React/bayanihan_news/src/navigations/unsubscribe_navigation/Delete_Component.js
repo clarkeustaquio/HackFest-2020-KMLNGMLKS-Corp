@@ -55,7 +55,7 @@ function DeleteComponent({ phoneNumber, setIsSuccess, userID }){
             body: JSON.stringify({title: 'Unsubscribe', phoneNumber: phoneNumber})
         }
 
-        fetch('http://bayanihan-news.herokuapp.com/api/send-sms/', requestSMS)
+        fetch('https://bayanihan-news.herokuapp.com/api/send-sms/', requestSMS)
             .then((response) => {
                 return response.json()
             }).then((data) => {

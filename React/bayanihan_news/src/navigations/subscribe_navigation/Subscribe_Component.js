@@ -30,6 +30,9 @@ function SubscribeComponent() {
     const [isSuccess, setIsSuccess] = React.useState(false)
     const [userID, setUserID] = React.useState('')
 
+    React.useEffect(() => {
+      document.title = 'Subscribe'
+    })
     return (
         <React.Fragment>
             <Container className="mt-5">

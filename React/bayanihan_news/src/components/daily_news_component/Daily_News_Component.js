@@ -10,7 +10,7 @@ import CardComponent from './Card_Component';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 function DailyNewsComponent({ isPhone }) {
-    // They don't allowed hosted applications
+    // They don't allowed hosted applications -- Own API
     const url = 'https://bayanihan-news.herokuapp.com/api/request-news/'
     const [isLoading, setIsLoading] = React.useState(true)
     const [news, setNews] = React.useState({})
@@ -28,11 +28,8 @@ function DailyNewsComponent({ isPhone }) {
             setNews(news)
             setIsLoading(false)
         })
+        document.title = 'BayanihanNews'
     }, [])
-
-    if(news){
-        console.log(news)
-    }
 
     return (
         <React.Fragment>
@@ -50,20 +47,19 @@ function DailyNewsComponent({ isPhone }) {
                     </div>
                 </Container> :
                 <Grid
-                    alignItems="center" 
+                    alignItems="stretch" 
                     justify="center" 
                     container 
-                    spacing={3}
                 >
-                    {/* {
+                    {
                     news ? news.articles.map((data, index) => {
                         return (
-                            <Grid item key={index} >
+                            <Grid item key={index} className="mb-4">
                                 <CardComponent {...data} isPhone={isPhone}/>
                             </Grid>
                         )
                     }) : <CircularProgress />
-                    } */}
+                    }
                 </Grid>
             }
         </React.Fragment>

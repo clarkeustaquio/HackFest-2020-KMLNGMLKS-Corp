@@ -1,11 +1,10 @@
 import React from 'react'
 import { Container, Jumbotron } from 'react-bootstrap'
-import news_hero_image from '../../static/images/news_hero_image.jpg'
 
-function HeroComponent({ isPhone }){
+function HeroComponent({ isPhone, hero_image }){
     const jumbotron_image = {
         height: '500px',
-        backgroundImage: 'linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(' + news_hero_image + ')',
+        backgroundImage: 'linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(' + hero_image + ')',
         backgroundSize: 'cover',
         backgroundRepeat: 'no-repeat',
         backgroundPosition: 'center',
