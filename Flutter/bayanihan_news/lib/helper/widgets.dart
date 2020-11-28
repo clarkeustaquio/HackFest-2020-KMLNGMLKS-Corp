@@ -333,3 +333,17 @@ class CustomTextField extends StatelessWidget {
     );
   }
 }
+
+Widget customButton(String title, Function event) {
+  return RaisedButton(
+    onPressed: event,
+    child: Text(
+      title,
+      style: TextStyle(fontWeight: FontWeight.bold),
+    ),
+    color: Color(0xff4d74c2),
+    shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(15.0),
+        side: BorderSide(color: Color(0xff285bc1))),
+  );
+}

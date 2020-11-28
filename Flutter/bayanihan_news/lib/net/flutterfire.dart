@@ -49,7 +49,29 @@ void addInfo(
       'last_name': lastName,
       'address': address
     });
-  } catch (e) {
-    print('hahaha');
-  }
+  } catch (e) {}
+}
+
+void addAnnouncement(String announcement, FieldValue date) {
+  try {
+    String uid = FirebaseAuth.instance.currentUser.uid;
+
+    CollectionReference collectionReference = FirebaseFirestore.instance
+        .collection('Users')
+        .doc(uid)
+        .collection('Announcements');
+
+    collectionReference.add({'announcement': announcement, 'date': date});
+  } catch (e) {}
+}
+
+Stream<QuerySnapshot> getAllAnnouncements() {
+  String uid = FirebaseAuth.instance.currentUser.uid;
+
+  return FirebaseFirestore.instance
+      .collection('Users')
+      .doc(uid)
+      .collection('Announcements')
+      .orderBy('date', descending: true)
+      .snapshots();
 }
