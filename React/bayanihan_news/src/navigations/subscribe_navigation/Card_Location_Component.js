@@ -61,9 +61,9 @@ function CardLocationComponent({ phoneNumber, setIsSuccess, userID }){
         setLocation(event.target.value);
     };
 
-    const handleSubscribe =  () => {
+    const handleSubscribe = () => {
         const db = firebaseConfig.firestore()
-        const userRef = db.collection('users').doc(userID)
+        const userRef = db.collection('Subscribers').doc(userID)
 
         userRef.get()
         .then((docSnapshot) => {
@@ -73,7 +73,7 @@ function CardLocationComponent({ phoneNumber, setIsSuccess, userID }){
                 // setIsDisabled(true)
             });
             } else {
-                db.collection('users').doc(userID).set({
+                db.collection('Subscribers').doc(userID).set({
                     'phoneNumber': phoneNumber,
                     'location': location,
                 }).then(() => {
@@ -89,16 +89,14 @@ function CardLocationComponent({ phoneNumber, setIsSuccess, userID }){
                     },
                     body: JSON.stringify({title: 'Subscribe', phoneNumber: phoneNumber})
                 }
-        
+
                 fetch('https://bayanihan-news.herokuapp.com/api/send-sms/', requestSMS)
                     .then((response) => {
                         return response.json()
-                    }).then((data) => {
-                        // console.log(data)
+                    }).then(() => {
+                        setIsSuccess(true)
+                        setIsDisabled(true)
                     })
-                
-                setIsSuccess(true)
-                setIsDisabled(true)
             }
         });
     }
@@ -126,7 +124,7 @@ function CardLocationComponent({ phoneNumber, setIsSuccess, userID }){
                 <Modal.Body>Sorry the number you are using was already subscribed to our service.</Modal.Body>
                 <Modal.Footer>
                 <Link to='/' style={{ textDecoration: "none"}}>
-                    <Button variant="secondary" onClick={handleClose}>
+                    <Button variant="text" onClick={handleClose}>
                         Close
                     </Button>
                 </Link>

@@ -47,7 +47,7 @@ function AboutComponent({ isPhone }){
                     </div>
                 </section>
                 <section id="solution">
-                <hr className="featurette-divider"></hr>
+                    <hr className="featurette-divider"></hr>
                     <div className="row featurette">
                         <div className="col-md-7 order-md-2">
                             <h2 className="featurette-heading font-weight-bold">Our Solution</h2>
@@ -62,7 +62,6 @@ function AboutComponent({ isPhone }){
                         <img className="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto" width="500" height="500" src={solution} alt="Solution"></img>
                         </div>
                     </div>
-                    
                 </section>
                 <section id="goals">
                 <div className = "text-center">

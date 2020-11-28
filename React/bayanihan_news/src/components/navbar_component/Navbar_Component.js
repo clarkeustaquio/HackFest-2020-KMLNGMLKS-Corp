@@ -15,7 +15,7 @@ function NavbarComponent(){
             <Navbar.Collapse id='toggle-navbar'>
                 <Nav className='ml-auto mr-5'>
                 <Nav.Link as={Link} to='/about'>About</Nav.Link>
-                <Nav.Link as={Link} to='/subscribe'>Subscribe</Nav.Link>
+                <Nav.Link href='/subscribe'>Subscribe</Nav.Link>
                 <Nav.Link as={Link} to='/contact'>Contact Us</Nav.Link>
                 </Nav>
             </Navbar.Collapse>
