@@ -45,17 +45,17 @@ function DeleteComponent({ phoneNumber, setIsSuccess, userID }){
     const handleUnsubscribe = () => {
         const db = firebaseConfig.firestore()
         let user = firebaseConfig.auth().currentUser
-        const userRef = db.collection('users').doc(userID)
+        const userRef = db.collection('Subscribers').doc(userID)
 
         userRef.get()
         .then((docSnapshot) => {
             if (docSnapshot.exists) {
                 userRef.onSnapshot((doc) => {
                     user.delete().catch((error) => {
-                        console.log('Unsubscribe Failed')
+                        console.log('Unsubscribe')
                     })
-                    db.collection('users').doc(userID).delete().catch((error) => {
-                        console.log('Unsubscribe Failed')
+                    db.collection('Subscribers').doc(userID).delete().catch((error) => {
+                        console.log('Unsubscribe')
                     })
             
                     const requestSMS = {
@@ -69,20 +69,15 @@ function DeleteComponent({ phoneNumber, setIsSuccess, userID }){
                     fetch('https://bayanihan-news.herokuapp.com/api/send-sms/', requestSMS)
                         .then((response) => {
                             return response.json()
-                        }).then((data) => {
-                            // console.log(data)
-                        })
-            
-                    setIsSuccess(true)
-                    setIsDisabled(true)
+                        }).then(() => {
+                            setIsSuccess(true)
+                            setIsDisabled(true)
+                        }) 
             });
             } else {
                 setShow(true)
             }
         });
-
-
-
     }
 
     const handleCancel = () => {
@@ -108,12 +103,12 @@ function DeleteComponent({ phoneNumber, setIsSuccess, userID }){
                 <Modal.Body>Sorry the number you are using is not in our service. Please subscribe.</Modal.Body>
                 <Modal.Footer>
                 <Link to='/' style={{ textDecoration: "none"}}>
-                    <Button variant="secondary" onClick={handleClose}>
+                    <Button variant="text" onClick={handleClose}>
                         Close
                     </Button>
                 </Link>
                 <Link to='/subscribe' style={{ textDecoration: "none"}}>
-                    <Button variant="secondary" onClick={handleClose}>
+                    <Button variant="text" onClick={handleClose}>
                         Subscribe
                     </Button>
                 </Link>

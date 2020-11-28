@@ -72,7 +72,6 @@ function IndexNavigation({ isPhone }){
       <NavbarComponent />
       <HeroComponent isPhone={isPhone} hero_image={news_hero_image}/>
       <DailyNews isPhone={isPhone}/>
-      
     </React.Fragment>
   )
 }
@@ -81,7 +80,6 @@ function SubscribeNavigation(){
     <React.Fragment>
       <NavbarComponent />
       <SubscribeComponent />
-      {/* <FooterComponent  className="footer-sticky"/> */}
     </React.Fragment>
   )
 }
@@ -90,7 +88,6 @@ function UnsubscribeNavigation(){
     <React.Fragment>
       <NavbarComponent />
       <UnsubscribeComponent />
-      {/* <FooterComponent className="footer-sticky"/> */}
     </React.Fragment>
   )
 }
@@ -100,7 +97,6 @@ function AboutNavigation({ isPhone }){
       <NavbarComponent />
       <HeroComponent isPhone={isPhone} hero_image={farmers}/>
       <AboutComponent isPhone={isPhone}/>
-      {/* <FooterComponent className="footer-sticky"/> */}
     </React.Fragment>
   )
 }
@@ -110,7 +106,6 @@ function ContactNavigation({ isPhone }){
       <NavbarComponent />
       <HeroComponent isPhone={isPhone} hero_image={contact_us}/>
       <ContactComponent />
-      {/* <FooterComponent className="footer-sticky" /> */}
     </React.Fragment>
   )
 }

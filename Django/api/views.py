@@ -75,7 +75,7 @@ def send_sms(request):
 def request_call():
     url = 'http://newsapi.org/v2/top-headlines?country=ph&apiKey=a3befdaa830b4a0595fa9b145c17929e'
 
-    cloud_datas = db.collection('users').get()
+    cloud_datas = db.collection('Subscribers').get()
     list_numbers = list()
 
     for data in cloud_datas:
