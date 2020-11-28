@@ -1,3 +1,6 @@
+import 'package:bayanihan_news/helper/account_settings.dart';
+import 'package:bayanihan_news/helper/manage_community.dart';
+import 'package:bayanihan_news/ui/message.dart';
 import 'package:flutter/material.dart';
 import 'package:bayanihan_news/helper/widgets.dart';
 
@@ -31,15 +34,31 @@ class MenuView extends StatelessWidget {
                             children: <Widget>[
                               FlatButton(
                                 child: Text('List Numbers'),
-                                onPressed: () {},
+                                onPressed: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => ListNumbers()));
+                                },
                               ),
                               FlatButton(
                                 child: Text('Add/Delete Numbers'),
-                                onPressed: () {},
+                                onPressed: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              AddDeleteNumbers()));
+                                },
                               ),
                               FlatButton(
                                 child: Text('Edit Numbers'),
-                                onPressed: () {},
+                                onPressed: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => EditNumbers()));
+                                },
                               ),
                             ],
                           ),
@@ -59,11 +78,22 @@ class MenuView extends StatelessWidget {
                             children: <Widget>[
                               FlatButton(
                                 child: Text('Edit Account'),
-                                onPressed: () {},
+                                onPressed: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => EditView()));
+                                },
                               ),
                               FlatButton(
                                 child: Text('See Account Details'),
-                                onPressed: () {},
+                                onPressed: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              AccountDetails()));
+                                },
                               ),
                             ],
                           ),

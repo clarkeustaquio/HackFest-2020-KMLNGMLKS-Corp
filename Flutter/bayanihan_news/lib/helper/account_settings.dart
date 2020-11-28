@@ -6,12 +6,12 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:bayanihan_news/helper/widgets.dart';
 
-class RegisterView extends StatefulWidget {
+class EditView extends StatefulWidget {
   @override
-  _RegisterViewState createState() => _RegisterViewState();
+  _EditViewState createState() => _EditViewState();
 }
 
-class _RegisterViewState extends State<RegisterView> {
+class _EditViewState extends State<EditView> {
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
@@ -52,7 +52,7 @@ class _RegisterViewState extends State<RegisterView> {
     _large = ResponsiveWidget.isScreenLarge(_width, _pixelRatio);
     _medium = ResponsiveWidget.isScreenMedium(_width, _pixelRatio);
 
-    void _validateRegisterInput() async {
+    void _validateEditInput() async {
       final FormState form = _formKey.currentState;
       if (_formKey.currentState.validate()) {
         form.save();
@@ -60,14 +60,11 @@ class _RegisterViewState extends State<RegisterView> {
           _loading = true;
         });
         try {
-          await FirebaseAuth.instance.createUserWithEmailAndPassword(
-              email: _email, password: _pass.text);
-
-          Navigator.pushAndRemoveUntil(
-            context,
-            MaterialPageRoute(builder: (context) => HomePage(true)),
-            (Route<dynamic> route) => false,
-          );
+          // Navigator.pushAndRemoveUntil(
+          //   context,
+          //   MaterialPageRoute(builder: (context) => HomePage(true)),
+          //   (Route<dynamic> route) => false,
+          // );
 
           String uid = FirebaseAuth.instance.currentUser.uid;
 
@@ -85,50 +82,7 @@ class _RegisterViewState extends State<RegisterView> {
           setState(() {
             _loading = false;
           });
-        } catch (error) {
-          switch (error.code) {
-            case "ERROR_EMAIL_ALREADY_IN_USE":
-              {
-                setState(() {
-                  errorMsg = "This email is already in use.";
-                  _loading = false;
-                });
-                showDialog(
-                    context: context,
-                    builder: (BuildContext context) {
-                      return AlertDialog(
-                        content: Container(
-                          child: Text(errorMsg),
-                        ),
-                      );
-                    });
-              }
-              break;
-            case "ERROR_WEAK_PASSWORD":
-              {
-                setState(() {
-                  errorMsg = "The password must be 6 characters long or more.";
-                  _loading = false;
-                });
-                showDialog(
-                    context: context,
-                    builder: (BuildContext context) {
-                      return AlertDialog(
-                        content: Container(
-                          child: Text(errorMsg),
-                        ),
-                      );
-                    });
-              }
-              break;
-            default:
-              {
-                setState(() {
-                  errorMsg = "";
-                });
-              }
-          }
-        }
+        } catch (error) {}
       } else {
         setState(() {
           _autoValidate = true;
@@ -257,7 +211,7 @@ class _RegisterViewState extends State<RegisterView> {
       );
     }
 
-    Widget registerButton() {
+    Widget editButton() {
       return _loading
           ? CircularProgressIndicator(
               valueColor: new AlwaysStoppedAnimation<Color>(primaryColor),
@@ -266,7 +220,7 @@ class _RegisterViewState extends State<RegisterView> {
               elevation: 0,
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(30.0)),
-              onPressed: _validateRegisterInput,
+              onPressed: _validateEditInput,
               textColor: Colors.white,
               padding: EdgeInsets.all(0.0),
               child: Container(
@@ -283,7 +237,7 @@ class _RegisterViewState extends State<RegisterView> {
                 ),
                 padding: const EdgeInsets.all(12.0),
                 child: Text(
-                  'register',
+                  'edit',
                   style: TextStyle(fontSize: _large ? 18 : (_medium ? 12 : 14)),
                 ),
               ),
@@ -336,11 +290,69 @@ class _RegisterViewState extends State<RegisterView> {
                 SizedBox(
                   height: _height / 35,
                 ),
-                registerButton(),
+                editButton(),
                 signInTextRow(),
               ],
             ),
           ),
         ));
+  }
+}
+
+class AccountDetails extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        appBar: MyAppBar(),
+        body: StreamBuilder(
+            stream: FirebaseFirestore.instance
+                .collection('Users')
+                .doc(FirebaseAuth.instance.currentUser.uid)
+                .snapshots(),
+            builder: (context, snapshot) {
+              DocumentSnapshot user = snapshot.data;
+              return Column(children: [
+                Row(
+                  children: [
+                    Text('First Name: '),
+                    Expanded(
+                      child: Text(user['first_name']),
+                    )
+                  ],
+                ),
+                Row(
+                  children: [
+                    Text('Last Name: '),
+                    Expanded(
+                      child: Text(user['last_name']),
+                    )
+                  ],
+                ),
+                Row(
+                  children: [
+                    Text('Email: '),
+                    Expanded(
+                      child: Text(user['email']),
+                    )
+                  ],
+                ),
+                Row(
+                  children: [
+                    Text('Phone: '),
+                    Expanded(
+                      child: Text(user['phone']),
+                    )
+                  ],
+                ),
+                Row(
+                  children: [
+                    Text('Address: '),
+                    Expanded(
+                      child: Text(user['address']),
+                    ),
+                  ],
+                ),
+              ]);
+            }));
   }
 }
