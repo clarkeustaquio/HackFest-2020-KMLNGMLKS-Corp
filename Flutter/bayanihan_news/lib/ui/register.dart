@@ -1,10 +1,12 @@
 import 'package:bayanihan_news/helper/input_fields.dart';
+import 'package:bayanihan_news/helper/locations.dart';
 import 'package:bayanihan_news/services/validators.dart';
 import 'package:bayanihan_news/ui/homeview.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:bayanihan_news/helper/widgets.dart';
+import 'package:searchable_dropdown/searchable_dropdown.dart';
 
 class RegisterView extends StatefulWidget {
   @override
@@ -136,6 +138,23 @@ class _RegisterViewState extends State<RegisterView> {
       }
     }
 
+    Widget personalInfoRow() {
+      return Container(
+        margin: EdgeInsets.only(left: _width / 20, top: _height / 100),
+        child: Row(
+          children: <Widget>[
+            Text(
+              "Personal Info",
+              style: TextStyle(
+                fontWeight: FontWeight.w400,
+                fontSize: _large ? 30 : (_medium ? 25 : 20),
+              ),
+            ),
+          ],
+        ),
+      );
+    }
+
     Widget clipShape() {
       return Stack(
         children: <Widget>[
@@ -149,7 +168,7 @@ class _RegisterViewState extends State<RegisterView> {
                     : (_medium ? _height / 7 : _height / 6.5),
                 decoration: BoxDecoration(
                   gradient: LinearGradient(
-                    colors: [Colors.orange[200], Colors.pinkAccent],
+                    colors: [Color(0xffFDDF5C), Color(0xff4D74C2)],
                   ),
                 ),
               ),
@@ -165,7 +184,7 @@ class _RegisterViewState extends State<RegisterView> {
                     : (_medium ? _height / 11 : _height / 10),
                 decoration: BoxDecoration(
                   gradient: LinearGradient(
-                    colors: [Colors.orange[200], Colors.pinkAccent],
+                    colors: [Color(0xffFDDF5C), Color(0xff4D74C2)],
                   ),
                 ),
               ),
@@ -220,7 +239,7 @@ class _RegisterViewState extends State<RegisterView> {
               hint: "Confirm Password",
               keyboardType: TextInputType.text,
             ),
-            SizedBox(height: _height / 10.0),
+            personalInfoRow(),
             CustomTextField(
               icon: Icons.person,
               hint: "First Name",
@@ -241,14 +260,38 @@ class _RegisterViewState extends State<RegisterView> {
               keyboardType: TextInputType.text,
             ),
             SizedBox(height: _height / 60.0),
-            CustomTextField(
-              icon: Icons.place,
-              hint: "Address",
-              onSaved: (input) {
-                _address = input;
+            FutureBuilder<List<String>>(
+              future: getLocations(), // async work
+              builder:
+                  (BuildContext context, AsyncSnapshot<List<String>> snapshot) {
+                List<DropdownMenuItem> i = [];
+                if (snapshot.data != null) {
+                  snapshot.data.forEach((element) {
+                    i.add(
+                        DropdownMenuItem(child: Text(element), value: element));
+                  });
+                }
+                switch (snapshot.connectionState) {
+                  case ConnectionState.waiting:
+                    return Text('Loading....');
+                  default:
+                    if (snapshot.hasError)
+                      return Text('Error: ${snapshot.error}');
+                    else
+                      return SearchableDropdown.single(
+                        items: i,
+                        value: _address,
+                        hint: "Select one",
+                        searchHint: "Select one",
+                        onChanged: (value) {
+                          _address = value;
+                        },
+                        isExpanded: true,
+                        icon: Icon(Icons.place),
+                        label: 'Location',
+                      );
+                }
               },
-              validator: hasValueValidator,
-              keyboardType: TextInputType.text,
             ),
           ]),
           key: _formKey,
@@ -278,13 +321,16 @@ class _RegisterViewState extends State<RegisterView> {
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.all(Radius.circular(20.0)),
                   gradient: LinearGradient(
-                    colors: <Color>[Colors.orange[200], Colors.pinkAccent],
+                    colors: <Color>[Color(0xffFDDF5C), Color(0xff4D74C2)],
                   ),
                 ),
                 padding: const EdgeInsets.all(12.0),
                 child: Text(
-                  'register',
-                  style: TextStyle(fontSize: _large ? 18 : (_medium ? 12 : 14)),
+                  'Register',
+                  style: TextStyle(
+                      fontSize: _large ? 18 : (_medium ? 12 : 14),
+                      color: Colors.black,
+                      fontWeight: FontWeight.w400),
                 ),
               ),
             );
@@ -321,6 +367,23 @@ class _RegisterViewState extends State<RegisterView> {
       );
     }
 
+    Widget registerUpLabelTextRow() {
+      return Container(
+        margin: EdgeInsets.only(left: _width / 20, top: _height / 100),
+        child: Row(
+          children: <Widget>[
+            Text(
+              "Register",
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: _large ? 60 : (_medium ? 50 : 40),
+              ),
+            ),
+          ],
+        ),
+      );
+    }
+
     return Scaffold(
         key: _scaffoldKey,
         body: Container(
@@ -332,12 +395,16 @@ class _RegisterViewState extends State<RegisterView> {
               children: <Widget>[
                 Opacity(opacity: 0.88, child: CustomAppBar()),
                 clipShape(),
+                registerUpLabelTextRow(),
                 form(),
                 SizedBox(
                   height: _height / 35,
                 ),
                 registerButton(),
                 signInTextRow(),
+                SizedBox(
+                  height: _height / 20,
+                ),
               ],
             ),
           ),

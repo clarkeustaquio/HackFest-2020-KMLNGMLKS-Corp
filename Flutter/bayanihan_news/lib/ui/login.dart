@@ -1,4 +1,6 @@
+import 'package:bayanihan_news/helper/input_fields.dart';
 import 'package:bayanihan_news/net/flutterfire.dart';
+import 'package:bayanihan_news/services/validators.dart';
 import 'package:bayanihan_news/ui/homeview.dart';
 import 'package:bayanihan_news/ui/register.dart';
 import 'package:flutter/material.dart';
@@ -24,9 +26,14 @@ class _LogInViewState extends State<LogInView> {
   double _pixelRatio;
   bool _large;
   bool _medium;
+  String _password;
   TextEditingController emailController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
+  final TextEditingController _pass = TextEditingController();
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   GlobalKey<FormState> _key = GlobalKey();
+  bool _autoValidate = false;
+
+  bool _loading = false;
 
   @override
   Widget build(BuildContext context) {
@@ -43,9 +50,9 @@ class _LogInViewState extends State<LogInView> {
         child: SingleChildScrollView(
           child: Column(
             children: <Widget>[
+              Opacity(opacity: 0.88, child: CustomAppBar()),
               clipShape(),
               welcomeTextRow(),
-              signInTextRow(),
               form(),
               SizedBox(height: _height / 12),
               button(),
@@ -58,7 +65,6 @@ class _LogInViewState extends State<LogInView> {
   }
 
   Widget clipShape() {
-    //double height = MediaQuery.of(context).size.height;
     return Stack(
       children: <Widget>[
         Opacity(
@@ -67,11 +73,11 @@ class _LogInViewState extends State<LogInView> {
             clipper: CustomShapeClipper(),
             child: Container(
               height: _large
-                  ? _height / 4
-                  : (_medium ? _height / 3.75 : _height / 3.5),
+                  ? _height / 8
+                  : (_medium ? _height / 7 : _height / 6.5),
               decoration: BoxDecoration(
                 gradient: LinearGradient(
-                  colors: [Colors.orange[200], Colors.pinkAccent],
+                  colors: [Color(0xffFDDF5C), Color(0xff4D74C2)],
                 ),
               ),
             ),
@@ -83,11 +89,11 @@ class _LogInViewState extends State<LogInView> {
             clipper: CustomShapeClipper2(),
             child: Container(
               height: _large
-                  ? _height / 4.5
-                  : (_medium ? _height / 4.25 : _height / 4),
+                  ? _height / 12
+                  : (_medium ? _height / 11 : _height / 10),
               decoration: BoxDecoration(
                 gradient: LinearGradient(
-                  colors: [Colors.orange[200], Colors.pinkAccent],
+                  colors: [Color(0xffFDDF5C), Color(0xff4D74C2)],
                 ),
               ),
             ),
@@ -103,7 +109,7 @@ class _LogInViewState extends State<LogInView> {
       child: Row(
         children: <Widget>[
           Text(
-            "Welcome",
+            "Login",
             style: TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: _large ? 60 : (_medium ? 50 : 40),
@@ -114,36 +120,19 @@ class _LogInViewState extends State<LogInView> {
     );
   }
 
-  Widget signInTextRow() {
-    return Container(
-      margin: EdgeInsets.only(left: _width / 15.0),
-      child: Row(
-        children: <Widget>[
-          Text(
-            "Sign in to your account",
-            style: TextStyle(
-              fontWeight: FontWeight.w200,
-              fontSize: _large ? 20 : (_medium ? 17.5 : 15),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
   Widget form() {
     return Container(
       margin: EdgeInsets.only(
-          left: _width / 12.0, right: _width / 12.0, top: _height / 15.0),
+          left: _width / 12.0, right: _width / 12.0, top: _height / 20.0),
       child: Form(
-        key: _key,
-        child: Column(
-          children: <Widget>[
-            emailTextFormField(),
-            SizedBox(height: _height / 40.0),
-            passwordTextFormField(),
-          ],
-        ),
+        child: Column(children: <Widget>[
+          emailTextFormField(),
+          SizedBox(height: _height / 40.0),
+          passwordTextFormField(_password, _pass),
+          SizedBox(height: _height / 60.0),
+        ]),
+        key: _formKey,
+        autovalidate: _autoValidate,
       ),
     );
   }
@@ -154,16 +143,7 @@ class _LogInViewState extends State<LogInView> {
       controller: emailController,
       icon: Icons.email,
       hint: "Email ID",
-    );
-  }
-
-  Widget passwordTextFormField() {
-    return CustomTextField(
-      keyboardType: TextInputType.emailAddress,
-      controller: passwordController,
-      icon: Icons.lock,
-      obsecure: true,
-      hint: "Password",
+      validator: emailValidator,
     );
   }
 
@@ -171,20 +151,7 @@ class _LogInViewState extends State<LogInView> {
     return RaisedButton(
       elevation: 0,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
-      onPressed: () async {
-        print('jdlsjfld');
-        print(emailController.text);
-        print(passwordController.text);
-        bool shouldNavigate =
-            await signIn(emailController.text, passwordController.text);
-        if (shouldNavigate) {
-          Navigator.pushAndRemoveUntil(
-            context,
-            MaterialPageRoute(builder: (context) => HomePage(true)),
-            (Route<dynamic> route) => false,
-          );
-        }
-      },
+      onPressed: _validateLoginInput,
       textColor: Colors.white,
       padding: EdgeInsets.all(0.0),
       child: Container(
@@ -193,7 +160,7 @@ class _LogInViewState extends State<LogInView> {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.all(Radius.circular(20.0)),
           gradient: LinearGradient(
-            colors: <Color>[Colors.orange[200], Colors.pinkAccent],
+            colors: <Color>[Color(0xffFDDF5C), Color(0xff4D74C2)],
           ),
         ),
         padding: const EdgeInsets.all(12.0),
@@ -239,5 +206,33 @@ class _LogInViewState extends State<LogInView> {
         ],
       ),
     );
+  }
+
+  void _validateLoginInput() async {
+    final FormState form = _formKey.currentState;
+    if (_formKey.currentState.validate()) {
+      form.save();
+      setState(() {
+        _loading = true;
+      });
+      try {
+        bool shouldNavigate = await signIn(emailController.text, _pass.text);
+        if (shouldNavigate) {
+          Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(builder: (context) => HomePage(true)),
+            (Route<dynamic> route) => false,
+          );
+        }
+
+        setState(() {
+          _loading = false;
+        });
+      } catch (error) {}
+    } else {
+      setState(() {
+        _autoValidate = true;
+      });
+    }
   }
 }
