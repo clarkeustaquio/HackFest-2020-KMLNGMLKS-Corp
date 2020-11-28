@@ -1,5 +1,5 @@
 import React from 'react'
-import { Container } from 'react-bootstrap'
+import { Container, Modal } from 'react-bootstrap'
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
@@ -50,40 +50,57 @@ function CardLocationComponent({ phoneNumber, setIsSuccess, userID }){
     const classes = useStyles();
     const [location, setLocation] = React.useState('');
     const [isDisabled, setIsDisabled] = React.useState(false)
+    const [show, setShow] = React.useState(false)
+
+    const handleClose = () => {
+        setShow(false)
+        firebaseConfig.auth().signOut()
+    }
 
     const handleChange = (event) => {
         setLocation(event.target.value);
     };
 
-    const handleSubscribe = () => {
+    const handleSubscribe =  () => {
         const db = firebaseConfig.firestore()
+        const userRef = db.collection('users').doc(userID)
 
-        db.collection('users').doc(userID).set({
-            'phoneNumber': phoneNumber,
-            'location': location,
-        }).then(() => {
-            firebaseConfig.auth().signOut()
-        }).catch((error) => {
-            console.log('Subscribe Failed')
-        })
-
-        const requestSMS = {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({title: 'Subscribe', phoneNumber: phoneNumber})
-        }
-
-        fetch('https://bayanihan-news.herokuapp.com/api/send-sms/', requestSMS)
-            .then((response) => {
-                return response.json()
-            }).then((data) => {
-                console.log(data)
-            })
-
-        setIsSuccess(true)
-        setIsDisabled(true)
+        userRef.get()
+        .then((docSnapshot) => {
+            if (docSnapshot.exists) {
+                userRef.onSnapshot((doc) => {
+                setShow(true)
+                // setIsDisabled(true)
+            });
+            } else {
+                db.collection('users').doc(userID).set({
+                    'phoneNumber': phoneNumber,
+                    'location': location,
+                }).then(() => {
+                    firebaseConfig.auth().signOut()
+                }).catch((error) => {
+                    console.log('Subscribe Failed')
+                })
+        
+                const requestSMS = {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({title: 'Subscribe', phoneNumber: phoneNumber})
+                }
+        
+                fetch('https://bayanihan-news.herokuapp.com/api/send-sms/', requestSMS)
+                    .then((response) => {
+                        return response.json()
+                    }).then((data) => {
+                        // console.log(data)
+                    })
+                
+                setIsSuccess(true)
+                setIsDisabled(true)
+            }
+        });
     }
 
     const handleCancel = () => {
@@ -97,11 +114,32 @@ function CardLocationComponent({ phoneNumber, setIsSuccess, userID }){
 
     return (
         <React.Fragment>
+            {show && <Modal
+                show={show}
+                onHide={handleClose}
+                backdrop="static"
+                keyboard={false}
+            >
+                <Modal.Header closeButton>
+                <Modal.Title>Phone Number</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>Sorry the number you are using was already subscribed to our service.</Modal.Body>
+                <Modal.Footer>
+                <Link to='/' style={{ textDecoration: "none"}}>
+                    <Button variant="secondary" onClick={handleClose}>
+                        Close
+                    </Button>
+                </Link>
+                </Modal.Footer>
+            </Modal>
+            }
+
             <Container style={{
                 display: "flex",
                 justifyContent: "center",
                 alignItems: "center"
             }}>
+                
             <Card className={classes.root}>
                 <CardContent>
                     <Typography className={classes.title} color="textSecondary" gutterBottom>
@@ -125,13 +163,13 @@ function CardLocationComponent({ phoneNumber, setIsSuccess, userID }){
                     </FormControl>
                     <Container >
                     <Link to='/' onClick={handleCancel}>
-                        <Button disabled={isDisabled} variant="contained" color="primary" className="mt-4 mr-2">
+                        <Button disabled={false} variant="contained" color="primary" className="mt-4 mr-2">
                             Cancel
                         </Button>
                     </Link>
-                    <Button disabled={isDisabled} variant="contained" color="primary" className="mt-4 ml-2" onClick={handleSubscribe}>
-                        Subscribe
-                    </Button>
+                        <Button disabled={location.length > 1 ? isDisabled : !isDisabled} variant="contained" color="primary" className="mt-4 ml-2" onClick={handleSubscribe}>
+                            Subscribe
+                        </Button>
                     </Container>
                 </CardContent>
             </Card>

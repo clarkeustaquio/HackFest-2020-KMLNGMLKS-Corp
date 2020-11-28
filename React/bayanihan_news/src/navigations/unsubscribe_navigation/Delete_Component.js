@@ -1,5 +1,5 @@
 import React from 'react'
-import { Container } from 'react-bootstrap'
+import { Container, Modal } from 'react-bootstrap'
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
@@ -35,35 +35,54 @@ const useStyles = makeStyles(() => ({
 function DeleteComponent({ phoneNumber, setIsSuccess, userID }){
     const classes = useStyles();
     const [isDisabled, setIsDisabled] = React.useState(false)
+    const [show, setShow] = React.useState(false)
+
+    const handleClose = () => {
+        setShow(false)
+        firebaseConfig.auth().signOut()
+    }
 
     const handleUnsubscribe = () => {
         const db = firebaseConfig.firestore()
         let user = firebaseConfig.auth().currentUser
+        const userRef = db.collection('users').doc(userID)
 
-        user.delete().catch((error) => {
-            console.log('Unsubscribe Failed')
-        })
-        db.collection('users').doc(userID).delete().catch((error) => {
-            console.log('Unsubscribe Failed')
-        })
+        userRef.get()
+        .then((docSnapshot) => {
+            if (docSnapshot.exists) {
+                userRef.onSnapshot((doc) => {
+                    user.delete().catch((error) => {
+                        console.log('Unsubscribe Failed')
+                    })
+                    db.collection('users').doc(userID).delete().catch((error) => {
+                        console.log('Unsubscribe Failed')
+                    })
+            
+                    const requestSMS = {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({title: 'Unsubscribe', phoneNumber: phoneNumber})
+                    }
+            
+                    fetch('https://bayanihan-news.herokuapp.com/api/send-sms/', requestSMS)
+                        .then((response) => {
+                            return response.json()
+                        }).then((data) => {
+                            // console.log(data)
+                        })
+            
+                    setIsSuccess(true)
+                    setIsDisabled(true)
+            });
+            } else {
+                setShow(true)
+            }
+        });
 
-        const requestSMS = {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({title: 'Unsubscribe', phoneNumber: phoneNumber})
-        }
 
-        fetch('https://bayanihan-news.herokuapp.com/api/send-sms/', requestSMS)
-            .then((response) => {
-                return response.json()
-            }).then((data) => {
-                console.log(data)
-            })
 
-        setIsSuccess(true)
-        setIsDisabled(true)
     }
 
     const handleCancel = () => {
@@ -77,6 +96,30 @@ function DeleteComponent({ phoneNumber, setIsSuccess, userID }){
 
     return (
         <React.Fragment>
+            {show && <Modal
+                show={show}
+                onHide={handleClose}
+                backdrop="static"
+                keyboard={false}
+            >
+                <Modal.Header closeButton>
+                <Modal.Title>Phone Number</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>Sorry the number you are using is not in our service. Please subscribe.</Modal.Body>
+                <Modal.Footer>
+                <Link to='/' style={{ textDecoration: "none"}}>
+                    <Button variant="secondary" onClick={handleClose}>
+                        Close
+                    </Button>
+                </Link>
+                <Link to='/subscribe' style={{ textDecoration: "none"}}>
+                    <Button variant="secondary" onClick={handleClose}>
+                        Subscribe
+                    </Button>
+                </Link>
+                </Modal.Footer>
+            </Modal>
+            }
             <Container style={{
                 display: "flex",
                 justifyContent: "center",
@@ -93,7 +136,7 @@ function DeleteComponent({ phoneNumber, setIsSuccess, userID }){
                         <Grid container justify="center">
                             <Grid item>
                             <Link to='/' onClick={handleCancel}>
-                                <Button disabled={isDisabled} variant="contained" color="primary" className="mt-4 mb-3 mr-2">
+                                <Button disabled={false} variant="contained" color="primary" className="mt-4 mb-3 mr-2">
                                     Cancel
                                 </Button>
                             </Link>

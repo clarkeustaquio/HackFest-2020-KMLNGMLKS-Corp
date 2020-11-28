@@ -11,13 +11,17 @@ import SuccessComponent from './Success_Component'
 
 const uiConfig = {
   signInFlow: 'popup',
-  signInOptions: [firebaseConfig.auth.PhoneAuthProvider.PROVIDER_ID],
+  signInOptions: [{ 
+    provider: firebaseConfig.auth.PhoneAuthProvider.PROVIDER_ID, 
+    defaultCountry: "PH", 
+    whitelistedCountries: ['PH', '+63']
+  }],
   tosUrl: "http://localhost:3000/",
   callbacks: {
     signInSuccessWithAuthResult: () => {
       return false
     }
-  }
+  },
 }
 
 function getSteps() {

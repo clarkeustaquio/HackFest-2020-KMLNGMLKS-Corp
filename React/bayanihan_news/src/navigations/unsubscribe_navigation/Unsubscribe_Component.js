@@ -1,5 +1,5 @@
 import React from 'react'
-import { Container, Alert } from 'react-bootstrap'
+import { Container } from 'react-bootstrap'
 
 import firebaseConfig from '../../firebaseConfig'
 import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
@@ -12,17 +12,17 @@ import UnsubscribeSuccessComponent from './Unsubscribe_Success_Component'
 
 const uiConfig = {
   signInFlow: 'popup',
-  signInOptions: [firebaseConfig.auth.PhoneAuthProvider.PROVIDER_ID],
+  signInOptions: [{ 
+    provider: firebaseConfig.auth.PhoneAuthProvider.PROVIDER_ID, 
+    defaultCountry: "PH", 
+    whitelistedCountries: ['PH', '+63']
+  }],
   tosUrl: "http://localhost:3000/",
   callbacks: {
     signInSuccessWithAuthResult: () => {
-        firebaseConfig.auth().onAuthStateChanged(function(user){
-  
-      })
-     
       return false
     }
-  }
+  },
 }
 
 function getSteps() {
@@ -34,9 +34,9 @@ function UnsubscribeComponent() {
     const [phoneNumber, setPhoneNumber] = React.useState('')
     const [isSuccess, setIsSuccess] = React.useState(false)
     const [userID, setUserID] = React.useState('')
-    
+
     React.useEffect(() => {
-      document.title = 'Subscribe'
+      document.title = 'Unsubscribe'
     })
 
     return (
