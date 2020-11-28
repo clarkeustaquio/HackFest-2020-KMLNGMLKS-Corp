@@ -1,10 +1,12 @@
 import 'package:bayanihan_news/helper/input_fields.dart';
+import 'package:bayanihan_news/helper/locations.dart';
 import 'package:bayanihan_news/services/validators.dart';
 import 'package:bayanihan_news/ui/homeview.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:bayanihan_news/helper/widgets.dart';
+import 'package:searchable_dropdown/searchable_dropdown.dart';
 
 class EditView extends StatefulWidget {
   @override
@@ -15,17 +17,12 @@ class _EditViewState extends State<EditView> {
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
-  final TextEditingController _pass = TextEditingController();
-  final TextEditingController _confirmPass = TextEditingController();
-
   //FIELDS INPUT
-  String _email;
-  String _password;
-  String _confirmPassword;
-  String _lastName;
-  String _firstName;
+
+  TextEditingController _lastName = TextEditingController();
+  TextEditingController _firstName = TextEditingController();
   String _address;
-  String _phone;
+  TextEditingController _phone = TextEditingController();
 
   bool _loading = false;
   bool _autoValidate = false;
@@ -68,20 +65,28 @@ class _EditViewState extends State<EditView> {
 
           String uid = FirebaseAuth.instance.currentUser.uid;
 
+          DocumentSnapshot data = await FirebaseFirestore.instance
+              .collection('Users')
+              .doc(uid)
+              .get();
+
           DocumentReference documentReference =
               FirebaseFirestore.instance.collection('Users').doc(uid);
 
           documentReference.set({
-            'email': _email,
-            'phone': '+63' + _phone,
-            'first_name': _firstName,
-            'last_name': _lastName,
+            'email': data.get('email'),
+            'phone': '+63' + _phone.text,
+            'first_name': _firstName.text,
+            'last_name': _lastName.text,
             'address': _address
           });
-
+          _phone.clear();
+          _firstName.clear();
+          _lastName.clear();
           setState(() {
             _loading = false;
           });
+          _autoValidate = false;
         } catch (error) {}
       } else {
         setState(() {
@@ -103,7 +108,7 @@ class _EditViewState extends State<EditView> {
                     : (_medium ? _height / 7 : _height / 6.5),
                 decoration: BoxDecoration(
                   gradient: LinearGradient(
-                    colors: [Colors.orange[200], Colors.pinkAccent],
+                    colors: [Color(0xffFDDF5C), Color(0xff4D74C2)],
                   ),
                 ),
               ),
@@ -119,7 +124,7 @@ class _EditViewState extends State<EditView> {
                     : (_medium ? _height / 11 : _height / 10),
                 decoration: BoxDecoration(
                   gradient: LinearGradient(
-                    colors: [Colors.orange[200], Colors.pinkAccent],
+                    colors: [Color(0xffFDDF5C), Color(0xff4D74C2)],
                   ),
                 ),
               ),
@@ -135,78 +140,65 @@ class _EditViewState extends State<EditView> {
             left: _width / 12.0, right: _width / 12.0, top: _height / 20.0),
         child: Form(
           child: Column(children: <Widget>[
-            CustomTextField(
-              icon: Icons.email,
-              hint: "Email",
-              onSaved: (input) {
-                _email = input;
-              },
-              validator: emailValidator,
-              keyboardType: TextInputType.emailAddress,
-            ),
+            phoneTextFormField(_phone),
             SizedBox(height: _height / 60.0),
-            CustomTextField(
-              icon: Icons.phone,
-              onSaved: (input) {
-                _phone = input;
-              },
-              validator: phoneValidator,
-              hint: "9xxxxxxxxx",
-              keyboardType: TextInputType.text,
-              prefix: '+63',
-            ),
+            firstNameTextFormField(_firstName),
             SizedBox(height: _height / 60.0),
-            passwordTextFormField(_password, _pass),
+            lastNameTextFormField(_lastName),
             SizedBox(height: _height / 60.0),
-            CustomTextField(
-              icon: Icons.lock,
-              obsecure: true,
-              controller: _confirmPass,
-              onSaved: (
-                input,
-              ) =>
-                  _confirmPassword = input,
-              validator: (val) {
-                if (val.isEmpty) return 'Empty';
-                if (val != _pass.text) return 'Not Match';
-                return null;
+            FutureBuilder<List<String>>(
+              future: getLocations(), // async work
+              builder:
+                  (BuildContext context, AsyncSnapshot<List<String>> snapshot) {
+                List<DropdownMenuItem> i = [];
+                if (snapshot.data != null) {
+                  snapshot.data.forEach((element) {
+                    i.add(
+                        DropdownMenuItem(child: Text(element), value: element));
+                  });
+                }
+                switch (snapshot.connectionState) {
+                  case ConnectionState.waiting:
+                    return Text('Loading....');
+                  default:
+                    if (snapshot.hasError)
+                      return Text('Error: ${snapshot.error}');
+                    else
+                      return SearchableDropdown.single(
+                        items: i,
+                        value: _address,
+                        hint: "Select one",
+                        searchHint: "Select one",
+                        onChanged: (value) {
+                          _address = value;
+                        },
+                        isExpanded: true,
+                        icon: Icon(Icons.place),
+                        label: 'Location',
+                      );
+                }
               },
-              hint: "Confirm Password",
-              keyboardType: TextInputType.text,
-            ),
-            SizedBox(height: _height / 10.0),
-            CustomTextField(
-              icon: Icons.person,
-              hint: "First Name",
-              onSaved: (input) {
-                _firstName = input;
-              },
-              validator: hasValueValidator,
-              keyboardType: TextInputType.text,
-            ),
-            SizedBox(height: _height / 60.0),
-            CustomTextField(
-              icon: Icons.person,
-              hint: "Last Name",
-              onSaved: (input) {
-                _lastName = input;
-              },
-              validator: hasValueValidator,
-              keyboardType: TextInputType.text,
-            ),
-            SizedBox(height: _height / 60.0),
-            CustomTextField(
-              icon: Icons.place,
-              hint: "Address",
-              onSaved: (input) {
-                _address = input;
-              },
-              validator: hasValueValidator,
-              keyboardType: TextInputType.text,
             ),
           ]),
           key: _formKey,
           autovalidate: _autoValidate,
+        ),
+      );
+    }
+
+    Widget editUpLabelTextRow() {
+      return Container(
+        margin: EdgeInsets.only(left: _width / 20, top: _height / 100),
+        child: Row(
+          children: <Widget>[
+            Text(
+              "Edit",
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: _large ? 60 : (_medium ? 50 : 40),
+              ),
+            ),
+          ],
         ),
       );
     }
@@ -232,13 +224,16 @@ class _EditViewState extends State<EditView> {
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.all(Radius.circular(20.0)),
                   gradient: LinearGradient(
-                    colors: <Color>[Colors.orange[200], Colors.pinkAccent],
+                    colors: <Color>[Color(0xffFDDF5C), Color(0xff4D74C2)],
                   ),
                 ),
                 padding: const EdgeInsets.all(12.0),
                 child: Text(
                   'edit',
-                  style: TextStyle(fontSize: _large ? 18 : (_medium ? 12 : 14)),
+                  style: TextStyle(
+                      fontSize: _large ? 18 : (_medium ? 12 : 14),
+                      fontWeight: FontWeight.w400,
+                      color: Colors.black),
                 ),
               ),
             );
@@ -286,6 +281,7 @@ class _EditViewState extends State<EditView> {
               children: <Widget>[
                 Opacity(opacity: 0.88, child: CustomAppBar()),
                 clipShape(),
+                editUpLabelTextRow(),
                 form(),
                 SizedBox(
                   height: _height / 35,
@@ -304,55 +300,80 @@ class AccountDetails extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: MyAppBar(),
-        body: StreamBuilder(
-            stream: FirebaseFirestore.instance
-                .collection('Users')
-                .doc(FirebaseAuth.instance.currentUser.uid)
-                .snapshots(),
-            builder: (context, snapshot) {
-              DocumentSnapshot user = snapshot.data;
-              return Column(children: [
-                Row(
-                  children: [
-                    Text('First Name: '),
-                    Expanded(
-                      child: Text(user['first_name']),
-                    )
-                  ],
-                ),
-                Row(
-                  children: [
-                    Text('Last Name: '),
-                    Expanded(
-                      child: Text(user['last_name']),
-                    )
-                  ],
-                ),
-                Row(
-                  children: [
-                    Text('Email: '),
-                    Expanded(
-                      child: Text(user['email']),
-                    )
-                  ],
-                ),
-                Row(
-                  children: [
-                    Text('Phone: '),
-                    Expanded(
-                      child: Text(user['phone']),
-                    )
-                  ],
-                ),
-                Row(
-                  children: [
-                    Text('Address: '),
-                    Expanded(
-                      child: Text(user['address']),
+        body: Column(
+          children: [
+            SizedBox(
+              height: MediaQuery.of(context).size.height * 0.1,
+            ),
+            Container(
+              alignment: Alignment.centerLeft,
+              child: Text('Account Details',
+                  style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold)),
+            ),
+            SizedBox(
+              height: MediaQuery.of(context).size.height * 0.03,
+            ),
+            StreamBuilder(
+                stream: FirebaseFirestore.instance
+                    .collection('Users')
+                    .doc(FirebaseAuth.instance.currentUser.uid)
+                    .snapshots(),
+                builder: (context, snapshot) {
+                  DocumentSnapshot user = snapshot.data;
+                  return Column(children: [
+                    Row(
+                      children: [
+                        Text('First Name: ',
+                            style: TextStyle(
+                                fontSize: 18, fontWeight: FontWeight.w600)),
+                        Expanded(
+                          child: Text(user['first_name']),
+                        )
+                      ],
                     ),
-                  ],
-                ),
-              ]);
-            }));
+                    Row(
+                      children: [
+                        Text('Last Name: ',
+                            style: TextStyle(
+                                fontSize: 18, fontWeight: FontWeight.w600)),
+                        Expanded(
+                          child: Text(user['last_name']),
+                        )
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        Text('Email: ',
+                            style: TextStyle(
+                                fontSize: 18, fontWeight: FontWeight.w600)),
+                        Expanded(
+                          child: Text(user['email']),
+                        )
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        Text('Phone: ',
+                            style: TextStyle(
+                                fontSize: 18, fontWeight: FontWeight.w600)),
+                        Expanded(
+                          child: Text(user['phone']),
+                        )
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        Text('Address: ',
+                            style: TextStyle(
+                                fontSize: 18, fontWeight: FontWeight.w600)),
+                        Expanded(
+                          child: Text(user['address']),
+                        ),
+                      ],
+                    ),
+                  ]);
+                }),
+          ],
+        ));
   }
 }

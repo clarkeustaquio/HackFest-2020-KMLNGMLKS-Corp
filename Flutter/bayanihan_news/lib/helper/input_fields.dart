@@ -2,37 +2,31 @@ import 'package:bayanihan_news/helper/widgets.dart';
 import 'package:bayanihan_news/services/validators.dart';
 import 'package:flutter/material.dart';
 
-Widget firstNameTextFormField(String _firstName) {
+Widget firstNameTextFormField(TextEditingController controller) {
   return CustomTextField(
     icon: Icons.person,
     hint: "First Name",
-    onSaved: (input) {
-      _firstName = input;
-    },
+    controller: controller,
     validator: hasValueValidator,
     keyboardType: TextInputType.text,
   );
 }
 
-Widget lastNameTextFormField(String _lastName) {
+Widget lastNameTextFormField(TextEditingController controller) {
   return CustomTextField(
     icon: Icons.person,
     hint: "Last Name",
-    onSaved: (input) {
-      _lastName = input;
-    },
+    controller: controller,
     validator: hasValueValidator,
     keyboardType: TextInputType.text,
   );
 }
 
-Widget emailTextFormField(String _email) {
+Widget emailTextFormField(TextEditingController controller) {
   return CustomTextField(
     icon: Icons.email,
     hint: "Email",
-    onSaved: (input) {
-      _email = input;
-    },
+    controller: controller,
     validator: emailValidator,
     keyboardType: TextInputType.emailAddress,
   );

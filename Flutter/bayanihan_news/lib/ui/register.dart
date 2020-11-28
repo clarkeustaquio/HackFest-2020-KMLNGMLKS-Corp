@@ -239,7 +239,7 @@ class _RegisterViewState extends State<RegisterView> {
               hint: "Confirm Password",
               keyboardType: TextInputType.text,
             ),
-            personalInfoRow(),
+            SizedBox(height: _height / 60.0),
             CustomTextField(
               icon: Icons.person,
               hint: "First Name",
@@ -271,26 +271,19 @@ class _RegisterViewState extends State<RegisterView> {
                         DropdownMenuItem(child: Text(element), value: element));
                   });
                 }
-                switch (snapshot.connectionState) {
-                  case ConnectionState.waiting:
-                    return Text('Loading....');
-                  default:
-                    if (snapshot.hasError)
-                      return Text('Error: ${snapshot.error}');
-                    else
-                      return SearchableDropdown.single(
-                        items: i,
-                        value: _address,
-                        hint: "Select one",
-                        searchHint: "Select one",
-                        onChanged: (value) {
-                          _address = value;
-                        },
-                        isExpanded: true,
-                        icon: Icon(Icons.place),
-                        label: 'Location',
-                      );
-                }
+
+                return SearchableDropdown.single(
+                  items: i,
+                  value: _address,
+                  hint: "Select one",
+                  searchHint: "Select one",
+                  onChanged: (value) {
+                    _address = value;
+                  },
+                  isExpanded: true,
+                  icon: Icon(Icons.place),
+                  label: 'Location',
+                );
               },
             ),
           ]),
@@ -409,5 +402,12 @@ class _RegisterViewState extends State<RegisterView> {
             ),
           ),
         ));
+  }
+
+  @override
+  void dispose() {
+    _pass.clear();
+    _confirmPass.dispose();
+    super.dispose();
   }
 }

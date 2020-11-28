@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:bayanihan_news/helper/input_fields.dart';
 import 'package:bayanihan_news/helper/widgets.dart';
 import 'package:bayanihan_news/services/search.dart';
@@ -12,39 +14,57 @@ class AddDeleteNumbers extends StatefulWidget {
 }
 
 class _AddDeleteNumbersState extends State<AddDeleteNumbers> {
+  List<DropdownMenuItem> items = [];
   TextEditingController _controller = new TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   bool _autoValidate = false;
+  String label = 'Receive verified daily news via SMS without going online.';
+  Color labelColor = Colors.black;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: MyAppBar(),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            Form(
-              child: Column(children: <Widget>[
-                phoneTextFormField(_controller),
-              ]),
-              key: _formKey,
-              autovalidate: _autoValidate,
+      body: Container(
+          padding: EdgeInsets.all(7),
+          child: ListView(children: <Widget>[
+            ClipRRect(
+              borderRadius: BorderRadius.circular(80.0),
+              child: Image.asset('assets/add-sub.png'),
+            ),
+            SizedBox(
+              height: 5,
+            ),
+            Text(label,
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                    fontSize: 15,
+                    fontWeight: FontWeight.bold,
+                    color: labelColor)),
+            SizedBox(
+              height: 5,
             ),
             Column(
               children: [
-                RaisedButton(
-                  child: Text("Add"),
-                  onPressed: _validateAddPhoneInput,
+                Form(
+                  child: Column(children: <Widget>[
+                    phoneTextFormField(_controller),
+                    SizedBox(
+                      height: 10,
+                    ),
+                  ]),
+                  key: _formKey,
+                  autovalidate: _autoValidate,
                 ),
-                RaisedButton(
-                  child: Text("Delete"),
-                  onPressed: _validateDeletePhoneInput,
-                ),
+                Column(
+                  children: [
+                    customButton('Add', _validateAddPhoneInput),
+                    customButton('Delete', _validateDeletePhoneInput)
+                  ],
+                )
               ],
-            )
-          ],
-        ),
-      ),
+            ),
+          ])),
     );
   }
 
@@ -55,15 +75,25 @@ class _AddDeleteNumbersState extends State<AddDeleteNumbers> {
       try {
         String uid = FirebaseAuth.instance.currentUser.uid;
 
+        DocumentSnapshot address =
+            await FirebaseFirestore.instance.collection('Users').doc(uid).get();
+
         DocumentReference documentReference = FirebaseFirestore.instance
-            .collection('Users')
-            .doc(uid)
-            .collection('Numbers')
+            .collection('Subscribers')
             .doc(_controller.text);
 
-        documentReference.set({'phone_number': '+63' + _controller.text});
-        sendSms('+63' + _controller.text,
-            '-Thank you for subscribing to Bayanihan News. You will now receive daily news from us.');
+        documentReference.set({
+          'phone_number': '+63' + _controller.text,
+          'location': address.get('address')
+        });
+
+        // sendSms('+63' + _controller.text,
+        //     '-Thank you for subscribing to Bayanihan News. You will now receive daily news from us.');
+        _controller.clear();
+        label = 'Successfully Subscribed!';
+        labelColor = Colors.lightGreen;
+        _autoValidate = false;
+        setState(() {});
       } catch (error) {}
     } else {
       setState(() {
@@ -77,16 +107,17 @@ class _AddDeleteNumbersState extends State<AddDeleteNumbers> {
     if (_formKey.currentState.validate()) {
       form.save();
       try {
-        String uid = FirebaseAuth.instance.currentUser.uid;
-
         FirebaseFirestore.instance
-            .collection('Users')
-            .doc(uid)
-            .collection('Numbers')
+            .collection('Subscribers')
             .doc(_controller.text)
             .delete();
-        sendSms('+63' + _controller.text,
-            '-You unsubscribed to Bayanihan News. You will no longer receive daily news. Thank you!');
+        // sendSms('+63' + _controller.text,
+        //     '-You unsubscribed to Bayanihan News. You will no longer receive daily news. Thank you!');
+        _controller.clear();
+        label = 'Deleted Phone Number';
+        labelColor = Colors.red;
+        _autoValidate = false;
+        setState(() {});
       } catch (error) {}
     } else {
       setState(() {
@@ -106,6 +137,8 @@ class _EditNumbersState extends State<EditNumbers> {
   TextEditingController _newNumber = new TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   bool _autoValidate = false;
+  String editLabel = '';
+  Color colorLabel = Colors.black;
 
   @override
   Widget build(BuildContext context) {
@@ -117,25 +150,42 @@ class _EditNumbersState extends State<EditNumbers> {
             Form(
               child: Column(children: <Widget>[
                 SizedBox(
-                  height: MediaQuery.of(context).size.height * 0.1,
+                  height: MediaQuery.of(context).size.height * 0.02,
+                ),
+                Text("Edit Number",
+                    style:
+                        TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+                SizedBox(
+                  height: MediaQuery.of(context).size.height * 0.04,
+                ),
+                Text(editLabel,
+                    style: TextStyle(fontSize: 15, color: colorLabel)),
+                SizedBox(
+                  height: MediaQuery.of(context).size.height * 0.01,
                 ),
                 Text('Old Number'),
+                SizedBox(
+                  height: MediaQuery.of(context).size.height * 0.01,
+                ),
                 phoneTextFormField(_oldNumber),
                 SizedBox(
-                  height: MediaQuery.of(context).size.height * 0.1,
+                  height: MediaQuery.of(context).size.height * 0.05,
                 ),
                 Text('New Number'),
+                SizedBox(
+                  height: MediaQuery.of(context).size.height * 0.01,
+                ),
                 phoneTextFormField(_newNumber),
               ]),
               key: _formKey,
               autovalidate: _autoValidate,
             ),
+            SizedBox(
+              height: MediaQuery.of(context).size.height * 0.05,
+            ),
             Column(
               children: [
-                RaisedButton(
-                  child: Text("Edit"),
-                  onPressed: _validateEditPhoneInput,
-                ),
+                customButton("Confirm", _validateEditPhoneInput),
               ],
             )
           ],
@@ -151,20 +201,26 @@ class _EditNumbersState extends State<EditNumbers> {
       try {
         String uid = FirebaseAuth.instance.currentUser.uid;
 
-        await FirebaseFirestore.instance
-            .collection('Users')
-            .doc(uid)
-            .collection('Numbers')
+        DocumentSnapshot address =
+            await FirebaseFirestore.instance.collection('Users').doc(uid).get();
+
+        FirebaseFirestore.instance
+            .collection('Subscribers')
             .doc(_oldNumber.text)
             .delete();
 
-        DocumentReference documentReference = FirebaseFirestore.instance
-            .collection('Users')
-            .doc(uid)
-            .collection('Numbers')
-            .doc(_newNumber.text);
-
-        documentReference.set({'phone_number': _newNumber.text});
+        FirebaseFirestore.instance
+            .collection('Subscribers')
+            .doc(_newNumber.text)
+            .set({
+          'phone_number': '+63' + _newNumber.text,
+          'location': address.get('address')
+        });
+        _newNumber.clear();
+        _oldNumber.clear();
+        editLabel = 'Successfully Edited the Number';
+        colorLabel = Colors.lightGreen;
+        setState(() {});
       } catch (error) {}
     } else {
       setState(() {
