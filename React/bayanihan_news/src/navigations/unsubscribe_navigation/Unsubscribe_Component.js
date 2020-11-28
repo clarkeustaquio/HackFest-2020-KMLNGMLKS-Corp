@@ -8,6 +8,7 @@ import BreadCrumbComponent from '../subscribe_navigation/BreadCrumb_Component'
 import StepperComponent from '../../components/stepper_component/Stepper_Component'
 
 import DeleteComponent from './Delete_Component'
+import UnsubscribeSuccessComponent from './Unsubscribe_Success_Component'
 
 const uiConfig = {
   signInFlow: 'popup',
@@ -40,18 +41,13 @@ function UnsubscribeComponent() {
 
     return (
         <React.Fragment>
-
             <Container className="mt-5">
-              <BreadCrumbComponent />
               {isSuccess 
                 ? 
-                <div>
-                  <Alert variant='success'>
-                    Success
-                  </Alert>
-                </div>
+                <UnsubscribeSuccessComponent />
                 :
                 <div>
+                  <BreadCrumbComponent />
                   <StepperComponent 
                     phoneNumber={phoneNumber} 
                     setPhoneNumber={setPhoneNumber} 

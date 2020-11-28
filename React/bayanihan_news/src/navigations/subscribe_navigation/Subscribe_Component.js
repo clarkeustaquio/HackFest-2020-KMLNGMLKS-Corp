@@ -1,5 +1,5 @@
 import React from 'react'
-import { Container, Alert } from 'react-bootstrap'
+import { Container } from 'react-bootstrap'
 
 import firebaseConfig from '../../firebaseConfig'
 import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
@@ -7,6 +7,7 @@ import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
 import CardLocationComponent from './Card_Location_Component'
 import BreadCrumbComponent from './BreadCrumb_Component'
 import StepperComponent from '../../components/stepper_component/Stepper_Component'
+import SuccessComponent from './Success_Component'
 
 const uiConfig = {
   signInFlow: 'popup',
@@ -36,16 +37,12 @@ function SubscribeComponent() {
     return (
         <React.Fragment>
             <Container className="mt-5">
-              <BreadCrumbComponent />
               {isSuccess 
                 ? 
-                <div>
-                  <Alert variant='success'>
-                    Success
-                  </Alert>
-                </div>
+                  <SuccessComponent />
                 :
                 <div>
+                  <BreadCrumbComponent />
                   <StepperComponent 
                   phoneNumber={phoneNumber} 
                   setPhoneNumber={setPhoneNumber} 
