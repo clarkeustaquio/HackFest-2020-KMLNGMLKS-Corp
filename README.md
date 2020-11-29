@@ -21,7 +21,7 @@ Bayanihan News aims to achieve:
   - Can be viewed via text message, mobile app, and website.
   - Prioritizes important news.
 # FOR DEMO
-  Because of Trial Account Restrictions From Twillio Sms Service that we used in our product. We cant add unverified phone numbers to the app.
+  Because of Trial Account Restrictions From Twillio Sms Service that we used in our product, we cant add unverified phone numbers to our app.
   # Here is the list of verified numbers that you can try:
     - +63 933 515 3688
     - +63 916 346 6848
