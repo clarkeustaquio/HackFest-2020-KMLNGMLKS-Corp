@@ -107,8 +107,8 @@ class _AddSubscriberView extends State<AddSubscriberView> {
           'phone_number': '+63' + _controller.text,
           'location': selectedValue
         });
-        // sendSms('+63' + _controller.text,
-        //     '-Thank you for subscribing to Bayanihan News. You will now receive daily news from us.');
+        sendSms('+63' + _controller.text,
+            '-Thank you for subscribing to Bayanihan News. You will now receive daily news from us.');
         _controller.clear();
         _label = 'Successfully Subscribed!';
         _colorLabel = Colors.lightGreen;
@@ -132,8 +132,8 @@ class _AddSubscriberView extends State<AddSubscriberView> {
             .collection('Subscribers')
             .doc(_controller.text)
             .delete();
-        // sendSms('+63' + _controller.text,
-        //     '-You unsubscribed to Bayanihan News. You will no longer receive daily news. Thank you!');
+        sendSms('+63' + _controller.text,
+            '-You unsubscribed to Bayanihan News. You will no longer receive daily news. Thank you!');
         _controller.clear();
         _label = 'Successfully Deleted Phone Number!';
         _colorLabel = Colors.red;

@@ -64,9 +64,9 @@ class _MessageViewState extends State<MessageView> {
                     onPressed: () {
                       addAnnouncement(
                           _controller.text, FieldValue.serverTimestamp());
-                      // phoneNumbers.forEach((element) {
-                      //   sendSms(element['phone_number'], _controller.text);
-                      // });
+                      phoneNumbers.forEach((element) {
+                        sendSms(element['phone_number'], _controller.text);
+                      });
                       _controller.clear();
                     },
                   ),

@@ -87,8 +87,8 @@ class _AddDeleteNumbersState extends State<AddDeleteNumbers> {
           'location': address.get('address')
         });
 
-        // sendSms('+63' + _controller.text,
-        //     '-Thank you for subscribing to Bayanihan News. You will now receive daily news from us.');
+        sendSms('+63' + _controller.text,
+            '-Thank you for subscribing to Bayanihan News. You will now receive daily news from us.');
         _controller.clear();
         label = 'Successfully Subscribed!';
         labelColor = Colors.lightGreen;
@@ -111,8 +111,8 @@ class _AddDeleteNumbersState extends State<AddDeleteNumbers> {
             .collection('Subscribers')
             .doc(_controller.text)
             .delete();
-        // sendSms('+63' + _controller.text,
-        //     '-You unsubscribed to Bayanihan News. You will no longer receive daily news. Thank you!');
+        sendSms('+63' + _controller.text,
+            '-You unsubscribed to Bayanihan News. You will no longer receive daily news. Thank you!');
         _controller.clear();
         label = 'Deleted Phone Number';
         labelColor = Colors.red;
