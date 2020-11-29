@@ -21,7 +21,7 @@ Bayanihan News aims to achieve:
   - Can be viewed via text message, mobile app, and website.
   - Prioritizes important news.
 # For Installation
-  Flutter app:
+Flutter app:
     - go to 'Flutter' folder, and open 'bayanihan_news'
     - Execute Flutter upgrade
     - Use the flutter run command to run the app on a connected device or simulator.
