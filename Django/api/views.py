@@ -42,18 +42,26 @@ def send_sms(request):
         if(request.data):
             try:
                 if(request.data['title'] == 'Subscribe'):
-                    daily_news = client.messages.create(
-                        body=subscribe_body[:1600], 
-                        from_=settings.TWILIO_NUMBER, to=request.data['phoneNumber']
-                    )
+                    try:
+                        daily_news = client.messages.create(
+                            body=subscribe_body[:1600], 
+                            from_=settings.TWILIO_NUMBER, to=request.data['phoneNumber']
+                        )
+                        isSuccess = True
+                    except Exception as e:
+                        pass
                 elif (request.data['title'] == 'Unsubscribe'):
-                    daily_news = client.messages.create(
-                        body=unsubscribe_body, 
-                        from_=settings.TWILIO_NUMBER, to=request.data['phoneNumber']
-                    )
-                isSuccess = True
-            except TwilioException as E:
-                print(E) # Should fail silently
+                    try:
+                        daily_news = client.messages.create(
+                            body=unsubscribe_body, 
+                            from_=settings.TWILIO_NUMBER, to=request.data['phoneNumber']
+                        )
+                        isSuccess = True
+                    except Exception as e:
+                        pass
+                
+            except TwilioException as e:
+                pass # Should fail silently
         
         # response['twilio_sid'] = daily_news.sid
         
@@ -97,10 +105,13 @@ def request_call():
     # Send message
     if(daily_news and list_numbers):
         for number in list_numbers:
-            client.messages.create(
-                body=daily_news[:1500],
-                from_=settings.TWILIO_NUMBER, to=number
-            )
+            try:
+                client.messages.create(
+                    body=daily_news[:1500],
+                    from_=settings.TWILIO_NUMBER, to=number
+                )
+            except Exception as e:
+                pass
 
     return Response({ 'status': 'OK' })
 
