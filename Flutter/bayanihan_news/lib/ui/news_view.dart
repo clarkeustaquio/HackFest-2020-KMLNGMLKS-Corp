@@ -51,6 +51,9 @@ class _NewsViewState extends State<NewsView> {
                 child: Column(
                   children: <Widget>[
                     /// Categories
+                    SizedBox(
+                      height: 10,
+                    ),
                     Container(
                       padding: EdgeInsets.symmetric(horizontal: 16),
                       height: 70,

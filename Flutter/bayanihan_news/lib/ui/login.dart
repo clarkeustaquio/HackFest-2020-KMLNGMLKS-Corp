@@ -235,4 +235,10 @@ class _LogInViewState extends State<LogInView> {
       });
     }
   }
+
+  @override
+  void dispose() {
+    emailController.clear();
+    super.dispose();
+  }
 }

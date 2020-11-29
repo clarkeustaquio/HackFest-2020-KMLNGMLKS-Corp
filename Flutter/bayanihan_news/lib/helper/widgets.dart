@@ -7,6 +7,7 @@ Widget MyAppBar() {
   return AppBar(
     title: Row(
       mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: <Widget>[
         Text(
           "Bayanihan",
@@ -99,10 +100,11 @@ class AccessDeniedPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       alignment: Alignment.center,
+      padding: EdgeInsets.all(10.0),
       child: Column(
         children: [
           SizedBox(
-            height: MediaQuery.of(context).size.height * 0.1,
+            height: MediaQuery.of(context).size.height * 0.02,
           ),
           Text(
             'Only Authorized Users Can Access This Page',
@@ -113,7 +115,13 @@ class AccessDeniedPage extends StatelessWidget {
             ),
           ),
           SizedBox(
-            height: MediaQuery.of(context).size.height * 0.15,
+            height: MediaQuery.of(context).size.height * 0.02,
+          ),
+          ClipRRect(
+              borderRadius: BorderRadius.circular(80.0),
+              child: Image.asset('assets/sign-in.png')),
+          SizedBox(
+            height: MediaQuery.of(context).size.height * 0.02,
           ),
           ToLoginRegister(),
         ],
@@ -134,7 +142,6 @@ class ToLoginRegister extends StatelessWidget {
               style: TextStyle(fontSize: 17),
             ),
             RaisedButton(
-              child: Text('Login'),
               onPressed: () {
                 Navigator.push(
                   context,
@@ -143,6 +150,14 @@ class ToLoginRegister extends StatelessWidget {
                   ),
                 );
               },
+              child: Text(
+                "Login",
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+              color: Color(0xff4d74c2),
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(15.0),
+                  side: BorderSide(color: Color(0xff285bc1))),
             ),
           ],
         ),
@@ -156,7 +171,6 @@ class ToLoginRegister extends StatelessWidget {
               style: TextStyle(fontSize: 17),
             ),
             RaisedButton(
-              child: Text('Register'),
               onPressed: () {
                 Navigator.push(
                   context,
@@ -165,6 +179,14 @@ class ToLoginRegister extends StatelessWidget {
                   ),
                 );
               },
+              child: Text(
+                "Register",
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+              color: Color(0xff4d74c2),
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(15.0),
+                  side: BorderSide(color: Color(0xff285bc1))),
             ),
           ],
         ),
@@ -199,7 +221,7 @@ class CustomAppBar extends StatelessWidget {
         padding: EdgeInsets.only(left: 15, top: 25),
         decoration: BoxDecoration(
           gradient:
-              LinearGradient(colors: [Color(0xffE16D7A), Color(0xff4D74C2)]),
+              LinearGradient(colors: [Color(0xffFDDF5C), Color(0xff4D74C2)]),
         ),
         child: Row(
           children: <Widget>[
@@ -302,7 +324,6 @@ class CustomTextField extends StatelessWidget {
     medium = ResponsiveWidget.isScreenMedium(_width, _pixelRatio);
     return Material(
       borderRadius: BorderRadius.circular(30.0),
-      elevation: large ? 12 : (medium ? 10 : 8),
       child: TextFormField(
         onSaved: onSaved,
         validator: validator,

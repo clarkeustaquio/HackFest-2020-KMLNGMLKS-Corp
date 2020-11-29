@@ -157,26 +157,19 @@ class _EditViewState extends State<EditView> {
                         DropdownMenuItem(child: Text(element), value: element));
                   });
                 }
-                switch (snapshot.connectionState) {
-                  case ConnectionState.waiting:
-                    return Text('Loading....');
-                  default:
-                    if (snapshot.hasError)
-                      return Text('Error: ${snapshot.error}');
-                    else
-                      return SearchableDropdown.single(
-                        items: i,
-                        value: _address,
-                        hint: "Select one",
-                        searchHint: "Select one",
-                        onChanged: (value) {
-                          _address = value;
-                        },
-                        isExpanded: true,
-                        icon: Icon(Icons.place),
-                        label: 'Location',
-                      );
-                }
+
+                return SearchableDropdown.single(
+                  items: i,
+                  value: _address,
+                  hint: "Select one",
+                  searchHint: "Select one",
+                  onChanged: (value) {
+                    _address = value;
+                  },
+                  isExpanded: true,
+                  icon: Icon(Icons.place),
+                  label: 'Location',
+                );
               },
             ),
           ]),
@@ -320,58 +313,62 @@ class AccountDetails extends StatelessWidget {
                     .snapshots(),
                 builder: (context, snapshot) {
                   DocumentSnapshot user = snapshot.data;
-                  return Column(children: [
-                    Row(
-                      children: [
-                        Text('First Name: ',
-                            style: TextStyle(
-                                fontSize: 18, fontWeight: FontWeight.w600)),
-                        Expanded(
-                          child: Text(user['first_name']),
-                        )
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        Text('Last Name: ',
-                            style: TextStyle(
-                                fontSize: 18, fontWeight: FontWeight.w600)),
-                        Expanded(
-                          child: Text(user['last_name']),
-                        )
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        Text('Email: ',
-                            style: TextStyle(
-                                fontSize: 18, fontWeight: FontWeight.w600)),
-                        Expanded(
-                          child: Text(user['email']),
-                        )
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        Text('Phone: ',
-                            style: TextStyle(
-                                fontSize: 18, fontWeight: FontWeight.w600)),
-                        Expanded(
-                          child: Text(user['phone']),
-                        )
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        Text('Address: ',
-                            style: TextStyle(
-                                fontSize: 18, fontWeight: FontWeight.w600)),
-                        Expanded(
-                          child: Text(user['address']),
-                        ),
-                      ],
-                    ),
-                  ]);
+                  if (user != null) {
+                    return Column(children: [
+                      Row(
+                        children: [
+                          Text('First Name: ',
+                              style: TextStyle(
+                                  fontSize: 18, fontWeight: FontWeight.w600)),
+                          Expanded(
+                            child: Text(user['first_name']),
+                          )
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          Text('Last Name: ',
+                              style: TextStyle(
+                                  fontSize: 18, fontWeight: FontWeight.w600)),
+                          Expanded(
+                            child: Text(user['last_name']),
+                          )
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          Text('Email: ',
+                              style: TextStyle(
+                                  fontSize: 18, fontWeight: FontWeight.w600)),
+                          Expanded(
+                            child: Text(user['email']),
+                          )
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          Text('Phone: ',
+                              style: TextStyle(
+                                  fontSize: 18, fontWeight: FontWeight.w600)),
+                          Expanded(
+                            child: Text(user['phone']),
+                          )
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          Text('Address: ',
+                              style: TextStyle(
+                                  fontSize: 18, fontWeight: FontWeight.w600)),
+                          Expanded(
+                            child: Text(user['address']),
+                          ),
+                        ],
+                      ),
+                    ]);
+                  } else {
+                    return CircularProgressIndicator();
+                  }
                 }),
           ],
         ));

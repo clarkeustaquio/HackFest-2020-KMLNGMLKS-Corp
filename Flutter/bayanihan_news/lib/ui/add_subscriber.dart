@@ -17,6 +17,8 @@ class _AddSubscriberView extends State<AddSubscriberView> {
   TextEditingController _controller = new TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   bool _autoValidate = false;
+  String _label = 'Receive verified daily news via SMS without going online.';
+  Color _colorLabel = Colors.black;
 
   @override
   Widget build(BuildContext context) {
@@ -30,9 +32,12 @@ class _AddSubscriberView extends State<AddSubscriberView> {
           SizedBox(
             height: 5,
           ),
-          Text('Receive verified daily news via SMS without going online.',
+          Text(_label,
               textAlign: TextAlign.center,
-              style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold)),
+              style: TextStyle(
+                  fontSize: 15,
+                  fontWeight: FontWeight.bold,
+                  color: _colorLabel)),
           SizedBox(
             height: 5,
           ),
@@ -55,28 +60,23 @@ class _AddSubscriberView extends State<AddSubscriberView> {
                               child: Text(element), value: element));
                         });
                       }
-                      switch (snapshot.connectionState) {
-                        case ConnectionState.waiting:
-                          return Text('Loading....');
-                        default:
-                          if (snapshot.hasError)
-                            return Text('Error: ${snapshot.error}');
-                          else
-                            return SearchableDropdown.single(
-                              items: i,
-                              value: selectedValue,
-                              hint: "Select one",
-                              searchHint: "Select one",
-                              onChanged: (value) {
-                                selectedValue = value;
-                              },
-                              isExpanded: true,
-                              style:
-                                  TextStyle(fontSize: 18, color: Colors.black),
-                              icon: Icon(Icons.place),
-                              label: 'Location',
-                            );
-                      }
+
+                      return SearchableDropdown.single(
+                        items: i,
+                        value: selectedValue,
+                        hint: "Select one",
+                        searchHint: "Select one",
+                        onChanged: (value) {
+                          selectedValue = value;
+                        },
+                        isExpanded: true,
+                        style: TextStyle(fontSize: 20, color: Colors.black),
+                        icon: Icon(
+                          Icons.place,
+                          size: 20,
+                        ),
+                        label: 'Location',
+                      );
                     },
                   ),
                 ]),
@@ -109,6 +109,12 @@ class _AddSubscriberView extends State<AddSubscriberView> {
         });
         // sendSms('+63' + _controller.text,
         //     '-Thank you for subscribing to Bayanihan News. You will now receive daily news from us.');
+        _controller.clear();
+        _label = 'Successfully Subscribed!';
+        _colorLabel = Colors.lightGreen;
+        _autoValidate = false;
+        selectedValue = null;
+        setState(() {});
       } catch (error) {}
     } else {
       setState(() {
@@ -128,11 +134,23 @@ class _AddSubscriberView extends State<AddSubscriberView> {
             .delete();
         // sendSms('+63' + _controller.text,
         //     '-You unsubscribed to Bayanihan News. You will no longer receive daily news. Thank you!');
+        _controller.clear();
+        _label = 'Successfully Deleted Phone Number!';
+        _colorLabel = Colors.red;
+
+        _autoValidate = false;
+        setState(() {});
       } catch (error) {}
     } else {
       setState(() {
         _autoValidate = true;
       });
     }
+  }
+
+  @override
+  void dispose() {
+    _controller.clear();
+    super.dispose();
   }
 }
