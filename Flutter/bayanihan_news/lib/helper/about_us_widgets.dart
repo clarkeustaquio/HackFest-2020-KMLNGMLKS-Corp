@@ -2,14 +2,10 @@ import 'package:bayanihan_news/helper/widgets.dart';
 import 'package:flutter/material.dart';
 
 class AboutAppView extends StatelessWidget {
-  double _height;
-  double _width;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        width: _width,
-        height: _height,
         child: Column(
           children: [
             Opacity(opacity: 0.88, child: CustomAppBar()),
@@ -32,14 +28,10 @@ class AboutAppView extends StatelessWidget {
 }
 
 class ContactUsView extends StatelessWidget {
-  double _height;
-  double _width;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        width: _width,
-        height: _height,
         child: Column(
           children: [
             Opacity(opacity: 0.88, child: CustomAppBar()),
@@ -62,14 +54,10 @@ class ContactUsView extends StatelessWidget {
 }
 
 class AboutUsInfoView extends StatelessWidget {
-  double _height;
-  double _width;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        width: _width,
-        height: _height,
         child: Column(
           children: [
             Opacity(opacity: 0.88, child: CustomAppBar()),
@@ -101,14 +89,10 @@ class AboutUsInfoView extends StatelessWidget {
 }
 
 class VersionView extends StatelessWidget {
-  double _height;
-  double _width;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        width: _width,
-        height: _height,
         child: Column(
           children: [
             Opacity(opacity: 0.88, child: CustomAppBar()),

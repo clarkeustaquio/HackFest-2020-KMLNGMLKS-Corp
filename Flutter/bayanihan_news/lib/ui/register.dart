@@ -138,23 +138,6 @@ class _RegisterViewState extends State<RegisterView> {
       }
     }
 
-    Widget personalInfoRow() {
-      return Container(
-        margin: EdgeInsets.only(left: _width / 20, top: _height / 100),
-        child: Row(
-          children: <Widget>[
-            Text(
-              "Personal Info",
-              style: TextStyle(
-                fontWeight: FontWeight.w400,
-                fontSize: _large ? 30 : (_medium ? 25 : 20),
-              ),
-            ),
-          ],
-        ),
-      );
-    }
-
     Widget clipShape() {
       return Stack(
         children: <Widget>[
@@ -307,7 +290,6 @@ class _RegisterViewState extends State<RegisterView> {
               padding: EdgeInsets.all(0.0),
               child: Container(
                 alignment: Alignment.center,
-//        height: _height / 20,
                 width: _large
                     ? _width / 3
                     : (_medium ? _width / 2.75 : _width / 2.5),

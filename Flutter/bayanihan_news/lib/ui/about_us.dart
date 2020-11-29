@@ -1,5 +1,4 @@
 import 'package:bayanihan_news/helper/about_us_widgets.dart';
-import 'package:bayanihan_news/helper/widgets.dart';
 import 'package:flutter/material.dart';
 
 class AboutUsView extends StatelessWidget {
