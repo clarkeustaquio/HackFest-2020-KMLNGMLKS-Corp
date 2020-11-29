@@ -26,6 +26,7 @@ Flutter app:
     - Execute Flutter upgrade
     - Use the flutter run command to run the app on a connected device or simulator.
     - The device or emulator should have internet
+    - IF doesn't build just install the Android apk under 'AndroidApk' folder
 # For Demo
   Because of Trial Account Restrictions From Twillio Sms Service that we used in our product, we cant add unverified phone numbers to our app.
   # Here is the list of verified numbers that you can try:
