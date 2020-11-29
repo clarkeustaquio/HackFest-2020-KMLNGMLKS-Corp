@@ -98,33 +98,35 @@ class NewsTile extends StatelessWidget {
 
 class AccessDeniedPage extends StatelessWidget {
   Widget build(BuildContext context) {
-    return Container(
-      alignment: Alignment.center,
-      padding: EdgeInsets.all(10.0),
-      child: Column(
-        children: [
-          SizedBox(
-            height: MediaQuery.of(context).size.height * 0.02,
-          ),
-          Text(
-            'Only Authorized Users Can Access This Page',
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              fontSize: 25,
-              color: Colors.red,
+    return SingleChildScrollView(
+      child: Container(
+        alignment: Alignment.center,
+        padding: EdgeInsets.all(10.0),
+        child: Column(
+          children: [
+            SizedBox(
+              height: MediaQuery.of(context).size.height * 0.02,
             ),
-          ),
-          SizedBox(
-            height: MediaQuery.of(context).size.height * 0.02,
-          ),
-          ClipRRect(
-              borderRadius: BorderRadius.circular(80.0),
-              child: Image.asset('assets/sign-in.png')),
-          SizedBox(
-            height: MediaQuery.of(context).size.height * 0.02,
-          ),
-          ToLoginRegister(),
-        ],
+            Text(
+              'Only Authorized Users Can Access This Page',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontSize: 25,
+                color: Colors.red,
+              ),
+            ),
+            SizedBox(
+              height: MediaQuery.of(context).size.height * 0.02,
+            ),
+            ClipRRect(
+                borderRadius: BorderRadius.circular(80.0),
+                child: Image.asset('assets/sign-in.png')),
+            SizedBox(
+              height: MediaQuery.of(context).size.height * 0.02,
+            ),
+            ToLoginRegister(),
+          ],
+        ),
       ),
     );
   }
