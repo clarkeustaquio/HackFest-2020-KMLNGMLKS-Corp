@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:bayanihan_news/helper/widgets.dart';
 import 'package:bayanihan_news/ui/add_subscriber.dart';
 import 'package:bayanihan_news/ui/menu.dart';
-import 'package:bayanihan_news/ui/message.dart';
 import 'package:bayanihan_news/ui/news_view.dart';
 import 'package:bayanihan_news/ui/about_us.dart';
 

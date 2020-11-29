@@ -1,7 +1,5 @@
 import 'package:bayanihan_news/helper/input_fields.dart';
 import 'package:bayanihan_news/helper/locations.dart';
-import 'package:bayanihan_news/services/validators.dart';
-import 'package:bayanihan_news/ui/homeview.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -49,6 +47,33 @@ class _EditViewState extends State<EditView> {
     _large = ResponsiveWidget.isScreenLarge(_width, _pixelRatio);
     _medium = ResponsiveWidget.isScreenMedium(_width, _pixelRatio);
 
+    edittedDialog() {
+      // set up the button
+      Widget okButton = FlatButton(
+        child: Text("OK"),
+        onPressed: () {
+          Navigator.of(context).pop();
+        },
+      );
+
+      // set up the AlertDialog
+      AlertDialog alert = AlertDialog(
+        title: Text("Alert"),
+        content: Text("Account Editted"),
+        actions: [
+          okButton,
+        ],
+      );
+
+      // show the dialog
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return alert;
+        },
+      );
+    }
+
     void _validateEditInput() async {
       final FormState form = _formKey.currentState;
       if (_formKey.currentState.validate()) {
@@ -87,6 +112,7 @@ class _EditViewState extends State<EditView> {
             _loading = false;
           });
           _autoValidate = false;
+          edittedDialog();
         } catch (error) {}
       } else {
         setState(() {
@@ -232,37 +258,6 @@ class _EditViewState extends State<EditView> {
             );
     }
 
-    Widget signInTextRow() {
-      return Container(
-        margin: EdgeInsets.only(top: _height / 20.0),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              "Already have an account?",
-              style: TextStyle(fontWeight: FontWeight.w400),
-            ),
-            SizedBox(
-              width: 5,
-            ),
-            GestureDetector(
-              onTap: () {
-                Navigator.of(context).pop();
-                print("Routing to Sign up screen");
-              },
-              child: Text(
-                "Login",
-                style: TextStyle(
-                    fontWeight: FontWeight.w800,
-                    color: Colors.orange[200],
-                    fontSize: 19),
-              ),
-            )
-          ],
-        ),
-      );
-    }
-
     return Scaffold(
         key: _scaffoldKey,
         body: Container(
@@ -280,7 +275,6 @@ class _EditViewState extends State<EditView> {
                   height: _height / 35,
                 ),
                 editButton(),
-                signInTextRow(),
               ],
             ),
           ),

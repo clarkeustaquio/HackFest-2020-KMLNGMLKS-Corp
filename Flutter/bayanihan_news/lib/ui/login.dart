@@ -30,7 +30,6 @@ class _LogInViewState extends State<LogInView> {
   TextEditingController emailController = TextEditingController();
   final TextEditingController _pass = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  GlobalKey<FormState> _key = GlobalKey();
   bool _autoValidate = false;
 
   bool _loading = false;

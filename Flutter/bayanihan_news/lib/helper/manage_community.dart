@@ -2,7 +2,7 @@ import 'dart:ui';
 
 import 'package:bayanihan_news/helper/input_fields.dart';
 import 'package:bayanihan_news/helper/widgets.dart';
-import 'package:bayanihan_news/services/search.dart';
+import 'package:bayanihan_news/net/flutterfire.dart';
 import 'package:bayanihan_news/services/sms_service.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -259,9 +259,7 @@ class _ListNumbersState extends State<ListNumbers> {
       tempSearchStore = [];
       list = await SearchService().searchByPhone(value);
     }
-    print(list.length);
     for (int i = 0; i < list.length; ++i) {
-      print(list[i].data());
       tempSearchStore.add(list[i].data());
     }
     setState(() {});
@@ -280,14 +278,6 @@ class _ListNumbersState extends State<ListNumbers> {
               initiateSearch(val);
             },
             decoration: InputDecoration(
-                prefixIcon: IconButton(
-                  color: Colors.black,
-                  icon: Icon(Icons.arrow_back),
-                  iconSize: 20.0,
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                ),
                 contentPadding: EdgeInsets.only(left: 25.0),
                 hintText: 'Search Phone Number',
                 border: OutlineInputBorder(

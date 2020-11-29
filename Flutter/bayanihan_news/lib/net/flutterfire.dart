@@ -75,3 +75,30 @@ Stream<QuerySnapshot> getAllAnnouncements() {
       .orderBy('date', descending: true)
       .snapshots();
 }
+
+class SearchService {
+  searchByPhone(String searchField) async {
+    String uid = FirebaseAuth.instance.currentUser.uid;
+    DocumentSnapshot s =
+        await FirebaseFirestore.instance.collection('Users').doc(uid).get();
+    String location = s.data()['address'];
+    return (await FirebaseFirestore.instance
+            .collection('Subscribers')
+            .where('location', isEqualTo: location)
+            .where('phone_number', isEqualTo: searchField)
+            .get())
+        .docs;
+  }
+
+  getAllPhone() async {
+    String uid = FirebaseAuth.instance.currentUser.uid;
+    DocumentSnapshot s =
+        await FirebaseFirestore.instance.collection('Users').doc(uid).get();
+    String location = s.data()['address'];
+    return (await FirebaseFirestore.instance
+            .collection('Subscribers')
+            .where('location', isEqualTo: location)
+            .get())
+        .docs;
+  }
+}
