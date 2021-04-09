@@ -34,7 +34,7 @@ function ContactComponent({ isPhone}){
                         <div key={index} className="col-md-6">
                             <div className="row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
                                 <div className="col p-4 d-flex flex-column position-static">
-                                    <strong className="d-inline-block mb-2 text-primary">HackFest-2020</strong>
+                                    <strong className="d-inline-block mb-2 text-primary">Blue Hacks</strong>
                                     <h3 className="mb-0">{data.name}</h3>
                                 <div className="mb-1 text-muted">Computer Scientist</div>
                                 <p className="card-text mb-auto">We aim to be a company in the future that can contribute better communication tool between people and information for their daily lives.</p>

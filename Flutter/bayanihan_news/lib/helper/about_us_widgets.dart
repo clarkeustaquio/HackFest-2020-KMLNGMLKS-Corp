@@ -42,8 +42,7 @@ class ContactUsView extends StatelessWidget {
                 style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold)),
             Container(
               padding: EdgeInsets.all(20),
-              child: Text(
-                  'Github: https://github.com/clarkeustaquio/HackFest-2020-KMLNGMLKS-Corp.git',
+              child: Text('Github: https://github.com/jeikatsu/Bayanihan-News',
                   style: TextStyle(fontSize: 18)),
             )
           ],
@@ -104,7 +103,7 @@ class VersionView extends StatelessWidget {
             SizedBox(
               height: MediaQuery.of(context).size.height * 0.1,
             ),
-            Text('12.2020.01.00',
+            Text('04.2021.09.00',
                 style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold))
           ],
         ),

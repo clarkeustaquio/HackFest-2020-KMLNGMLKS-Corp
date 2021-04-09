@@ -11,7 +11,7 @@ class News {
     String url =
         "http://newsapi.org/v2/top-headlines?country=ph&excludeDomains=stackoverflow.com&sortBy=publishedAt&language=en&apiKey=${apiKey}";
 
-    var response = await http.get(url);
+    var response = await http.get(Uri.parse(url));
 
     var jsonData = jsonDecode(response.body);
 
@@ -43,7 +43,7 @@ class NewsForCategorie {
     String url =
         "http://newsapi.org/v2/top-headlines?country=ph&category=$category&apiKey=${apiKey}";
 
-    var response = await http.get(url);
+    var response = await http.get(Uri.parse(url));
 
     var jsonData = jsonDecode(response.body);
 

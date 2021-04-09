@@ -39,7 +39,7 @@ function SuccessComponent(){
                                 </Button>
                             </Link>
                             
-                            <Button className="ml-4" style={{ textDecoration: 'none', color: '#FFF' }} href="https://github.com/clarkeustaquio/HackFest-2020-KMLNGMLKS-Corp" variant="contained" color="primary">
+                            <Button className="ml-4" style={{ textDecoration: 'none', color: '#FFF' }} href="https://github.com/jeikatsu/Bayanihan-News" variant="contained" color="primary">
                                 Download
                             </Button>
                         </div>

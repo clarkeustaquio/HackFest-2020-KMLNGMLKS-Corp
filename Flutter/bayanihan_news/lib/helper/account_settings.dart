@@ -49,7 +49,7 @@ class _EditViewState extends State<EditView> {
 
     edittedDialog() {
       // set up the button
-      Widget okButton = FlatButton(
+      Widget okButton = TextButton(
         child: Text("OK"),
         onPressed: () {
           Navigator.of(context).pop();
@@ -227,13 +227,16 @@ class _EditViewState extends State<EditView> {
           ? CircularProgressIndicator(
               valueColor: new AlwaysStoppedAnimation<Color>(primaryColor),
             )
-          : RaisedButton(
-              elevation: 0,
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(30.0)),
+          : ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                shape: new RoundedRectangleBorder(
+                  borderRadius: new BorderRadius.circular(30.0),
+                ),
+                elevation: 5,
+                onPrimary: Colors.white,
+                padding: EdgeInsets.all(0.0),
+              ),
               onPressed: _validateEditInput,
-              textColor: Colors.white,
-              padding: EdgeInsets.all(0.0),
               child: Container(
                 alignment: Alignment.center,
 //        height: _height / 20,

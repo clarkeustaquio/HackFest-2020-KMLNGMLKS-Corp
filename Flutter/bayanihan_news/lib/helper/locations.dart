@@ -5,7 +5,7 @@ Future<List<String>> getLocations() async {
   List<String> location = [];
   String url = "http://bkintanar.site/api/provinces?include=municipalities";
 
-  var response = await http.get(url);
+  var response = await http.get(Uri.parse(url));
 
   var jsonData = jsonDecode(response.body);
 

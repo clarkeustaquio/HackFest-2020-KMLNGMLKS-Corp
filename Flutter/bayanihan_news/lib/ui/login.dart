@@ -147,12 +147,17 @@ class _LogInViewState extends State<LogInView> {
   }
 
   Widget button() {
-    return RaisedButton(
-      elevation: 0,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
+    return ElevatedButton(
+      style: ElevatedButton.styleFrom(
+        shape: new RoundedRectangleBorder(
+          borderRadius: new BorderRadius.circular(30.0),
+        ),
+        primary: Color(0xff4d74c2),
+        onPrimary: Colors.white,
+        elevation: 0,
+        padding: EdgeInsets.all(0.0),
+      ),
       onPressed: _validateLoginInput,
-      textColor: Colors.white,
-      padding: EdgeInsets.all(0.0),
       child: Container(
         alignment: Alignment.center,
         width: _large ? _width / 4 : (_medium ? _width / 3.75 : _width / 3.5),

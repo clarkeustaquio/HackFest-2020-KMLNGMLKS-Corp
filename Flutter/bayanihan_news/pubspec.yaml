@@ -25,14 +25,14 @@ dependencies:
     sdk: flutter
 
   #FlutterFire
-  firebase_core: "^0.5.2"
-  firebase_auth: "^0.18.3"
-  cloud_firestore: "^0.14.3"
+  firebase_core: ^1.0.3
+  firebase_auth: ^1.0.3
+  cloud_firestore: ^1.0.4
   
   #api
-  http: ^0.12.2
-  cached_network_image: ^2.3.3
-  webview_flutter: ^1.0.7
+  http: ^0.13.1
+  cached_network_image: ^3.0.0
+  webview_flutter: ^2.0.4
 
   #sms service
   twilio_flutter: ^0.0.5

@@ -143,7 +143,7 @@ class ToLoginRegister extends StatelessWidget {
               'Login Authorized Account: ',
               style: TextStyle(fontSize: 17),
             ),
-            RaisedButton(
+            ElevatedButton(
               onPressed: () {
                 Navigator.push(
                   context,
@@ -156,10 +156,12 @@ class ToLoginRegister extends StatelessWidget {
                 "Login",
                 style: TextStyle(fontWeight: FontWeight.bold),
               ),
-              color: Color(0xff4d74c2),
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(15.0),
-                  side: BorderSide(color: Color(0xff285bc1))),
+              style: ElevatedButton.styleFrom(
+                shape: new RoundedRectangleBorder(
+                  borderRadius: new BorderRadius.circular(15.0),
+                ),
+                primary: Color(0xff4d74c2),
+              ),
             ),
           ],
         ),
@@ -172,7 +174,7 @@ class ToLoginRegister extends StatelessWidget {
               'Register For An Authorized Account: ',
               style: TextStyle(fontSize: 17),
             ),
-            RaisedButton(
+            ElevatedButton(
               onPressed: () {
                 Navigator.push(
                   context,
@@ -185,10 +187,12 @@ class ToLoginRegister extends StatelessWidget {
                 "Register",
                 style: TextStyle(fontWeight: FontWeight.bold),
               ),
-              color: Color(0xff4d74c2),
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(15.0),
-                  side: BorderSide(color: Color(0xff285bc1))),
+              style: ElevatedButton.styleFrom(
+                shape: new RoundedRectangleBorder(
+                  borderRadius: new BorderRadius.circular(15.0),
+                ),
+                primary: Color(0xff4d74c2),
+              ),
             ),
           ],
         ),
@@ -357,15 +361,17 @@ class CustomTextField extends StatelessWidget {
 }
 
 Widget customButton(String title, Function event) {
-  return RaisedButton(
+  return ElevatedButton(
     onPressed: event,
     child: Text(
       title,
       style: TextStyle(fontWeight: FontWeight.bold),
     ),
-    color: Color(0xff4d74c2),
-    shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(15.0),
-        side: BorderSide(color: Color(0xff285bc1))),
+    style: ElevatedButton.styleFrom(
+      shape: new RoundedRectangleBorder(
+          borderRadius: new BorderRadius.circular(15.0),
+          side: BorderSide(color: Color(0xff285bc1))),
+      primary: Color(0xff4d74c2),
+    ),
   );
 }

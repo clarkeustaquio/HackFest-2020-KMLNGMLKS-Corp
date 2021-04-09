@@ -56,7 +56,7 @@ class _MessageViewState extends State<MessageView> {
                 ),
                 Container(
                   width: 70,
-                  child: FlatButton(
+                  child: TextButton(
                     child: Icon(
                       Icons.send,
                       size: 30,

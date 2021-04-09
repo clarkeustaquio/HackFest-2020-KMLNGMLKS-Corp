@@ -281,13 +281,17 @@ class _RegisterViewState extends State<RegisterView> {
           ? CircularProgressIndicator(
               valueColor: new AlwaysStoppedAnimation<Color>(primaryColor),
             )
-          : RaisedButton(
-              elevation: 0,
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(30.0)),
+          : ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                shape: new RoundedRectangleBorder(
+                  borderRadius: new BorderRadius.circular(30.0),
+                ),
+                primary: Color(0xff4d74c2),
+                onPrimary: Colors.white,
+                elevation: 0,
+                padding: EdgeInsets.all(0.0),
+              ),
               onPressed: _validateRegisterInput,
-              textColor: Colors.white,
-              padding: EdgeInsets.all(0.0),
               child: Container(
                 alignment: Alignment.center,
                 width: _large

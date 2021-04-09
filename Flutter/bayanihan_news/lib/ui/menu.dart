@@ -28,7 +28,7 @@ class MenuView extends StatelessWidget {
                         ),
                         Column(
                           children: <Widget>[
-                            FlatButton(
+                            TextButton(
                               child: Text('List Numbers'),
                               onPressed: () {
                                 Navigator.push(
@@ -37,7 +37,7 @@ class MenuView extends StatelessWidget {
                                         builder: (context) => ListNumbers()));
                               },
                             ),
-                            FlatButton(
+                            TextButton(
                               child: Text('Add/Delete Numbers'),
                               onPressed: () {
                                 Navigator.push(
@@ -47,7 +47,7 @@ class MenuView extends StatelessWidget {
                                             AddDeleteNumbers()));
                               },
                             ),
-                            FlatButton(
+                            TextButton(
                               child: Text('Edit Numbers'),
                               onPressed: () {
                                 Navigator.push(
@@ -56,7 +56,7 @@ class MenuView extends StatelessWidget {
                                         builder: (context) => EditNumbers()));
                               },
                             ),
-                            FlatButton(
+                            TextButton(
                               child: Text('Message Subscribers'),
                               onPressed: () {
                                 Navigator.push(
@@ -81,7 +81,7 @@ class MenuView extends StatelessWidget {
                         ),
                         Column(
                           children: <Widget>[
-                            FlatButton(
+                            TextButton(
                               child: Text('Edit Account'),
                               onPressed: () {
                                 Navigator.push(
@@ -90,7 +90,7 @@ class MenuView extends StatelessWidget {
                                         builder: (context) => EditView()));
                               },
                             ),
-                            FlatButton(
+                            TextButton(
                               child: Text('See Account Details'),
                               onPressed: () {
                                 Navigator.push(
@@ -100,7 +100,7 @@ class MenuView extends StatelessWidget {
                                             AccountDetails()));
                               },
                             ),
-                            RaisedButton(
+                            ElevatedButton(
                               child: Text('Sign-out'),
                               onPressed: () {
                                 Navigator.pushAndRemoveUntil(
