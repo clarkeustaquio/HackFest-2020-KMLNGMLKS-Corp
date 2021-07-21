@@ -3,15 +3,12 @@ import DailyNews from './components/daily_news_component/Daily_News_Component';
 import HeroComponent from './components/hero_component/Hero_Component';
 import NavbarComponent from './components/navbar_component/Navbar_Component';
 import FooterComponent from './components/footer_component/Footer_Component';
-import WaveComponent from './components/footer_component/WaveComponent';
 import SubscribeComponent from './navigations/subscribe_navigation/Subscribe_Component';
 import AboutComponent from './navigations/about_us_navigation/About_Component'
 import ContactComponent from './navigations/contact_us_navigation/Contact_Component'
 import AuthorizeComponent from './navigations/AuthorizeComponent/AuthorizeComponent';
-
-// import AdminComponent from './navigations/admin_navigation/Admin_Component'
-// import AdminDisplayComponent from './navigations/admin_navigation/Admin_Display_Component'
 import UnsubscribeComponent from './navigations/unsubscribe_navigation/Unsubscribe_Component'
+
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 
 import news_hero_image from './static/images/news_hero_image.jpg'
@@ -63,10 +60,6 @@ function App(){
               <AuthorizeNavigation isPhone={isPhone}/>
             </Route>
           </Switch>
-          
-          {/* <WaveComponent /> */}
-          {/* <FooterComponent isPhone={isPhone} className="footer-sticky"/> */}
- 
         </Router>
       </div>
 
@@ -74,15 +67,10 @@ function App(){
   )
 }
 
-// Intened for Admin - Workin with this spaghetti
 function IndexNavigation({ isPhone }){
   return (
     <React.Fragment>
-      <div 
-          style={{
-            position: 'relative',
-          minHeight: '100vh'
-        }}>
+      <div id="root">
         <NavbarComponent />
         <HeroComponent isPhone={isPhone} hero_image={news_hero_image}/>
         <DailyNews isPhone={isPhone}/>
@@ -94,11 +82,7 @@ function IndexNavigation({ isPhone }){
 function SubscribeNavigation({ isPhone }){
   return (
     <React.Fragment>
-      <div 
-          style={{
-            position: 'relative',
-          minHeight: '100vh'
-        }}>
+      <div id="root">
         <NavbarComponent />
         <SubscribeComponent />
       </div>
@@ -109,11 +93,7 @@ function SubscribeNavigation({ isPhone }){
 function UnsubscribeNavigation({ isPhone }){
   return (
     <React.Fragment>
-      <div 
-          style={{
-            position: 'relative',
-          minHeight: '100vh'
-        }}>
+      <div id="root">
         <NavbarComponent />
         <UnsubscribeComponent />
       </div>
@@ -124,11 +104,7 @@ function UnsubscribeNavigation({ isPhone }){
 function AboutNavigation({ isPhone }){
   return (
     <React.Fragment>
-      <div 
-          style={{
-            position: 'relative',
-          minHeight: '100vh'
-        }}>
+      <div id="root">
       <NavbarComponent />
       <HeroComponent isPhone={isPhone} hero_image={farmers}/>
       <AboutComponent isPhone={isPhone}/>
@@ -140,11 +116,7 @@ function AboutNavigation({ isPhone }){
 function ContactNavigation({ isPhone }){
   return (
     <React.Fragment>
-      <div 
-          style={{
-            position: 'relative',
-            minHeight: '100vh'
-        }}>
+      <div id="root">
         <NavbarComponent />
         <HeroComponent isPhone={isPhone} hero_image={contact_us}/>
         <ContactComponent />
@@ -156,13 +128,9 @@ function ContactNavigation({ isPhone }){
 function AuthorizeNavigation({ isPhone }){
   return (
     <React.Fragment>
-      <div 
-          style={{
-          position: 'relative',
-          minHeight: '100vh'
-        }}>
+      <div id="root">
         <NavbarComponent />
-        <AuthorizeComponent />
+        <AuthorizeComponent isPhone={isPhone} />
       </div>
       <FooterComponent isPhone={isPhone}/>
     </React.Fragment>

@@ -10,7 +10,6 @@ function PrivateComponent(){
     const token = localStorage.getItem('token')
     const name = localStorage.getItem('last_name') + ', ' + localStorage.getItem('first_name')
 
-    
     const [isMount, setIsMount] = useState(false)
     const [listNumber, setListNumber] = useState([])
     const [place, setPlace] = useState('')

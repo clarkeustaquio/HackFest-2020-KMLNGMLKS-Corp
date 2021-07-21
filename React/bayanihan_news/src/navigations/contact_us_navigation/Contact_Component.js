@@ -22,35 +22,32 @@ function ContactComponent({ isPhone}){
         <React.Fragment>
             <Container>
             { isPhone || 
-                <div className="text-center">
+                <div className="text-center mt-2">
                     <h1>KMLNGMLKS Corp.</h1>
                     <p>We would like to help you</p>
                 </div> 
             }
-
-            <div className="row mb-2 mt-5">
-                {names.map((data, index) => {
-                    return (
-                        <div key={index} className="col-md-6">
-                            <div className="row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
-                                <div className="col p-4 d-flex flex-column position-static">
-                                    <strong className="d-inline-block mb-2 text-primary">Bayanihan News</strong>
-                                    <h3 className="mb-0">{data.name}</h3>
-                                <div className="mb-1 text-muted">Computer Scientist</div>
-                                <p className="card-text mb-auto">We aim to be a company in the future that can contribute better communication tool between people and information for their daily lives.</p>
-                                    <a href={data.facebook} style={{ textDecoration: 'none'}} className="mt-2 mb-n2"><FacebookIcon style={{fill: "#3B5998"}}/> Contact with Facebook</a>
+                <div className="row mb-2 mt-5">
+                    {names.map((data, index) => {
+                        return (
+                            <div key={index} className="col-md-6">
+                                <div className="row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+                                    <div className="col p-4 d-flex flex-column position-static">
+                                        <strong className="d-inline-block mb-2 text-primary">Bayanihan News</strong>
+                                        <h3 className="mb-0">{data.name}</h3>
+                                    <div className="mb-1 text-muted">Computer Scientist</div>
+                                    <p className="card-text mb-auto">We aim to be a company in the future that can contribute better communication tool between people and information for their daily lives.</p>
+                                        <a href={data.facebook} style={{ textDecoration: 'none'}} className="mt-2 mb-n2"><FacebookIcon style={{fill: "#3B5998"}}/> Contact with Facebook</a>
+                                    </div>
+                                    <div className="col-auto d-none d-lg-block">
+                                        <img src={data.image} className="bd-placeholder-img" width="200" height="250" alt={data.name}></img>
+                                    </div>
                                 </div>
-                                <div className="col-auto d-none d-lg-block">
-                                    <img src={data.image} className="bd-placeholder-img" width="200" height="250" alt={data.name}></img>
                                 </div>
-                            </div>
-                            </div>
-                        )
-                    })
-                } 
-            </div>
-
-
+                            )
+                        })
+                    } 
+                </div>
             </Container>
         </React.Fragment>
     )

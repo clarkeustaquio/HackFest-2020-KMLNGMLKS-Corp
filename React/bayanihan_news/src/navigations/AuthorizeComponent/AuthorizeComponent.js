@@ -32,28 +32,35 @@ function AuthorizeComponent({ isPhone }){
     useEffect(() => {
         document.title = 'Authorize'
     }, [])
-
+    
     return (
         <React.Fragment>
             <Container className="mt-4">
                 {isAuthorize === true ? <PrivateComponent /> : <div>
-                    <Row>
-                        <Col>
-                            <img className="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto" width="1000" height="1000" src={background_jeep} alt="Background"></img> 
-                        </Col>
-                        <Col>
-                            <LoginComponent setIsAuthorize={setIsAuthorize} />
-                        </Col>
-                    </Row>
-                    <hr />
-                    <Row>
-                        <Col>
-                            <CreateComponent /> 
-                        </Col>
-                        <Col>
-                            <img className="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto" width="1000" height="1000" src={background} alt="Background"></img>
-                        </Col>
-                    </Row>
+                    {isPhone === false ? <div>
+                        <Row>
+                            <Col>
+                                <img className="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto" width="1000" height="1000" src={background_jeep} alt="Background"></img> 
+                            </Col>
+                            <Col>
+                                <LoginComponent setIsAuthorize={setIsAuthorize} />
+                            </Col>
+                        </Row>
+                        <hr />
+                        <Row>
+                            <Col>
+                                <CreateComponent /> 
+                            </Col>
+                            <Col>
+                                <img className="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto" width="1000" height="1000" src={background} alt="Background"></img>
+                            </Col>
+                        </Row>
+                    </div> : <div>
+                        <LoginComponent setIsAuthorize={setIsAuthorize} isPhone={isPhone}/>
+                        <hr />
+                    <CreateComponent /> 
+                    </div>
+                    }
                 </div>
                 }
             </Container>

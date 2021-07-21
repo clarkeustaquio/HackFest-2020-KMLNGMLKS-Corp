@@ -9,7 +9,10 @@ import LogoComponent from './Logo_Component'
 function NavbarComponent(){
     return (
     <React.Fragment>
-        <Navbar sticky="top" bg="light" expand='lg'>
+        <Navbar style={{
+            background: '#4D74C2',
+            borderColor: '#4D74C2'
+        }} sticky="top" bg="light" expand='lg'>
             <Container>
             <Link to='/'><Navbar.Brand><LogoComponent /></Navbar.Brand></Link>
             <Navbar.Toggle aria-controls='toggle-navbar' />

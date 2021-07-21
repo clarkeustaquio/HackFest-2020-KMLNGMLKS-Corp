@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Container, Form, Button, Row, Col } from 'react-bootstrap'
+import { Container, Form, Button, Row, Col, Alert } from 'react-bootstrap'
 
 import axios from 'axios'
 import locations from '../../list_location.json'
@@ -22,36 +22,65 @@ function CreateComponent(){
                 event.preventDefault();
                 event.stopPropagation();
 
-                axios.post('http://localhost:8000/users/create-account/', {
-                    username: email,
-                    first_name: firstName,
-                    last_name: lastName,
-                    password: password,
-                    place: place   
-                }).then(response => {
-                    console.log(response.data)
-                }).catch(error => {
-                    throw new Error('Server Refused. Try again later.')
-                })
-            }
+                if(password !== confirmPassword){
+                    setVariant("danger")
+                    setAlert('Password do not match.')
+                    setIsAlertShow(true)
+                }else if(password.length < 8){
+                    setVariant("danger")
+                    setAlert('Password must be atleast 8 characters long.')
+                    setIsAlertShow(true)
+                }else{
+                    axios.post('http://localhost:8000/users/create-account/', {
+                        username: email,
+                        first_name: firstName,
+                        last_name: lastName,
+                        password: password,
+                        place: place   
+                    }).then(response => {
+                        setPlace(locations[0])
+                        setPassword('')
+                        setConfirmPassword('')
+                        setEmail('')
+                        setLastName('')
+                        setFirstName('')
 
-            setValidated(true);
+                        setVariant("success")
+                        setAlert('You have successfully created an account..')
+                        setIsAlertShow(true)
+                        
+    
+                    }).catch(error => {
+                        setVariant("danger")
+                        setAlert('User with this email already exists.')
+                        setIsAlertShow(true)
+                    })
+                }
+            }
+        setValidated(true);
     }
 
     useEffect(() => {
         setPlace(locations[0])
     }, [])
+
+    const [alert, setAlert] = useState('')
+    const [isAlertShow, setIsAlertShow] = useState(false)
+    const [variant, setVariant] = useState('danger')
+
     return (
         <React.Fragment>
             <Container className="mt-4">
             <h3 className="featurette-heading font-weight-bold">Bayanihan News Registration.</h3>
             <span className="lead text-muted">Create an authorize account.</span>
 
+            {isAlertShow === true ?  <Alert className="mt-3" variant={variant} onClose={() => setIsAlertShow(false)} dismissible>{alert}</Alert> : null
+            }
+
             <Form className="mt-3" noValidate validated={validated} onSubmit={handleCreate}>
                 <Row>
                     <Col>
                         <Form.Group className="mb-3">
-                            {/* <Form.Label>Email address</Form.Label> */}
                             <Form.Control 
                                 type="email" 
                                 placeholder="Enter email" 
@@ -66,14 +95,6 @@ function CreateComponent(){
                     </Col>
                     <Col>
                         <Form.Group className="mb-3">
-                            {/* <Form.Label>Place</Form.Label> */}
-                            {/* <Form.Control 
-                                type="text" 
-                                placeholder="Enter Place" 
-                                value={place}
-                                onChange={(event) => setPlace(event.target.value)}
-                                required
-                            /> */}
                             <select className="form-control" onChange={(event) => setPlace(event.target.value)} required>
                             {locations.map((location, index) => {
                                 return (
@@ -88,7 +109,6 @@ function CreateComponent(){
                 <Row>
                     <Col>
                         <Form.Group className="mb-3">
-                            {/* <Form.Label>First Name</Form.Label> */}
                             <Form.Control 
                                 type="text" 
                                 placeholder="Enter First Name"
@@ -100,7 +120,6 @@ function CreateComponent(){
                     </Col>
                     <Col>
                         <Form.Group className="mb-3">
-                            {/* <Form.Label>Last Name</Form.Label> */}
                             <Form.Control 
                                 type="text" 
                                 placeholder="Enter Last Name" 
@@ -115,7 +134,6 @@ function CreateComponent(){
                 <Row>
                     <Col>
                         <Form.Group className="mb-3">
-                            {/* <Form.Label>Password</Form.Label> */}
                             <Form.Control 
                                 type="password" 
                                 placeholder="Password" 
@@ -127,7 +145,6 @@ function CreateComponent(){
                     </Col>
                     <Col>
                         <Form.Group className="mb-3">
-                            {/* <Form.Label>Confirm Password</Form.Label> */}
                             <Form.Control
                                 type="password"
                                 placeholder="Confirm Password" 

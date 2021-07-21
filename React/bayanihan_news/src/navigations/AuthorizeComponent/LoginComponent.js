@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { Container, Form, Button, Alert } from 'react-bootstrap'
 
 import axios from 'axios'
@@ -10,10 +10,6 @@ function LoginComponent({ setIsAuthorize }){
     const [password, setPassword] = useState('')
     const [alert, setAlert] = useState('')
     const [isAlertShow, setIsAlertShow] = useState(false)
-
-    useEffect(() => {
-
-    }, [])
 
     const handleLogin = (event) => {
         const form = event.currentTarget;
@@ -32,6 +28,7 @@ function LoginComponent({ setIsAuthorize }){
                         localStorage.setItem('token', response.data.token)
                         localStorage.setItem('first_name', response.data.first_name)
                         localStorage.setItem('last_name', response.data.last_name)
+                        localStorage.setItem('is_admin', response.data.is_admin)
                         setIsAuthorize(true)
                     }else if(response.status === 202){
                         setAlert(response.data.status)
@@ -42,8 +39,7 @@ function LoginComponent({ setIsAuthorize }){
                     setIsAlertShow(true)
                 })
             }
-
-            setValidated(true);
+        setValidated(true);
     }
 
     return (
@@ -56,9 +52,7 @@ function LoginComponent({ setIsAuthorize }){
             {isAlertShow === true ?  <Alert className="mt-3" variant="danger" onClose={() => setIsAlertShow(false)} dismissible>{alert}</Alert> : null
             }
             <Form className="mt-3" noValidate validated={validated} onSubmit={handleLogin}>
-         
                 <Form.Group className="mb-3">
-                    {/* <Form.Label>Email address</Form.Label> */}
                     <Form.Control 
                         type="email" 
                         placeholder="Enter email" 
@@ -72,7 +66,6 @@ function LoginComponent({ setIsAuthorize }){
                 </Form.Group>
            
                 <Form.Group className="mb-3">
-                    {/* <Form.Label>Password</Form.Label> */}
                     <Form.Control 
                         type="password" 
                         placeholder="Password" 
@@ -81,8 +74,6 @@ function LoginComponent({ setIsAuthorize }){
                         required
                     />
                 </Form.Group>
-
-
                 <Button style={{
                             background: '#4D74C2',
                             borderColor: '#4D74C2'
