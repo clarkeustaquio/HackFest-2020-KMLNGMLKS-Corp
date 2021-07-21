@@ -4,7 +4,7 @@ function LogoComponent(){
     return (
         <React.Fragment>
             <img width="50" height="50" src={bayanihan_news_logo} alt="Logo"></img>
-            <span className="h5"><span style={{color: '#4D74C2'}}>Bayanihan</span><span style={{ color: '#E16D7A'}}>News</span></span>
+            <span className="h5 ml-2 font-weight-bold"><span style={{color: '#4D74C2'}}>Bayanihan</span><span style={{ color: '#E16D7A'}}>News</span></span>
         </React.Fragment>
     )
 }

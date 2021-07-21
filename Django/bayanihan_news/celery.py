@@ -19,6 +19,7 @@ app.conf.beat_schedule = {
     'every-day-between-10AM-&&-8PM': {
         'task': 'api.tasks.send_request',
         'schedule': crontab(hour='10, 20', minute=0),
+        # 'schedule': 5.0
     },
 }
 

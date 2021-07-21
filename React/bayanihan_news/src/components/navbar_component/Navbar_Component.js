@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import LogoComponent from './Logo_Component'
 
+
 function NavbarComponent(){
     return (
     <React.Fragment>
@@ -14,9 +15,10 @@ function NavbarComponent(){
             <Navbar.Toggle aria-controls='toggle-navbar' />
             <Navbar.Collapse id='toggle-navbar'>
                 <Nav className='ml-auto mr-5'>
-                <Nav.Link as={Link} to='/about'>About</Nav.Link>
-                <Nav.Link href='/subscribe'>Subscribe</Nav.Link>
-                <Nav.Link as={Link} to='/contact'>Contact Us</Nav.Link>
+                    <Nav.Link as={Link} to='/about'>About</Nav.Link>
+                    <Nav.Link href='/subscribe'>Subscribe</Nav.Link>
+                    <Nav.Link as={Link} to='/contact'>Contact Us</Nav.Link>
+                    <Nav.Link as={Link} to='/authorize'>Authorize</Nav.Link>
                 </Nav>
             </Navbar.Collapse>
             </Container>

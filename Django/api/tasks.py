@@ -5,5 +5,5 @@ from .views import request_call
 
 @shared_task
 def send_request():
-    response = request_call()
-    return Response(response)
+    request_call()
+    return True
