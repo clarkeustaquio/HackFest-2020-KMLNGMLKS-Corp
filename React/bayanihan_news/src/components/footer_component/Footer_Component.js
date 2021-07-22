@@ -3,7 +3,6 @@ import { Container } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useLocation } from 'react-router-dom'
-import WaveComponent from './WaveComponent';
 
 function FooterComponent({ isPhone }){
     const featurette = {
@@ -43,16 +42,7 @@ function FooterComponent({ isPhone }){
 
     return (
         <React.Fragment>
-            {/* <div className="footer">
-            <WaveComponent />
-
-            </div> */}
-            {/* <div style={phantom} />
-            <div style={style}>
-            <WaveComponent />
-            </div> */}
-            <WaveComponent />
-            {/* <footer style={footerStyle}>
+            <footer style={footerStyle}>
                 
                 <hr style={featurette}></hr>
                 {isPhone 
@@ -67,7 +57,7 @@ function FooterComponent({ isPhone }){
                         <p className="mb-3">&copy; 2021 KMLNGMLKS Corp. &middot; Privacy &middot; Terms</p>
                     </div>
                 }
-            </footer> */}
+            </footer>
         </React.Fragment>
     )
 }

@@ -4,11 +4,6 @@ function WaveComponent(){
     return (
         <React.Fragment>
             <svg 
-                style={{
-                    // position: 'absolute',
-                    // // bottom: 0,
-                    // width: '100%',
-                }}
                 xmlns="http://www.w3.org/2000/svg" 
                 viewBox="0 0 1440 320">
                 <path 

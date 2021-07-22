@@ -71,7 +71,7 @@ function CreateComponent(){
     return (
         <React.Fragment>
             <Container className="mt-4">
-            <h3 className="featurette-heading font-weight-bold">Bayanihan News Registration.</h3>
+            <h3 className="featurette-heading font-weight-bold"><span style={{ color: '#4D74C2' }}>Bayanihan</span> <span style={{ color: '#E16D7A' }}>News </span>Registration.</h3>
             <span className="lead text-muted">Create an authorize account.</span>
 
             {isAlertShow === true ?  <Alert className="mt-3" variant={variant} onClose={() => setIsAlertShow(false)} dismissible>{alert}</Alert> : null
@@ -83,7 +83,7 @@ function CreateComponent(){
                         <Form.Group className="mb-3">
                             <Form.Control 
                                 type="email" 
-                                placeholder="Enter email" 
+                                placeholder="Enter Email" 
                                 value={email}
                                 onChange={(event) => setEmail(event.target.value)}
                                 required

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Container, Modal } from 'react-bootstrap'
+import { Container, Modal, Row, Col } from 'react-bootstrap'
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
@@ -15,7 +15,7 @@ import firebaseConfig from '../../firebaseConfig'
 import { Link } from 'react-router-dom'
 
 import locations from  '../../list_location.json'
-
+import phone_loc from '../../static/images/phone_loc.png'
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 const useStyles = makeStyles((theme) => ({
@@ -121,7 +121,7 @@ function CardLocationComponent({ phoneNumber, setIsSuccess, userID }){
                 <Modal.Header closeButton>
                 <Modal.Title>Phone Number</Modal.Title>
                 </Modal.Header>
-                <Modal.Body>Sorry the number you are using was already subscribed to our service.</Modal.Body>
+                <Modal.Body>Sorry the number you are using was already subscribed in our service.</Modal.Body>
                 <Modal.Footer>
                 <Link to='/' style={{ textDecoration: "none"}}>
                     <Button variant="text" onClick={handleClose}>
@@ -137,40 +137,52 @@ function CardLocationComponent({ phoneNumber, setIsSuccess, userID }){
                 justifyContent: "center",
                 alignItems: "center"
             }}>
-                
-            <Card className={classes.root}>
-                <CardContent>
-                    <Typography className={classes.title} color="textSecondary" gutterBottom>
-                        Add Location
-                    </Typography>
+            <Row>
+                <Col>
+                    <img src={phone_loc} className="bd-placeholder-img" width="400" height="400" alt="Location"></img>
+                </Col>
+                <Col className="mt-5">
+                    <Card className={classes.root}>
+                        <CardContent>
+                            <Typography className={classes.title} color="textSecondary" gutterBottom>
+                                Add Location
+                            </Typography>
 
-                    <FormControl className={classes.formControl}>
-                        <InputLabel id="demo-simple-select-label">Province</InputLabel>
-                        <Select
-                        labelId="demo-simple-select-label"
-                        id="demo-simple-select"
-                        value={location}
-                        onChange={handleChange}
-                        >
-                            {locations.map((location, index) => {
-                                return (
-                                    <MenuItem key={index} value={location}>{location}</MenuItem>
-                                )
-                            })}
-                        </Select>
-                    </FormControl>
-                    <Container >
-                    <Link to='/' onClick={handleCancel}>
-                        <Button disabled={false} variant="contained" color="primary" className="mt-4 mr-2">
-                            Cancel
-                        </Button>
-                    </Link>
-                        <Button disabled={location.length > 1 ? isDisabled : !isDisabled} variant="contained" color="primary" className="mt-4 ml-2" onClick={handleSubscribe}>
-                            Subscribe
-                        </Button>
-                    </Container>
-                </CardContent>
-            </Card>
+                            <FormControl className={classes.formControl}>
+                                <InputLabel id="demo-simple-select-label">Province</InputLabel>
+                                <Select
+                                labelId="demo-simple-select-label"
+                                id="demo-simple-select"
+                                value={location}
+                                onChange={handleChange}
+                                >
+                                    {locations.map((location, index) => {
+                                        return (
+                                            <MenuItem key={index} value={location}>{location}</MenuItem>
+                                        )
+                                    })}
+                                </Select>
+                            </FormControl>
+                            <Container >
+                            <Link to='/' onClick={handleCancel}>
+                                <Button style={{
+                                            background: '#4D74C2',
+                                            borderColor: '#4D74C2'
+                                        }} disabled={false} size="large" variant="contained" color="primary" className="mt-4 mr-2">
+                                    Cancel
+                                </Button>
+                            </Link>
+                                <Button style={location.length > 1 ? {
+                                        background: '#E16D7A',
+                                        borderColor: '#E16D7A'
+                                    } : null } size="large" disabled={location.length > 1 ? isDisabled : !isDisabled} variant="contained" color="primary" className="mt-4 ml-2" onClick={handleSubscribe}>
+                                    Subscribe
+                                </Button>
+                            </Container>
+                        </CardContent>
+                    </Card>
+                </Col>
+            </Row>
         </Container>
     </React.Fragment>
     )

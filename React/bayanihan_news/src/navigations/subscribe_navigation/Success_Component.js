@@ -20,9 +20,9 @@ function SuccessComponent(){
         <React.Fragment>
             <Container>
                 <Container fluid className="h-100">
-                    <div className="row featurette mt-5">
-                        <div className="col-md-7">
-                            <h2 className="featurette-heading font-weight-bold">Successfully Subscribed</h2>
+                    <div className="row featurette mt-3">
+                        <div className="col-md-6">
+                            <h2 className="featurette-heading font-weight-bold"><span style={{ color: '#4D74C2' }}>Successfully</span> <span style={{ color: '#E16D7A' }}>Subscribed</span></h2>
                             <p>Thank you for subscribing to Bayanihan News. You will receive message shortly.</p>
                             <ul className="mt-3">
                                 <li><p className="lead">Your daily news provider.</p></li>
@@ -33,19 +33,27 @@ function SuccessComponent(){
                             </ul>
 
                         <div className={classes.root}>
-                            <Link to='/about'>
-                                <Button className="ml-4" variant="contained" color="primary">
+                            <Link to='/contact'>
+                                <Button style={{
+                                            background: '#4D74C2',
+                                            borderColor: '#4D74C2'
+                                        }} size="large" className="ml-4" variant="contained" color="primary">
                                     Contact Us
                                 </Button>
                             </Link>
                             
-                            <Button className="ml-4" style={{ textDecoration: 'none', color: '#FFF' }} href="https://github.com/jeikatsu/Bayanihan-News" variant="contained" color="primary">
+                            <Button style={{
+                                            background: '#E16D7A',
+                                            borderColor: '#E16D7A',
+                                            textDecoration: 'none',
+                                            color: 'white'
+                                        }} size="large" className="ml-4" href="https://github.com/jeikatsu/Bayanihan-News" variant="contained" color="primary">
                                 Download
                             </Button>
                         </div>
                         </div>
-                        <div className="col-md-5">
-                            <img className="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto" width="500" height="500" src={subscribe} alt="Fishermen"></img>
+                        <div className="col-md-6">
+                            <img className="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto" width="800" height="800" src={subscribe} alt="Fishermen"></img>
                         </div>
                     </div>
                 </Container>

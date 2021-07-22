@@ -2,18 +2,18 @@ import React from 'react'
 import { Container } from 'react-bootstrap'
 import FacebookIcon from '@material-ui/icons/Facebook';
 
-import conntact_1 from '../../static/images/contact_1.png'
-import conntact_2 from '../../static/images/contact_2.png'
-import conntact_3 from '../../static/images/contact_3.png'
-import conntact_4 from '../../static/images/contact_4.png'
+import dev1 from '../../static/images/dev1.png'
+import dev2 from '../../static/images/dev2.png'
+import dev3 from '../../static/images/dev3.png'
+import dev4 from '../../static/images/dev4.png'
 
 function ContactComponent({ isPhone}){
     
     const names = [
-        { name : 'Joruel Braña', facebook: 'https://www.facebook.com/jogjog.brana', image: conntact_1},
-        { name : 'Alexander Gali', facebook: 'https://www.facebook.com/Alexander.Gali.CS', image: conntact_2},
-        { name : 'Clark Eustaquio', facebook: 'https://www.facebook.com/clark.eustaquio', image: conntact_3},
-        { name : 'CJ Fatalla', facebook: 'https://www.facebook.com/profile.php?id=100008977066085', image: conntact_4}       
+        { name : 'Joruel', last: 'Braña', facebook: 'https://www.facebook.com/jogjog.brana', image: dev4},
+        { name : 'Alexander', last: 'Gali', facebook: 'https://www.facebook.com/Alexander.Gali.CS', image: dev3},
+        { name : 'Clark', last: 'Eustaquio', facebook: 'https://www.facebook.com/clark.eustaquio', image: dev2},
+        { name : 'CJ', last: 'Fatalla', facebook: 'https://www.facebook.com/profile.php?id=100008977066085', image: dev1}       
     ]
     React.useEffect(() => {
         document.title = 'Contact'
@@ -23,7 +23,7 @@ function ContactComponent({ isPhone}){
             <Container>
             { isPhone || 
                 <div className="text-center mt-2">
-                    <h1>KMLNGMLKS Corp.</h1>
+                    <h1 className="font-weight-bold"><span style={{ color: '#4D74C2' }}>KMLNGMLKS</span> <span style={{ color: '#E16D7A' }}>Corp.</span></h1>
                     <p>We would like to help you</p>
                 </div> 
             }
@@ -33,8 +33,8 @@ function ContactComponent({ isPhone}){
                             <div key={index} className="col-md-6">
                                 <div className="row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
                                     <div className="col p-4 d-flex flex-column position-static">
-                                        <strong className="d-inline-block mb-2 text-primary">Bayanihan News</strong>
-                                        <h3 className="mb-0">{data.name}</h3>
+                                        <strong className="d-inline-block mb-2 text-primary"><span style={{ color: '#4D74C2' }}>Bayanihan</span> <span style={{ color: '#E16D7A' }}>News</span></strong>
+                                        <h3 className="mb-0 font-weight-bold">{data.name} {data.last}</h3>
                                     <div className="mb-1 text-muted">Computer Scientist</div>
                                     <p className="card-text mb-auto">We aim to be a company in the future that can contribute better communication tool between people and information for their daily lives.</p>
                                         <a href={data.facebook} style={{ textDecoration: 'none'}} className="mt-2 mb-n2"><FacebookIcon style={{fill: "#3B5998"}}/> Contact with Facebook</a>

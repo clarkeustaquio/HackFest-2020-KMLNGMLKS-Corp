@@ -32,7 +32,7 @@ function AboutComponent({ isPhone }){
                     {isPhone || <hr className="featurette-divider"></hr>}
                     <div className="row featurette mt-2">
                         <div className="col-md-7">
-                            <h2 className="featurette-heading font-weight-bold">Current Situtaion</h2>
+                            <h2 className="featurette-heading font-weight-bold"><span style={{ color: '#4D74C2' }}>Current</span> <span style={{ color: '#E16D7A' }}>Situtaion</span></h2>
                             <ul className="mt-3">
                                 <li><p className="lead">Limited access to obtain daily news</p></li>
                                 <li><p className="lead">Not everyone can watch the news due to time insufficiency</p></li>
@@ -49,7 +49,7 @@ function AboutComponent({ isPhone }){
                     <hr className="featurette-divider"></hr>
                     <div className="row featurette">
                         <div className="col-md-7 order-md-2">
-                            <h2 className="featurette-heading font-weight-bold">Our Solution</h2>
+                            <h2 className="featurette-heading font-weight-bold"><span style={{ color: '#4D74C2' }}>Our</span> <span style={{ color: '#E16D7A' }}>Solution</span></h2>
                             <ul className="mt-3">
                                 <li><p className="lead">Wide availability of the news anytime and anywhere.</p></li>
                                 <li><p className="lead">Updates people on time with the assurance of   not missing any important details.</p></li>
@@ -65,7 +65,7 @@ function AboutComponent({ isPhone }){
                 <section id="goals">
                 <div className = "text-center">
                     <hr className="featurette-divider"></hr>
-                    <h2 className="featurette-heading font-weight-bold">Bayanihan News</h2>
+                    <h2 className="featurette-heading font-weight-bold"><span style={{ color: '#4D74C2' }}>Bayanihan</span> <span style={{ color: '#E16D7A' }}>News</span></h2>
                     <p className="lead">We provide you the latest updates</p>
                 </div>
                 <Grid

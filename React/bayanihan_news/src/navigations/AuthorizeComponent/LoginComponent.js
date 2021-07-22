@@ -46,7 +46,7 @@ function LoginComponent({ setIsAuthorize }){
         <React.Fragment>
             <Container className="mt-4">
             
-            <h3 className="featurette-heading font-weight-bold">Welcome to Bayanihan News.</h3>
+            <h3 className="featurette-heading font-weight-bold">Welcome to <span style={{ color: '#4D74C2' }}>Bayanihan</span> <span style={{ color: '#E16D7A' }}>News.</span></h3>
             <span className="lead text-muted">Login to Continue.</span>
 
             {isAlertShow === true ?  <Alert className="mt-3" variant="danger" onClose={() => setIsAlertShow(false)} dismissible>{alert}</Alert> : null

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Container, Modal } from 'react-bootstrap'
+import { Container, Modal, Row, Col } from 'react-bootstrap'
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
@@ -9,6 +9,7 @@ import Grid from '@material-ui/core/Grid';
 import firebaseConfig from '../../firebaseConfig'
 
 import { Link } from 'react-router-dom'
+import phone_loc from '../../static/images/phone_loc.png'
 
 const useStyles = makeStyles(() => ({
     root: {
@@ -120,28 +121,41 @@ function DeleteComponent({ phoneNumber, setIsSuccess, userID }){
                 justifyContent: "center",
                 alignItems: "center"
             }}>
-                <Card className={classes.root}>
-                    <Container>
-                        <CardContent >
-                            <Typography className={classes.title} color="textPrimary" gutterBottom>
-                                Are you sure you want to unsubscribe?
-                            </Typography>
-                        </CardContent>
+                <Row>
+                    <Col>
+                        <img src={phone_loc} className="bd-placeholder-img" width="400" height="400" alt="Location"></img>
+                    </Col>
+                    <Col className="mt-5">
+                        <Card className={classes.root}>
+                            <Container>
+                                <CardContent >
+                                    <Typography className={classes.title} color="textPrimary" gutterBottom>
+                                        <h3 className="text-center mt-3">Are you sure you want to unsubscribe?</h3>
+                                    </Typography>
+                                </CardContent>
 
-                        <Grid container justify="center">
-                            <Grid item>
-                            <Link to='/' onClick={handleCancel}>
-                                <Button disabled={false} variant="contained" color="primary" className="mt-4 mb-3 mr-2">
-                                    Cancel
-                                </Button>
-                            </Link>
-                            <Button disabled={isDisabled} variant="contained" color="primary" className="mt-4 mb-3 ml-2" onClick={handleUnsubscribe}>
-                                Unsubscribe
-                            </Button>
-                            </Grid>
-                        </Grid>
-                    </Container>
-                </Card>
+                                <Grid container justify="center" className="mt-n4">
+                                    <Grid item>
+                                    <Link to='/' onClick={handleCancel}>
+                                        <Button style={{
+                                            background: '#4D74C2',
+                                            borderColor: '#4D74C2'
+                                        }} disabled={false} variant="contained" size="large" color="primary" className="mt-4 mb-3 mr-2">
+                                            Cancel
+                                        </Button>
+                                    </Link>
+                                    <Button style={{
+                                            background: '#E16D7A',
+                                            borderColor: '#E16D7A'
+                                        }}  disabled={isDisabled} variant="contained" color="primary" size="large" className="mt-4 mb-3 ml-2" onClick={handleUnsubscribe}>
+                                        Unsubscribe
+                                    </Button>
+                                    </Grid>
+                                </Grid>
+                            </Container>
+                        </Card>
+                    </Col>
+                </Row>
             </Container>
         </React.Fragment>
     )

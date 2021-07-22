@@ -8,6 +8,8 @@ import AboutComponent from './navigations/about_us_navigation/About_Component'
 import ContactComponent from './navigations/contact_us_navigation/Contact_Component'
 import AuthorizeComponent from './navigations/AuthorizeComponent/AuthorizeComponent';
 import UnsubscribeComponent from './navigations/unsubscribe_navigation/Unsubscribe_Component'
+import WaveCompnent from './components/footer_component/WaveComponent'
+import BlueWaveComponent from './components/footer_component/BlueWaveComponent';
 
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 
@@ -75,18 +77,23 @@ function IndexNavigation({ isPhone }){
         <HeroComponent isPhone={isPhone} hero_image={news_hero_image}/>
         <DailyNews isPhone={isPhone}/>
       </div>
-      <FooterComponent isPhone={isPhone}/>
+      <BlueWaveComponent />
     </React.Fragment>
   )
 }
 function SubscribeNavigation({ isPhone }){
+  const [isMount, setIsMount] = useState(false)
+
   return (
     <React.Fragment>
       <div id="root">
         <NavbarComponent />
-        <SubscribeComponent />
+        <SubscribeComponent setIsMount={setIsMount}/>
       </div>
-      <FooterComponent isPhone={isPhone}/>
+      {isMount === true ? 
+      <BlueWaveComponent />
+      : null
+      }
     </React.Fragment>
   )
 }
@@ -97,7 +104,7 @@ function UnsubscribeNavigation({ isPhone }){
         <NavbarComponent />
         <UnsubscribeComponent />
       </div>
-      <FooterComponent isPhone={isPhone}/>
+      <BlueWaveComponent />
     </React.Fragment>
   )
 }
@@ -109,7 +116,7 @@ function AboutNavigation({ isPhone }){
       <HeroComponent isPhone={isPhone} hero_image={farmers}/>
       <AboutComponent isPhone={isPhone}/>
       </div>
-      <FooterComponent isPhone={isPhone}/>
+      <BlueWaveComponent />
     </React.Fragment>
   )
 }
@@ -121,7 +128,7 @@ function ContactNavigation({ isPhone }){
         <HeroComponent isPhone={isPhone} hero_image={contact_us}/>
         <ContactComponent />
       </div>
-      <FooterComponent isPhone={isPhone}/>
+      <WaveCompnent />
     </React.Fragment>
   )
 }
@@ -132,7 +139,7 @@ function AuthorizeNavigation({ isPhone }){
         <NavbarComponent />
         <AuthorizeComponent isPhone={isPhone} />
       </div>
-      <FooterComponent isPhone={isPhone}/>
+      <WaveCompnent />
     </React.Fragment>
   )
 }
