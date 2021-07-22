@@ -32,7 +32,7 @@ function getSteps() {
   return ['Verify phone number', 'Add location',];
 }
 
-function SubscribeComponent({ setIsMount }) {
+function SubscribeComponent() {
 
     const [isVerified, setIsVerified] = useState(false)
     const [phoneNumber, setPhoneNumber] = useState('')
@@ -43,7 +43,6 @@ function SubscribeComponent({ setIsMount }) {
 
     useEffect(() => {
       document.title = 'Subscribe'
-      setIsMount(true)
     })
 
     useEffect(() => {

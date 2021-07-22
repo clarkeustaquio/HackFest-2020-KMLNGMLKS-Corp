@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import DailyNews from './components/daily_news_component/Daily_News_Component';
 import HeroComponent from './components/hero_component/Hero_Component';
 import NavbarComponent from './components/navbar_component/Navbar_Component';
-import FooterComponent from './components/footer_component/Footer_Component';
 import SubscribeComponent from './navigations/subscribe_navigation/Subscribe_Component';
 import AboutComponent from './navigations/about_us_navigation/About_Component'
 import ContactComponent from './navigations/contact_us_navigation/Contact_Component'
@@ -10,6 +9,7 @@ import AuthorizeComponent from './navigations/AuthorizeComponent/AuthorizeCompon
 import UnsubscribeComponent from './navigations/unsubscribe_navigation/Unsubscribe_Component'
 import WaveCompnent from './components/footer_component/WaveComponent'
 import BlueWaveComponent from './components/footer_component/BlueWaveComponent';
+import FloatingButtonComponent from './components/footer_component/FloatingButtonComponent';
 
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 
@@ -61,6 +61,7 @@ function App(){
             <Route path="/authorize">
               <AuthorizeNavigation isPhone={isPhone}/>
             </Route>
+            
           </Switch>
         </Router>
       </div>
@@ -78,22 +79,19 @@ function IndexNavigation({ isPhone }){
         <DailyNews isPhone={isPhone}/>
       </div>
       <BlueWaveComponent />
+      <FloatingButtonComponent color={"#E16D7A"}/>
     </React.Fragment>
   )
 }
 function SubscribeNavigation({ isPhone }){
-  const [isMount, setIsMount] = useState(false)
-
   return (
     <React.Fragment>
       <div id="root">
         <NavbarComponent />
-        <SubscribeComponent setIsMount={setIsMount}/>
+        <SubscribeComponent />
       </div>
-      {isMount === true ? 
       <BlueWaveComponent />
-      : null
-      }
+      <FloatingButtonComponent color={"#E16D7A"}/>
     </React.Fragment>
   )
 }
@@ -105,6 +103,7 @@ function UnsubscribeNavigation({ isPhone }){
         <UnsubscribeComponent />
       </div>
       <BlueWaveComponent />
+      <FloatingButtonComponent color={"#E16D7A"}/>
     </React.Fragment>
   )
 }
@@ -117,6 +116,7 @@ function AboutNavigation({ isPhone }){
       <AboutComponent isPhone={isPhone}/>
       </div>
       <BlueWaveComponent />
+      <FloatingButtonComponent color={"#E16D7A"}/>
     </React.Fragment>
   )
 }
@@ -129,6 +129,7 @@ function ContactNavigation({ isPhone }){
         <ContactComponent />
       </div>
       <WaveCompnent />
+      <FloatingButtonComponent color={"#4D74C2"}/>
     </React.Fragment>
   )
 }
@@ -140,6 +141,7 @@ function AuthorizeNavigation({ isPhone }){
         <AuthorizeComponent isPhone={isPhone} />
       </div>
       <WaveCompnent />
+      <FloatingButtonComponent color={"#4D74C2"}/>
     </React.Fragment>
   )
 }
