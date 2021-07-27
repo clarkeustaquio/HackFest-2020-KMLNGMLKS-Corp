@@ -31,22 +31,22 @@ function DailyNewsComponent({ isPhone }) {
             setIsLoading(false)
         })
 
-        document.title = 'BayanihanNews'
+        document.title = 'Bayanihan News'
     }, [])
 
     return (
         <React.Fragment>
-            { isPhone || 
+            {/* { isPhone ||  */}
                 <div className="text-center">
                     <h1 className="font-weight-bold"><span style={{ color: '#4D74C2' }}>Daily</span> <span style={{ color: '#E16D7A' }}>News</span></h1>
                     <p>Keep yourself with the latest updates</p>
                 </div> 
-            }
+            {/* } */}
 
             {isLoading ? 
                 <Container>
                     <div className="text-center">
-                        <img src={loading_news} className="bd-placeholder-img" width="500" height="500" alt="News"></img>
+                        <img src={loading_news} className="bd-placeholder-img" width={isPhone === false ? "500" : "300"} height={isPhone === false ? "500" : "300"} alt="News"></img>
                         <LinearProgress />
                     </div>
                 </Container> :

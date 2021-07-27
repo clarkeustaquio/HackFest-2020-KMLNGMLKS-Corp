@@ -19,7 +19,7 @@ function UnsubscribeSuccessComponent(){
     return (
         <React.Fragment>
             <Container>
-                <Container fluid className="h-100 mt-5">
+                <Container fluid className="h-100">
                     <div className="row featurette">
                         <div className="col-md-6 order-md-2">
                             <h2 className="featurette-heading font-weight-bold"><span style={{ color: '#4D74C2' }}>Successfully</span> <span style={{ color: '#E16D7A' }}>Unsubscribed</span></h2>
@@ -45,7 +45,7 @@ function UnsubscribeSuccessComponent(){
                                             borderColor: '#E16D7A',
                                             textDecoration: 'none',
                                             color: 'white'
-                                        }} className="ml-4" size="large" href="https://github.com/jeikatsu/Bayanihan-News" variant="contained" color="primary">
+                                        }} size="large" href="https://github.com/jeikatsu/Bayanihan-News" variant="contained" color="primary">
                                     Download
                                 </Button>
                             </div>   

@@ -32,7 +32,7 @@ function getSteps() {
   return ['Verify phone number', 'Add location',];
 }
 
-function SubscribeComponent() {
+function SubscribeComponent({ isPhone }) {
 
     const [isVerified, setIsVerified] = useState(false)
     const [phoneNumber, setPhoneNumber] = useState('')
@@ -84,13 +84,13 @@ function SubscribeComponent() {
                           <Col>
                             <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={auth}/> 
                           </Col>
-                          <Col>
-                          <img src={phone1} className="bd-placeholder-img" width="400" height="400" alt="Phone"></img>
-                          </Col>
+                          {/* <Col>
+                            <img src={phone1} className="bd-placeholder-img" width="400" height="400" alt="Phone"></img>
+                          </Col> */}
                         </Row>
                       </div>: <div className="text-center">
-                        <img src={loading_news} className="bd-placeholder-img" width="500" height="500" alt="News"></img>
-                        <LinearProgress />
+                          <img src={loading_news} className="bd-placeholder-img"  width={isPhone === false ? "500" : "300"} height={isPhone === false ? "500" : "300"} alt="News"></img>
+                          <LinearProgress />
                       </div>}
                     </div>
                   }

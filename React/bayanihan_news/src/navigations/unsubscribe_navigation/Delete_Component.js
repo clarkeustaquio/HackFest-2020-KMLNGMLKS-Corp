@@ -1,6 +1,6 @@
 import React from 'react'
-import { Container, Modal, Row, Col } from 'react-bootstrap'
-import Card from '@material-ui/core/Card';
+import { Container, Modal, Row, Col, Card } from 'react-bootstrap'
+// import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
@@ -122,38 +122,48 @@ function DeleteComponent({ phoneNumber, setIsSuccess, userID }){
                 alignItems: "center"
             }}>
                 <Row>
-                    <Col>
+                    {/* <Col>
                         <img src={phone_loc} className="bd-placeholder-img" width="400" height="400" alt="Location"></img>
-                    </Col>
+                    </Col> */}
                     <Col className="mt-5">
-                        <Card className={classes.root}>
+                        <Card>
+                            <Card.Body>
+                                <Card.Title>Phone Subscription</Card.Title>
+                                <Card.Subtitle className="mb-2 text-muted">Unsubscribe</Card.Subtitle>
+                                <Card.Text>
+                                    Are you sure you want to unsubscribe?
+                                </Card.Text>
+                                <Link to='/' onClick={handleCancel}>
+                                    <Button style={{
+                                        background: '#4D74C2',
+                                        borderColor: '#4D74C2'
+                                    }} disabled={false} variant="contained" size="large" color="primary" className="mt-2 mb-3 mr-2">
+                                        Cancel
+                                    </Button>
+                                </Link>
+                                <Button style={{
+                                        background: '#E16D7A',
+                                        borderColor: '#E16D7A'
+                                    }}  disabled={isDisabled} variant="contained" color="primary" size="large" className="mt-2 mb-3 ml-2" onClick={handleUnsubscribe}>
+                                    Unsubscribe
+                                </Button>
+                            </Card.Body>
+                        </Card>
+                        {/* <Card className={classes.root}>
                             <Container>
                                 <CardContent >
                                     <Typography className={classes.title} color="textPrimary" gutterBottom>
-                                        <h3 className="text-center mt-3">Are you sure you want to unsubscribe?</h3>
+                                        <h3 className="text-center mt-3"></h3>
                                     </Typography>
                                 </CardContent>
 
                                 <Grid container justify="center" className="mt-n4">
                                     <Grid item>
-                                    <Link to='/' onClick={handleCancel}>
-                                        <Button style={{
-                                            background: '#4D74C2',
-                                            borderColor: '#4D74C2'
-                                        }} disabled={false} variant="contained" size="large" color="primary" className="mt-4 mb-3 mr-2">
-                                            Cancel
-                                        </Button>
-                                    </Link>
-                                    <Button style={{
-                                            background: '#E16D7A',
-                                            borderColor: '#E16D7A'
-                                        }}  disabled={isDisabled} variant="contained" color="primary" size="large" className="mt-4 mb-3 ml-2" onClick={handleUnsubscribe}>
-                                        Unsubscribe
-                                    </Button>
+                                    
                                     </Grid>
                                 </Grid>
                             </Container>
-                        </Card>
+                        </Card> */}
                     </Col>
                 </Row>
             </Container>

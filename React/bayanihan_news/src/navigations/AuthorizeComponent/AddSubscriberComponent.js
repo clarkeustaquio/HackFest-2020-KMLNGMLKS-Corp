@@ -5,6 +5,7 @@ import PhoneInput from 'react-phone-input-2'
 import 'react-phone-input-2/lib/bootstrap.css'
 
 import locations from '../../list_location.json'
+import { remote } from '../../domain'
 
 function AddSubscriberComponent({ setListNumber, setAddSubModal }){
     const token = localStorage.getItem('token')
@@ -22,7 +23,7 @@ function AddSubscriberComponent({ setListNumber, setAddSubModal }){
             event.stopPropagation();
 
             if(checkPhone === false){
-                axios.post('http://localhost:8000/users/add-subscriber/', {
+                axios.post(`${remote}users/add-subscriber/`, {
                     phone_number: '+' + phone,
                     location: location
                 
@@ -50,6 +51,10 @@ function AddSubscriberComponent({ setListNumber, setAddSubModal }){
     
     useEffect(() => {
         setLocation(locations[0])
+
+        return () => {
+            setLocation('')
+        }
     }, [])
 
     const [alert, setAlert] = useState(false)
@@ -64,7 +69,7 @@ function AddSubscriberComponent({ setListNumber, setAddSubModal }){
             const formData = new FormData();
             formData.append('file', file[0]);            
 
-            axios.post('http://localhost:8000/users/import-subscriber/', formData, {
+            axios.post(`${remote}users/import-subscriber/`, formData, {
                 headers: {
                     'Authorization': 'Token ' + token
                 }

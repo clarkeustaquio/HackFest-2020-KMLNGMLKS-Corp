@@ -40,7 +40,6 @@ function App(){
 
   return (
     <React.Fragment>
-      <div>
         <Router>
           <Switch>
             <Route exact path="/">
@@ -61,11 +60,8 @@ function App(){
             <Route path="/authorize">
               <AuthorizeNavigation isPhone={isPhone}/>
             </Route>
-            
           </Switch>
         </Router>
-      </div>
-
     </React.Fragment>
   )
 }
@@ -77,9 +73,9 @@ function IndexNavigation({ isPhone }){
         <NavbarComponent />
         <HeroComponent isPhone={isPhone} hero_image={news_hero_image}/>
         <DailyNews isPhone={isPhone}/>
+        <BlueWaveComponent />
+        <FloatingButtonComponent color={"#E16D7A"}/>
       </div>
-      <BlueWaveComponent />
-      <FloatingButtonComponent color={"#E16D7A"}/>
     </React.Fragment>
   )
 }
@@ -88,10 +84,10 @@ function SubscribeNavigation({ isPhone }){
     <React.Fragment>
       <div id="root">
         <NavbarComponent />
-        <SubscribeComponent />
+        <SubscribeComponent isPhone={isPhone} />
+        <BlueWaveComponent />
+        <FloatingButtonComponent color={"#E16D7A"}/>
       </div>
-      <BlueWaveComponent />
-      <FloatingButtonComponent color={"#E16D7A"}/>
     </React.Fragment>
   )
 }
@@ -101,9 +97,9 @@ function UnsubscribeNavigation({ isPhone }){
       <div id="root">
         <NavbarComponent />
         <UnsubscribeComponent />
+        <BlueWaveComponent />
+        <FloatingButtonComponent color={"#E16D7A"}/>
       </div>
-      <BlueWaveComponent />
-      <FloatingButtonComponent color={"#E16D7A"}/>
     </React.Fragment>
   )
 }
@@ -111,12 +107,12 @@ function AboutNavigation({ isPhone }){
   return (
     <React.Fragment>
       <div id="root">
-      <NavbarComponent />
-      <HeroComponent isPhone={isPhone} hero_image={farmers}/>
-      <AboutComponent isPhone={isPhone}/>
+        <NavbarComponent />
+        <HeroComponent isPhone={isPhone} hero_image={farmers}/>
+        <AboutComponent isPhone={isPhone}/>
+        <BlueWaveComponent />
+        <FloatingButtonComponent color={"#E16D7A"}/>
       </div>
-      <BlueWaveComponent />
-      <FloatingButtonComponent color={"#E16D7A"}/>
     </React.Fragment>
   )
 }
@@ -127,9 +123,9 @@ function ContactNavigation({ isPhone }){
         <NavbarComponent />
         <HeroComponent isPhone={isPhone} hero_image={contact_us}/>
         <ContactComponent />
+        <WaveCompnent />
+        <FloatingButtonComponent color={"#4D74C2"}/>
       </div>
-      <WaveCompnent />
-      <FloatingButtonComponent color={"#4D74C2"}/>
     </React.Fragment>
   )
 }
@@ -139,9 +135,9 @@ function AuthorizeNavigation({ isPhone }){
       <div id="root">
         <NavbarComponent />
         <AuthorizeComponent isPhone={isPhone} />
+        <WaveCompnent />
+        <FloatingButtonComponent color={"#4D74C2"}/>
       </div>
-      <WaveCompnent />
-      <FloatingButtonComponent color={"#4D74C2"}/>
     </React.Fragment>
   )
 }

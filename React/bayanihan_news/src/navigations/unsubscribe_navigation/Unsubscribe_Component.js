@@ -82,9 +82,9 @@ function UnsubscribeComponent() {
                           <Col>
                             <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={auth}/> 
                           </Col>
-                          <Col>
+                          {/* <Col>
                           <img src={phone1} className="bd-placeholder-img" width="400" height="400" alt="Phone"></img>
-                          </Col>
+                          </Col> */}
                         </Row>
                       </div>: <div className="text-center">
                         <img src={loading_news} className="bd-placeholder-img" width="500" height="500" alt="News"></img>

@@ -159,18 +159,12 @@ CORS_ALLOW_HEADERS = [
     'x-requested-with',
 ]
 
-# TWILIO_SID = os.environ.get('TWILIO_SID') #'AC5c2722daad9c873c0a124c73126776ca'
-# TWILIO_TOKEN = os.environ.get('TWILIO_TOKEN') #'d63d15fcee3c6dba0adbf071b4a158e6'
-# TWILIO_NUMBER = os.environ.get('TWILIO_NUMBER') #'+18184469801'
-
-TWILIO_SID = 'AC5c2722daad9c873c0a124c73126776ca'
-TWILIO_TOKEN = 'd63d15fcee3c6dba0adbf071b4a158e6'
-TWILIO_NUMBER = '+18184469801'
+TWILIO_SID = os.environ.get('TWILIO_SID')
+TWILIO_TOKEN = os.environ.get('TWILIO_TOKEN')
+TWILIO_NUMBER = os.environ.get('TWILIO_NUMBER')
 
 CELERY_TIMEZONE = 'Asia/Manila'
-# CELERY_BROKER_URL = os.environ.get('CELERY_BROKER_URL')
-CELERY_BROKER_URL = 'amqp://localhost'
-# CELERY_BROKER_URL = 'redis://:p6473d490aedf4eb951fbf7bef8cdae0a0cfc9ebc5f1bfc8f9da3461b09ed7e19@ec2-44-193-153-128.compute-1.amazonaws.com:15509'
+CELERY_BROKER_URL = os.environ.get('CELERY_BROKER_URL')
 CELERY_ACCEPT_CONTENT = ['json']
 CELERY_RESULT_BACKEND = 'django-db'
 CELERY_TASK_SERIALIZER = 'json'

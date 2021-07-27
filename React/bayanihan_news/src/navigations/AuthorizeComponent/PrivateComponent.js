@@ -3,14 +3,17 @@ import { Button, Form, Alert, Row, Col } from 'react-bootstrap'
 import { useHistory } from 'react-router-dom'
 import TableComponent from './TableComponent/TableComponent'
 import axios from 'axios'
-import { CircularProgress } from '@material-ui/core'
+import { CircularProgress, LinearProgress } from '@material-ui/core'
+import { remote } from '../../domain'
 
-function PrivateComponent(){
+import loading_news from '../../static/images/loading_news.png'
+
+function PrivateComponent({ isPhone }){
     const history = useHistory()
     const token = localStorage.getItem('token')
     const name = localStorage.getItem('last_name') + ', ' + localStorage.getItem('first_name')
 
-    const [isMount, setIsMount] = useState(false)
+    const [isMount, setIsMount] = useState(true)
     const [listNumber, setListNumber] = useState([])
     const [place, setPlace] = useState('')
 
@@ -21,30 +24,69 @@ function PrivateComponent(){
     const [isSuccess, setIsSuccess] = useState(false)
     const [validated, setValidated] = useState(false)
 
+    const [checkAuthorize, setCheckAuthorize] = useState(false)
+
     const handleLogout = () => {
         localStorage.clear()
         history.push('/')
     }
 
     useEffect(() => {
-        axios.get('http://localhost:8000/users/get-people/', {
-            headers: {
-                'Authorization': 'Token ' + token
-            }
-        }).then(response => {
-            if(response.status === 200){
-                setPlace(response.data.place)
-                setListNumber(response.data.list_numbers)
-                setIsMount(true)
-            }
-        })
+        if(token){
+            axios.get(`${remote}users/authorize-token/`, {
+                headers: {
+                    'Authorization': 'Token ' + token
+                }
+            }).then(response => {
+                if(response.status === 200){
+                    setCheckAuthorize(true)
+                }else{
+                    localStorage.clear()
+                    history.push('/')
+                }
+            }).catch(() => {
+                localStorage.clear()
+                history.push('/')
+            })
+        }
 
         return () => {
-            setPlace('')
-            setListNumber('')
-            setIsMount(false)
+            setCheckAuthorize(false)
         }
-    }, [token])
+    }, [history, token])
+
+    useEffect(() => {
+        if(checkAuthorize === true){
+            const abort = new AbortController();
+            Promise.all([
+                axios.get(`${remote}users/get-people/`, {
+                    headers: {
+                        'Authorization': 'Token ' + token
+                    }
+                }).then(response => {
+                    if(response.status === 200){
+                        setPlace(response.data.place)
+                        setListNumber(response.data.list_numbers)
+                        setIsMount(false)
+                    }
+                })
+            ]).then(() => {
+                setIsMount(false)
+            }).catch(() => {
+                setIsMount(true)
+            })
+
+            return () => {
+                abort.abort()
+            }
+        }
+        
+        return () => {
+            setPlace('')
+            setListNumber([])
+            setIsMount(true)
+        }
+    }, [token, checkAuthorize])
 
     const handleAnnouncement = (event) => {
         const form = event.currentTarget;
@@ -57,7 +99,7 @@ function PrivateComponent(){
             event.stopPropagation();
             setIsSending(true)
 
-            axios.post('http://localhost:8000/users/send-announcement/', {
+            axios.post(`${remote}users/send-announcement/`, {
                 'announcement': sendMessage
             }, {
                 headers: {
@@ -79,16 +121,25 @@ function PrivateComponent(){
             })
         }
     }
-
     return (
         <React.Fragment>
-            <h5 className="mb-3">{name.toUpperCase()} - {place}</h5>
-            <Button 
+            {isPhone === false ? <h5 className="mb-3">{name.toUpperCase()} - {place}</h5>
+            : <h6 className="mb-3">{name.toUpperCase()} - {place}</h6>
+            }
+            {isPhone === false ? <Button 
                 style={{
                     background: '#E16D7A',
                     borderColor: '#E16D7A'
                 }}
                 className="float-right mt-n5" variant="primary" onClick={handleLogout}>Logout</Button>
+            : <Button 
+                style={{
+                    background: '#E16D7A',
+                    borderColor: '#E16D7A'
+                }}
+                variant="primary" block onClick={handleLogout}>Logout</Button>
+            }
+            
 
             <hr />
             {isSuccess === true ? <Alert variant={fail === true ? "danger" : "success"} onClose={() => setIsSuccess(false)} dismissible>
@@ -124,7 +175,13 @@ function PrivateComponent(){
                 </Row>
             </Form>
             <hr />
-            <TableComponent table_data={listNumber} isMount={isMount} setListNumber={setListNumber}/>
+            {isMount === false ? <TableComponent table_data={listNumber} isMount={isMount} setListNumber={setListNumber} isPhone={isPhone} />
+            : <div className="text-center">
+                <img src={loading_news} className="bd-placeholder-img" width={isPhone === false ? "500" : "300"} height={isPhone === false ? "500" : "300"} alt="News"></img>
+                <LinearProgress />
+            </div>
+            }
+            
         </React.Fragment>
     )
 }

@@ -4,6 +4,7 @@ import 'react-phone-input-2/lib/bootstrap.css'
 import { Button, Form, Alert } from 'react-bootstrap'
 import locations from '../../../list_location.json'
 import axios from 'axios'
+import { remote } from '../../../domain'
 
 function EditComponent({ phone_number, old_location, setEdit, setListNumber }){
     const token = localStorage.getItem('token')
@@ -21,7 +22,7 @@ function EditComponent({ phone_number, old_location, setEdit, setListNumber }){
             event.preventDefault();
             event.stopPropagation();
             
-            axios.post('http://localhost:8000/users/edit-subscriber/', {
+            axios.post(`${remote}users/edit-subscriber/`, {
                 old_phone_number: phone_number,
                 new_phone_number: '+' + phone,
                 old_location: old_location,

@@ -1,6 +1,6 @@
 import React from 'react'
-import { Container, Modal, Row, Col } from 'react-bootstrap'
-import Card from '@material-ui/core/Card';
+import { Container, Modal, Row, Col, Card, Form } from 'react-bootstrap'
+// import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
@@ -19,10 +19,10 @@ import phone_loc from '../../static/images/phone_loc.png'
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 const useStyles = makeStyles((theme) => ({
-    formControl: {
-      margin: theme.spacing(1),
-      minWidth: 300,
-    },
+    // formControl: {
+    //   margin: theme.spacing(1),
+    //   minWidth: 300,
+    // },
     selectEmpty: {
       marginTop: theme.spacing(2),
     },
@@ -138,48 +138,39 @@ function CardLocationComponent({ phoneNumber, setIsSuccess, userID }){
                 alignItems: "center"
             }}>
             <Row>
-                <Col>
-                    <img src={phone_loc} className="bd-placeholder-img" width="400" height="400" alt="Location"></img>
-                </Col>
                 <Col className="mt-5">
-                    <Card className={classes.root}>
-                        <CardContent>
-                            <Typography className={classes.title} color="textSecondary" gutterBottom>
-                                Add Location
-                            </Typography>
-
-                            <FormControl className={classes.formControl}>
-                                <InputLabel id="demo-simple-select-label">Province</InputLabel>
-                                <Select
-                                labelId="demo-simple-select-label"
-                                id="demo-simple-select"
-                                value={location}
-                                onChange={handleChange}
+                    <Card>
+                        <Card.Body>
+                            <Card.Title>Select Location</Card.Title>
+                            <Card.Subtitle className="mb-2 mt-3 text-muted">Location</Card.Subtitle>
+                            <Card.Text>
+                                <select
+                                    className="form-control"
+                                    value={location}
+                                    onChange={handleChange}
                                 >
                                     {locations.map((location, index) => {
                                         return (
-                                            <MenuItem key={index} value={location}>{location}</MenuItem>
+                                            <option key={index} value={location}>{location}</option>
                                         )
                                     })}
-                                </Select>
-                            </FormControl>
-                            <Container >
+                                </select>
+                            </Card.Text>
                             <Link to='/' onClick={handleCancel}>
                                 <Button style={{
                                             background: '#4D74C2',
                                             borderColor: '#4D74C2'
-                                        }} disabled={false} size="large" variant="contained" color="primary" className="mt-4 mr-2">
+                                        }} disabled={false} size="large" variant="contained" color="primary" className="mt-2 mr-2">
                                     Cancel
                                 </Button>
                             </Link>
-                                <Button style={location.length > 1 ? {
-                                        background: '#E16D7A',
-                                        borderColor: '#E16D7A'
-                                    } : null } size="large" disabled={location.length > 1 ? isDisabled : !isDisabled} variant="contained" color="primary" className="mt-4 ml-2" onClick={handleSubscribe}>
-                                    Subscribe
-                                </Button>
-                            </Container>
-                        </CardContent>
+                            <Button style={location.length > 1 ? {
+                                    background: '#E16D7A',
+                                    borderColor: '#E16D7A'
+                                } : null } size="large" disabled={location.length > 1 ? isDisabled : !isDisabled} variant="contained" color="primary" className="mt-2 ml-2" onClick={handleSubscribe}>
+                                Subscribe
+                            </Button>
+                        </Card.Body>
                     </Card>
                 </Col>
             </Row>

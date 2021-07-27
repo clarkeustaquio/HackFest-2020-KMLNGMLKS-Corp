@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { Button, Form } from 'react-bootstrap'
 import axios from 'axios'
+import { remote } from '../../../domain'
 
 function DeleteComponent({ phone_number, old_location, setDeletePhone, setListNumber }){
     const token = localStorage.getItem('token')
@@ -17,7 +18,7 @@ function DeleteComponent({ phone_number, old_location, setDeletePhone, setListNu
             event.preventDefault();
             event.stopPropagation();
             
-            axios.post('http://localhost:8000/users/delete-subscriber/', {
+            axios.post(`${remote}users/delete-subscriber/`, {
                 phone_number: phone_number,
                 location: old_location,
             

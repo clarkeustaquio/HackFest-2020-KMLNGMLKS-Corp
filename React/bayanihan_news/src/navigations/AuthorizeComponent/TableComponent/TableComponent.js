@@ -17,9 +17,11 @@ import EditComponent from './EditComponent';
 import DeleteComponent from './DeleteComponent'
 
 import AddSubscriberComponent from '../AddSubscriberComponent';
+import loading_news from '../../../static/images/loading_news.png'
 
-function TableComponent({ table_data, isMount, setListNumber }){
+function TableComponent({ table_data, isMount, setListNumber, isPhone }){
     const [table_columns, setTableCol] = useState(columns)
+    const [isCheck, setIsCheck] = useState(true)
 
     const tableInstance = useTable({ 
         columns: table_columns, 
@@ -65,6 +67,7 @@ function TableComponent({ table_data, isMount, setListNumber }){
     }
 
     useEffect(() => {
+        const copy_table = table_columns
         const create_column = [{
             Header: 'Actions',
             accessor: 'actions',
@@ -96,214 +99,225 @@ function TableComponent({ table_data, isMount, setListNumber }){
             }
         }]
 
-        table_columns.map((table) => create_column.push({
+        copy_table.map((table) => create_column.push({
             Header: table.Header,
             accessor: table.accessor
         }))
 
-        setTableCol(create_column)
-        
-    }, [])
+        setTableCol(copy_table)
+        setIsCheck(false)
+
+        return () => {
+            setTableCol(columns)
+            setIsCheck(true)
+        }
+    }, [table_columns])
 
     return (
         <React.Fragment>
-            <Modal
-                show={edit}
-                onHide={() => setEdit(false)}
-                size="md"
-                aria-labelledby="contained-modal-title-vcenter"
-                centered
-            >
-                <Modal.Header closeButton>
-                    <Modal.Title id="contained-modal-title-vcenter">
-                        Edit Subscriber
-                    </Modal.Title>
-                </Modal.Header>
-                <Modal.Body>
-                    <EditComponent 
-                        phone_number={phone} 
-                        old_location={location} 
-                        setEdit={setEdit} 
-                        setListNumber={setListNumber}
-                    />
-                </Modal.Body>
-            </Modal>
+            {isCheck === false ? <div>
+                <Modal
+                    show={edit}
+                    onHide={() => setEdit(false)}
+                    size="md"
+                    aria-labelledby="contained-modal-title-vcenter"
+                    centered
+                >
+                    <Modal.Header closeButton>
+                        <Modal.Title id="contained-modal-title-vcenter">
+                            Edit Subscriber
+                        </Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                        <EditComponent 
+                            phone_number={phone} 
+                            old_location={location} 
+                            setEdit={setEdit} 
+                            setListNumber={setListNumber}
+                        />
+                    </Modal.Body>
+                </Modal>
 
-            <Modal
-                show={deletePhone}
-                onHide={() => setDeletePhone(false)}
-                size="md"
-                aria-labelledby="contained-modal-title-vcenter"
-                centered
-            >
-                <Modal.Header closeButton>
-                    <Modal.Title id="contained-modal-title-vcenter">
-                        Delete Subscriber
-                    </Modal.Title>
-                </Modal.Header>
-                <Modal.Body>
-                    <DeleteComponent 
-                        phone_number={phone} 
-                        old_location={location}
-                        setDeletePhone={setDeletePhone} 
-                        setListNumber={setListNumber}
-                    />
-                </Modal.Body>
-            </Modal>
+                <Modal
+                    show={deletePhone}
+                    onHide={() => setDeletePhone(false)}
+                    size="md"
+                    aria-labelledby="contained-modal-title-vcenter"
+                    centered
+                >
+                    <Modal.Header closeButton>
+                        <Modal.Title id="contained-modal-title-vcenter">
+                            Delete Subscriber
+                        </Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                        <DeleteComponent 
+                            phone_number={phone} 
+                            old_location={location}
+                            setDeletePhone={setDeletePhone} 
+                            setListNumber={setListNumber}
+                        />
+                    </Modal.Body>
+                </Modal>
 
-            {isMount === <LinearProgress /> ? null :
-            <div>
-                {table_data.length === 0 ? <div>
-                    
-                    <h4 className="text-center">
-                        <p>No available data.</p>
-                        <Button 
-                            style={{
-                                background: '#4D74C2',
-                                borderColor: '#4D74C2'
-                            }}
-                            onClick={() => setAddSubModal(true)}>Add Subscriber</Button>
-                    </h4>
-
-                    <Modal
-                        show={addSubModal}
-                        onHide={() => setAddSubModal(false)}
-                        size="md"
-                        aria-labelledby="contained-modal-title-vcenter"
-                        centered
-                    >
-                        <Modal.Header closeButton>
-                            <Modal.Title id="contained-modal-title-vcenter">
-                                Add Subscriber
-                            </Modal.Title>
-                        </Modal.Header>
-                        <Modal.Body>
-                            <AddSubscriberComponent setListNumber={setListNumber} setAddSubModal={setAddSubModal} />
-                        </Modal.Body>
-                    </Modal>
-                </div> :
-                    <div>
-                        <div className={"d-flex mb-2"}>
-                            <div className={ "mr-auto ml-n2 p-2"}>
-                                <div className={"float-left mr-2"}>
-                                    <Form.Control  
-                                        value={pageSize} 
-                                        onChange={(event) => setPageSize(Number(event.target.value))} 
-                                        as="select" 
-                                        size="md"
-                                    >
-                                        {
-                                            [25, 50, 100].map((pageSize) => (
-                                                <option key={pageSize} value={pageSize}>
-                                                    Show {pageSize}
-                                                </option>
-                                            ))
-                                        }
-                                    </Form.Control>
-                                </div>
-                            </div>  
-                            <div className={"mr-n2 p-2"}>   
-                                <div className="float-right ml-2">
-                                    <Button 
-                                        style={{
-                                            background: '#E16D7A',
-                                            borderColor: '#E16D7A'
-                                        }} 
-                                        onClick={() => setAddSubModal(true)}>Add Subscriber</Button>
-                                    <Modal
-                                        show={addSubModal}
-                                        onHide={() => setAddSubModal(false)}
-                                        size="md"
-                                        aria-labelledby="contained-modal-title-vcenter"
-                                        centered
-                                    >
-                                        <Modal.Header closeButton>
-                                            <Modal.Title id="contained-modal-title-vcenter">
-                                                Add Subscriber
-                                            </Modal.Title>
-                                        </Modal.Header>
-                                        <Modal.Body>
-                                            <AddSubscriberComponent setListNumber={setListNumber} setAddSubModal={setAddSubModal} />
-                                        </Modal.Body>
-                                    </Modal>
-                                </div>
-                                <div className={"float-right ml-2"}>
-                                    <GlobalFilter filter={globalFilter} setFilter={setGlobalFilter} />
-                                </div>
-                                
-                            </div>
+                {isMount === <LinearProgress /> ? null :
+                <div>
+                    {table_data.length === 0 ? <div>
+                        <h4 className="text-center">
+                            <p>No available data.</p>
+                            <Button 
+                                style={{
+                                    background: '#4D74C2',
+                                    borderColor: '#4D74C2'
+                                }}
+                                onClick={() => setAddSubModal(true)}>Add Subscriber</Button>
+                        </h4>
+                        <div className="text-center">
+                            <img className="text-center bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto" width="400" height="400" src={loading_news} alt="Loading"></img>
                         </div>
-                        {rows.length === 0
-                        ? <h6 className="text-center">No available data.</h6>
-                        : <div>
-                                <BTable 
-                                    id="project-table" 
-                                    striped 
-                                    bordered 
-                                    hover 
-                                    size="md" 
-                                    {...getTableProps()} 
-                                >
-                                    <thead>
-                                        {headerGroups.map(headerGroup => (
-                                        <tr {...headerGroup.getHeaderGroupProps()}>
-                                            {headerGroup.headers.map(column => (
-                                            <th 
-                                                {...column.getHeaderProps(column.getSortByToggleProps())}
-                                            >
-                                                {column.render('Header')}
-                                                <span className="ml-2 mt-n1">
-                                                    {column.isSorted ? (column.isSortedDesc?  <ExpandMoreIcon /> : <ExpandLessIcon /> ) : <SortIcon />}
-                                                </span>
-                                            </th>
-                                            ))}
-                                        </tr>
-                                        ))}
-                                    </thead>
-                                    <tbody>
-                                        {page.map((row, i) => {
-                                        prepareRow(row)
-                                        return (
-                                            <tr {...row.getRowProps()}>
-                                            {row.cells.map(cell => {
-                                                return (
-                                                <td {...cell.getCellProps()}>
-                                                    {cell.render('Cell')}
-                                                </td>
-                                                )
-                                            })}
-                                            </tr>
-                                        )
-                                        })}
-                                    </tbody>
-                                </BTable>
-                            <div className="mt-3 h6">
-                                <div className="float-left">
-                                    Page {' '}
-                                    <strong>{pageIndex + 1} of {pageOptions.length}</strong>
-                                </div>
-                                <div className="float-right">
-                                    <Form.Row>
-                                        <Col>
-                                            <Button style={{
-                                                background: '#4D74C2',
-                                                borderColor: '#4D74C2'
-                                            }} size="md" onClick={() => previousPage()} disabled={!canPreviousPage}>Previous</Button>
-                                        </Col>
-                                        <Col>
-                                            <Button style={{
+
+                        <Modal
+                            show={addSubModal}
+                            onHide={() => setAddSubModal(false)}
+                            size="md"
+                            aria-labelledby="contained-modal-title-vcenter"
+                            centered
+                        >
+                            <Modal.Header closeButton>
+                                <Modal.Title id="contained-modal-title-vcenter">
+                                    Add Subscriber
+                                </Modal.Title>
+                            </Modal.Header>
+                            <Modal.Body>
+                                <AddSubscriberComponent setListNumber={setListNumber} setAddSubModal={setAddSubModal} />
+                            </Modal.Body>
+                        </Modal>
+                    </div> :
+                        <div>
+                            <div className={isPhone === true ? "" : "d-flex mb-2"}>
+                                <div className={isPhone === true ? "" : "mr-auto ml-n2 p-2"}>
+                                    <div className={isPhone === true ? "mb-3" : "float-left mr-2"}>
+                                        <Form.Control  
+                                            value={pageSize} 
+                                            onChange={(event) => setPageSize(Number(event.target.value))} 
+                                            as="select" 
+                                            size="md"
+                                        >
+                                            {
+                                                [25, 50, 100].map((pageSize) => (
+                                                    <option key={pageSize} value={pageSize}>
+                                                        Show {pageSize}
+                                                    </option>
+                                                ))
+                                            }
+                                        </Form.Control>
+                                    </div>
+                                </div>  
+                                <div className={isPhone === true ? "" : "mr-n2 p-2"}>   
+                                    <Button 
+                                            style={{
                                                 background: '#E16D7A',
                                                 borderColor: '#E16D7A'
-                                            }} size="md" onClick={() => nextPage()} disabled={!canNextPage}>Next</Button>
-                                        </Col>
-                                    </Form.Row>
+                                            }} 
+                                            className={isPhone === true ? "mb-3" : "float-right ml-2 mb-2"}
+                                            block={isPhone === true ? true : false}
+                                            onClick={() => setAddSubModal(true)}>Add Subscriber</Button>
+
+                                        <Modal
+                                            show={addSubModal}
+                                            onHide={() => setAddSubModal(false)}
+                                            size="md"
+                                            aria-labelledby="contained-modal-title-vcenter"
+                                            centered
+                                        >
+                                            <Modal.Header closeButton>
+                                                <Modal.Title id="contained-modal-title-vcenter">
+                                                    Add Subscriber
+                                                </Modal.Title>
+                                            </Modal.Header>
+                                            <Modal.Body>
+                                                <AddSubscriberComponent setListNumber={setListNumber} setAddSubModal={setAddSubModal} />
+                                            </Modal.Body>
+                                        </Modal>
+
+                                    <div className={isPhone === true ? "mb-3" : "float-right ml-2"}>
+                                        <GlobalFilter filter={globalFilter} setFilter={setGlobalFilter} />
+                                    </div>
                                 </div>
                             </div>
+                            {rows.length === 0
+                            ? <h6 className="text-center">No available data.</h6>
+                            : <div>
+                                    <BTable 
+                                        id="project-table" 
+                                        striped 
+                                        bordered 
+                                        hover 
+                                        size="md" 
+                                        {...getTableProps()} 
+                                    >
+                                        <thead>
+                                            {headerGroups.map(headerGroup => (
+                                            <tr {...headerGroup.getHeaderGroupProps()}>
+                                                {headerGroup.headers.map(column => (
+                                                <th 
+                                                    {...column.getHeaderProps(column.getSortByToggleProps())}
+                                                >
+                                                    {column.render('Header')}
+                                                    <span className="ml-2 mt-n1">
+                                                        {column.isSorted ? (column.isSortedDesc?  <ExpandMoreIcon /> : <ExpandLessIcon /> ) : <SortIcon />}
+                                                    </span>
+                                                </th>
+                                                ))}
+                                            </tr>
+                                            ))}
+                                        </thead>
+                                        <tbody>
+                                            {page.map((row, i) => {
+                                            prepareRow(row)
+                                            return (
+                                                <tr {...row.getRowProps()}>
+                                                {row.cells.map(cell => {
+                                                    return (
+                                                    <td {...cell.getCellProps()}>
+                                                        {cell.render('Cell')}
+                                                    </td>
+                                                    )
+                                                })}
+                                                </tr>
+                                            )
+                                            })}
+                                        </tbody>
+                                    </BTable>
+                                <div className="mt-3 h6">
+                                    <div className="float-left">
+                                        Page {' '}
+                                        <strong>{pageIndex + 1} of {pageOptions.length}</strong>
+                                    </div>
+                                    <div className="float-right">
+                                        <Form.Row>
+                                            <Col>
+                                                <Button style={{
+                                                    background: '#4D74C2',
+                                                    borderColor: '#4D74C2'
+                                                }} size="md" onClick={() => previousPage()} disabled={!canPreviousPage}>Previous</Button>
+                                            </Col>
+                                            <Col>
+                                                <Button style={{
+                                                    background: '#E16D7A',
+                                                    borderColor: '#E16D7A'
+                                                }} size="md" onClick={() => nextPage()} disabled={!canNextPage}>Next</Button>
+                                            </Col>
+                                        </Form.Row>
+                                    </div>
+                                </div>
+                            </div>
+                            }
                         </div>
-                        }
-                    </div>
+                    }
+                </div>
                 }
-            </div>
+            </div> : null
             }
         </React.Fragment>
     )

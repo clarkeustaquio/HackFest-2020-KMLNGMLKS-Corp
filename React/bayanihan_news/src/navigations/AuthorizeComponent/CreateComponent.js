@@ -3,6 +3,8 @@ import { Container, Form, Button, Row, Col, Alert } from 'react-bootstrap'
 
 import axios from 'axios'
 import locations from '../../list_location.json'
+import { remote } from '../../domain'
+import { CircularProgress } from '@material-ui/core'
 function CreateComponent(){
     const [validated, setValidated] = useState(false)
 
@@ -12,56 +14,67 @@ function CreateComponent(){
     const [password, setPassword] = useState('')
     const [confirmPassword, setConfirmPassword] = useState('')
     const [place, setPlace] = useState('')
+    const [isSubmit, setIsSubmit] = useState(false)
 
     const handleCreate = (event) => {
+        setIsSubmit(true)
         const form = event.currentTarget;
-            if (form.checkValidity() === false) {
-                event.preventDefault();
-                event.stopPropagation();
+        if (form.checkValidity() === false) {
+            event.preventDefault();
+            event.stopPropagation();
+            setValidated(true);
+            setIsSubmit(false)
+        }else{
+            event.preventDefault();
+            event.stopPropagation();
+
+            if(password !== confirmPassword){
+                setVariant("danger")
+                setAlert('Password do not match.')
+                setIsAlertShow(true)
+                setIsSubmit(false)
+            }else if(password.length < 8){
+                setVariant("danger")
+                setAlert('Password must be atleast 8 characters long.')
+                setIsAlertShow(true)
+                setIsSubmit(false)
             }else{
-                event.preventDefault();
-                event.stopPropagation();
+                axios.post(`${remote}users/create-account/`, {
+                    username: email,
+                    first_name: firstName,
+                    last_name: lastName,
+                    password: password,
+                    place: place   
+                }).then(response => {
+                    setPlace(locations[0])
+                    setPassword('')
+                    setConfirmPassword('')
+                    setEmail('')
+                    setLastName('')
+                    setFirstName('')
 
-                if(password !== confirmPassword){
-                    setVariant("danger")
-                    setAlert('Password do not match.')
+                    setVariant("success")
+                    setAlert('You have successfully created an account..')
                     setIsAlertShow(true)
-                }else if(password.length < 8){
+                    
+                    setValidated(false)
+                    setIsSubmit(false)
+                }).catch(error => {
                     setVariant("danger")
-                    setAlert('Password must be atleast 8 characters long.')
+                    setAlert('User with this email already exists.')
                     setIsAlertShow(true)
-                }else{
-                    axios.post('http://localhost:8000/users/create-account/', {
-                        username: email,
-                        first_name: firstName,
-                        last_name: lastName,
-                        password: password,
-                        place: place   
-                    }).then(response => {
-                        setPlace(locations[0])
-                        setPassword('')
-                        setConfirmPassword('')
-                        setEmail('')
-                        setLastName('')
-                        setFirstName('')
-
-                        setVariant("success")
-                        setAlert('You have successfully created an account..')
-                        setIsAlertShow(true)
-                        
-    
-                    }).catch(error => {
-                        setVariant("danger")
-                        setAlert('User with this email already exists.')
-                        setIsAlertShow(true)
-                    })
-                }
+                    setIsSubmit(false)
+                })
             }
-        setValidated(true);
+        }
     }
 
     useEffect(() => {
         setPlace(locations[0])
+
+        return () => {
+            setPlace('')
+        }
     }, [])
 
     const [alert, setAlert] = useState('')
@@ -160,7 +173,7 @@ function CreateComponent(){
                             background: '#E16D7A',
                             borderColor: '#E16D7A'
                         }} block size="lg" variant="primary" type="submit">
-                    Create Account
+                    {isSubmit === true ? <CircularProgress size={25} /> : "Create Account" }
                 </Button>
             </Form>
             </Container>

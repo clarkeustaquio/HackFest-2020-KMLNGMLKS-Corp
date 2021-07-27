@@ -47,7 +47,7 @@ function SuccessComponent(){
                                             borderColor: '#E16D7A',
                                             textDecoration: 'none',
                                             color: 'white'
-                                        }} size="large" className="ml-4" href="https://github.com/jeikatsu/Bayanihan-News" variant="contained" color="primary">
+                                        }} size="large" href="https://github.com/jeikatsu/Bayanihan-News" variant="contained" color="primary">
                                 Download
                             </Button>
                         </div>
