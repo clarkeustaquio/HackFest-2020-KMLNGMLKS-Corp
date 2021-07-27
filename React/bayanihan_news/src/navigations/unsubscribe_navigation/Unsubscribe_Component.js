@@ -33,7 +33,7 @@ function getSteps() {
     return ['Verify phone number', 'Unsubscribe number',];
 }
 
-function UnsubscribeComponent() {
+function UnsubscribeComponent({ isPhone }) {
     const [isVerified, setIsVerified] = useState(false)
     const [phoneNumber, setPhoneNumber] = useState('')
     const [isSuccess, setIsSuccess] = useState(false)
@@ -87,8 +87,8 @@ function UnsubscribeComponent() {
                           </Col> */}
                         </Row>
                       </div>: <div className="text-center">
-                        <img src={loading_news} className="bd-placeholder-img" width="500" height="500" alt="News"></img>
-                        <LinearProgress />
+                          <img src={loading_news} className="bd-placeholder-img"  width={isPhone === false ? "500" : "300"} height={isPhone === false ? "500" : "300"} alt="News"></img>
+                          <LinearProgress />
                       </div>}
                     </div>
                   }

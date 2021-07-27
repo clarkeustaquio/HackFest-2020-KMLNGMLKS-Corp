@@ -96,7 +96,7 @@ function UnsubscribeNavigation({ isPhone }){
     <React.Fragment>
       <div id="root">
         <NavbarComponent />
-        <UnsubscribeComponent />
+        <UnsubscribeComponent isPhone={isPhone} />
         <BlueWaveComponent />
         <FloatingButtonComponent color={"#E16D7A"}/>
       </div>
