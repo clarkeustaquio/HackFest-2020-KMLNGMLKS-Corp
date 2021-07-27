@@ -11,7 +11,6 @@ import SuccessComponent from './Success_Component'
 
 import { LinearProgress } from '@material-ui/core';
 import loading_news from '../../static/images/loading_news.png'
-import phone1 from '../../static/images/phone1.png'
 
 const uiConfig = {
   signInFlow: 'popup',
@@ -63,7 +62,7 @@ function SubscribeComponent({ isPhone }) {
             <Container className="mt-5">
               {isSuccess 
                 ? 
-                  <SuccessComponent />
+                  <SuccessComponent isPhone={isPhone} />
                 :
                 <div>
                   <BreadCrumbComponent />
@@ -84,9 +83,6 @@ function SubscribeComponent({ isPhone }) {
                           <Col>
                             <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={auth}/> 
                           </Col>
-                          {/* <Col>
-                            <img src={phone1} className="bd-placeholder-img" width="400" height="400" alt="Phone"></img>
-                          </Col> */}
                         </Row>
                       </div>: <div className="text-center">
                           <img src={loading_news} className="bd-placeholder-img"  width={isPhone === false ? "500" : "300"} height={isPhone === false ? "500" : "300"} alt="News"></img>

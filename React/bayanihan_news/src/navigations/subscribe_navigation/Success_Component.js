@@ -13,7 +13,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function SuccessComponent(){
+function SuccessComponent({ isPhone }){
     const classes = useStyles();
 
     return (
@@ -31,27 +31,50 @@ function SuccessComponent(){
                                 <li><p className="lead">Can be viewed via text message, mobile app, and website.</p></li>
                                 <li><p className="lead">Prioritizes important news.</p></li>
                             </ul>
-
-                        <div className={classes.root}>
-                            <Link to='/contact'>
-                                <Button style={{
-                                            background: '#4D74C2',
-                                            borderColor: '#4D74C2'
-                                        }} size="large" className="ml-4" variant="contained" color="primary">
-                                    Contact Us
-                                </Button>
-                            </Link>
                             
-                            <Button style={{
-                                            background: '#E16D7A',
-                                            borderColor: '#E16D7A',
-                                            textDecoration: 'none',
-                                            color: 'white'
-                                        }} size="large" href="https://github.com/jeikatsu/Bayanihan-News" variant="contained" color="primary">
-                                Download
-                            </Button>
+                            {isPhone === false ? <div className={classes.root}>
+                                <Link to='/contact'>
+                                    <Button style={{
+                                                background: '#4D74C2',
+                                                borderColor: '#4D74C2'
+                                            }} size="large" className="ml-4" variant="contained" color="primary">
+                                        Contact Us
+                                    </Button>
+                                </Link>
+                                
+                                <Button style={{
+                                                background: '#E16D7A',
+                                                borderColor: '#E16D7A',
+                                                textDecoration: 'none',
+                                                color: 'white'
+                                            }} size="large" href="https://github.com/jeikatsu/Bayanihan-News" variant="contained" color="primary">
+                                    Download
+                                </Button>
+                            </div>
+                            : null
+                            }
                         </div>
-                        </div>
+                            {isPhone === true ? <div className={classes.root}>
+                                <Link to='/contact'>
+                                    <Button style={{
+                                                background: '#4D74C2',
+                                                borderColor: '#4D74C2'
+                                            }} size="medium" className="ml-4" variant="contained" color="primary">
+                                        Contact Us
+                                    </Button>
+                                </Link>
+                                
+                                <Button style={{
+                                                background: '#E16D7A',
+                                                borderColor: '#E16D7A',
+                                                textDecoration: 'none',
+                                                color: 'white'
+                                            }} size="medium" href="https://github.com/jeikatsu/Bayanihan-News" variant="contained" color="primary">
+                                    Download
+                                </Button>
+                            </div>
+                        : null
+                        }
                         <div className="col-md-6">
                             <img className="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto" width="800" height="800" src={subscribe} alt="Fishermen"></img>
                         </div>

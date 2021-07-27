@@ -14,7 +14,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-function UnsubscribeSuccessComponent(){
+function UnsubscribeSuccessComponent({ isPhone }){
     const classes = useStyles();
     return (
         <React.Fragment>
@@ -30,7 +30,7 @@ function UnsubscribeSuccessComponent(){
                                 <li><p className="lead">Daily news via text message.</p></li>
                                 <li><p className="lead">Fast transmission of flash news and warnings in different medias and platforms</p></li>
                             </ul>
-                            <div className={classes.root}>
+                            {isPhone === false ? <div className={classes.root}>
                                 <Link to='/contact'>
                                     <Button style={{
                                             background: '#4D74C2',
@@ -48,8 +48,30 @@ function UnsubscribeSuccessComponent(){
                                         }} size="large" href="https://github.com/jeikatsu/Bayanihan-News" variant="contained" color="primary">
                                     Download
                                 </Button>
-                            </div>   
+                            </div> : null
+                            }
                         </div>
+                        {isPhone === true ? <div className={classes.root}>
+                                <Link to='/contact'>
+                                    <Button style={{
+                                            background: '#4D74C2',
+                                            borderColor: '#4D74C2'
+                                        }} className="ml-4" size="medium" variant="contained" color="primary">
+                                        Contact Us
+                                    </Button>
+                                </Link>
+                                
+                                <Button style={{
+                                            background: '#E16D7A',
+                                            borderColor: '#E16D7A',
+                                            textDecoration: 'none',
+                                            color: 'white'
+                                        }} size="medium" href="https://github.com/jeikatsu/Bayanihan-News" variant="contained" color="primary">
+                                    Download
+                                </Button>
+                            </div>
+                        : null
+                        }
                         <div className="col-md-6 order-md-1">
                         <img className="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto" width="800" height="800" src={unsubscribe} alt="Solution"></img>
                         </div>
