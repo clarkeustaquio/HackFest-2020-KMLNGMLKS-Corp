@@ -4,4 +4,8 @@ db.sqlite3
 secret_key.txt
 twilio_key.txt
 twilio_number.txt
+<<<<<<< HEAD
 bayanihan_news/settings_config/development.py
+=======
+bayanihan_news/settings_config/development.py
+>>>>>>> a4987de2d5d0c23efdef94e39ef69d94eff989ad
