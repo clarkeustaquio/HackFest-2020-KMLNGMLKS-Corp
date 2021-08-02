@@ -13,6 +13,17 @@ class CustomAuthToken(ObtainAuthToken):
         user = serializer.validated_data['user']
         token, created = Token.objects.get_or_create(user=user)
 
+        if user.is_staff:
+            return Response({
+                'token': token.key,
+                'user_id': user.pk,
+                'email': user.email,
+                'first_name': user.first_name,
+                'last_name': user.last_name,
+                'place': user.place,
+                'is_admin': user.is_staff
+            }, status=status.HTTP_200_OK)
+
         if user.is_authorize:
             return Response({
                 'token': token.key,

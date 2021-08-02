@@ -1,40 +1,12 @@
 import React from 'react'
 import { Container, Modal, Row, Col, Card } from 'react-bootstrap'
 // import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
-import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/core/styles';
-import Grid from '@material-ui/core/Grid';
 import firebaseConfig from '../../firebaseConfig'
 
 import { Link } from 'react-router-dom'
-import phone_loc from '../../static/images/phone_loc.png'
-
-const useStyles = makeStyles(() => ({
-    root: {
-        maxWidth: 345,
-        justifyContent: 'center',
-    },
-    bullet: {
-      display: 'inline-block',
-      margin: '0 2px',
-      transform: 'scale(0.8)',
-    },
-    title: {
-      fontSize: 14,
-    },
-    pos: {
-      marginBottom: 12,
-    },
-    media: {
-        height: 180,
-    },
-  }));
-
 
 function DeleteComponent({ phoneNumber, setIsSuccess, userID }){
-    const classes = useStyles();
     const [isDisabled, setIsDisabled] = React.useState(false)
     const [show, setShow] = React.useState(false)
 
@@ -122,9 +94,6 @@ function DeleteComponent({ phoneNumber, setIsSuccess, userID }){
                 alignItems: "center"
             }}>
                 <Row>
-                    {/* <Col>
-                        <img src={phone_loc} className="bd-placeholder-img" width="400" height="400" alt="Location"></img>
-                    </Col> */}
                     <Col className="mt-5">
                         <Card>
                             <Card.Body>
@@ -149,21 +118,6 @@ function DeleteComponent({ phoneNumber, setIsSuccess, userID }){
                                 </Button>
                             </Card.Body>
                         </Card>
-                        {/* <Card className={classes.root}>
-                            <Container>
-                                <CardContent >
-                                    <Typography className={classes.title} color="textPrimary" gutterBottom>
-                                        <h3 className="text-center mt-3"></h3>
-                                    </Typography>
-                                </CardContent>
-
-                                <Grid container justify="center" className="mt-n4">
-                                    <Grid item>
-                                    
-                                    </Grid>
-                                </Grid>
-                            </Container>
-                        </Card> */}
                     </Col>
                 </Row>
             </Container>

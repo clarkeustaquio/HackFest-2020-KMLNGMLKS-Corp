@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import AuthorizeUser
+from .models import Announcements, AuthorizeUser
 
 class AuthorizeUserSerializer(serializers.ModelSerializer):
     first_name = serializers.CharField(required=True)
@@ -19,3 +19,13 @@ class AuthorizeUserSerializer(serializers.ModelSerializer):
         user.set_password(password)
         user.save()
         return user
+
+class AnnouncementSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Announcements
+        fields = '__all__'
+
+    def to_representation(self, instance):
+        representation = super(AnnouncementSerializer, self).to_representation(instance)
+        representation['user'] = instance.user.last_name.upper() + ', ' + instance.user.first_name.upper()
+        return representation

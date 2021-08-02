@@ -4,3 +4,4 @@ db.sqlite3
 secret_key.txt
 twilio_key.txt
 twilio_number.txt
+bayanihan_news/settings_config/development.py

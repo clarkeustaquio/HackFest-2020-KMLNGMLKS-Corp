@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 
 import Grid from '@material-ui/core/Grid';
 import CircularProgress from '@material-ui/core/CircularProgress'
@@ -10,28 +10,25 @@ import { Container } from 'react-bootstrap'
 import CardComponent from './Card_Component';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
+import axios from 'axios'
 
 function DailyNewsComponent({ isPhone }) {
     // They don't allowed hosted applications -- Own API
     const url = 'https://bayanihan-news.herokuapp.com/api/request-news/'
-    const [isLoading, setIsLoading] = React.useState(true)
-    const [news, setNews] = React.useState({})
+    const [isLoading, setIsLoading] = useState(true)
+    const [news, setNews] = useState({})
 
-    React.useEffect(() => {
-        fetch(url).then((response) => {
-            if(response.status >= 200 && response.status < 300){
-                return response.json()
-            }else{
-                setIsLoading(false)
-                // set Loading
-                // set Error page
-            }
-        }).then((news) => {
-            setNews(news)
-            setIsLoading(false)
-        })
-
+    useEffect(() => {
         document.title = 'Bayanihan News'
+
+        axios.get(url).then(response => {
+            if(response.status === 200){
+                setNews(response.data)
+                setIsLoading(false)
+            }
+        }).catch(() => {
+            throw new Error('Server Refused. Try again later.')
+        })
     }, [])
 
     return (

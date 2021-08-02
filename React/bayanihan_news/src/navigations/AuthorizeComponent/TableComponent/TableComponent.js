@@ -66,8 +66,8 @@ function TableComponent({ table_data, isMount, setListNumber, isPhone }){
         setDeletePhone(true)
     }
 
-    useEffect(() => {
-        const copy_table = table_columns
+    const updateColumn = React.useCallback(() => {
+        const copy_table = table_columns.slice()
         const create_column = [{
             Header: 'Actions',
             accessor: 'actions',
@@ -86,6 +86,7 @@ function TableComponent({ table_data, isMount, setListNumber, isPhone }){
                             </Col>
                             <Col>
                                 <Button 
+                                    className={isPhone === true ? "mt-2" : ""}
                                     style={{
                                         background: '#E16D7A',
                                         borderColor: '#E16D7A'
@@ -104,14 +105,18 @@ function TableComponent({ table_data, isMount, setListNumber, isPhone }){
             accessor: table.accessor
         }))
 
-        setTableCol(copy_table)
+        setTableCol(create_column)
         setIsCheck(false)
+    }, [])
+
+    useEffect(() => {     
+        updateColumn()
 
         return () => {
             setTableCol(columns)
             setIsCheck(true)
         }
-    }, [table_columns])
+    }, [updateColumn])
 
     return (
         <React.Fragment>
@@ -254,6 +259,11 @@ function TableComponent({ table_data, isMount, setListNumber, isPhone }){
                                         bordered 
                                         hover 
                                         size="md" 
+                                        responsive
+                                        style={{
+                                            overflow: 'scroll',
+                                            whiteSpace: 'nowrap'
+                                        }}
                                         {...getTableProps()} 
                                     >
                                         <thead>

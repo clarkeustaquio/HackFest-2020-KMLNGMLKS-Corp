@@ -1,53 +1,15 @@
 import React from 'react'
-import { Container, Modal, Row, Col, Card, Form } from 'react-bootstrap'
+import { Container, Modal, Row, Col, Card } from 'react-bootstrap'
 // import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
-import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/core/styles';
-
-import InputLabel from '@material-ui/core/InputLabel';
-import MenuItem from '@material-ui/core/MenuItem';
-import FormControl from '@material-ui/core/FormControl';
-import Select from '@material-ui/core/Select';
 
 import firebaseConfig from '../../firebaseConfig'
 import { Link } from 'react-router-dom'
 
 import locations from  '../../list_location.json'
-import phone_loc from '../../static/images/phone_loc.png'
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-const useStyles = makeStyles((theme) => ({
-    // formControl: {
-    //   margin: theme.spacing(1),
-    //   minWidth: 300,
-    // },
-    selectEmpty: {
-      marginTop: theme.spacing(2),
-    },
-    root: {
-        maxWidth: 345,
-    },
-    bullet: {
-      display: 'inline-block',
-      margin: '0 2px',
-      transform: 'scale(0.8)',
-    },
-    title: {
-      fontSize: 14,
-    },
-    pos: {
-      marginBottom: 12,
-    },
-    media: {
-        height: 180,
-    },
-  }));
-
-
 function CardLocationComponent({ phoneNumber, setIsSuccess, userID }){
-    const classes = useStyles();
     const [location, setLocation] = React.useState('');
     const [isDisabled, setIsDisabled] = React.useState(false)
     const [show, setShow] = React.useState(false)

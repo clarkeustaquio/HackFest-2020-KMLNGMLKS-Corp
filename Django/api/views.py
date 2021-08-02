@@ -150,6 +150,6 @@ def request_news(request):
     request_news = requests.get(url)
     response_data = request_news.json()
 
-    return Response(response_data)
+    return Response(response_data, status=status.HTTP_200_OK)
 
 # Fix celery execution of receive_call

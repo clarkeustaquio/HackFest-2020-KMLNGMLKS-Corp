@@ -1,5 +1,6 @@
 from django.contrib import admin
-from .models import AuthorizeUser
+from .models import Announcements, AuthorizeUser
 # Register your models here.
 
 admin.site.register(AuthorizeUser)
+admin.site.register(Announcements)

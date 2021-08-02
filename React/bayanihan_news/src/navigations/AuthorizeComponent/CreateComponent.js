@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react'
-import { Container, Form, Button, Row, Col, Alert } from 'react-bootstrap'
+import { Container, Form, Button, Alert } from 'react-bootstrap'
 
 import axios from 'axios'
 import locations from '../../list_location.json'
 import { remote } from '../../domain'
 import { CircularProgress } from '@material-ui/core'
-function CreateComponent(){
+
+function CreateComponent({ isPhone }){
     const [validated, setValidated] = useState(false)
 
     const [firstName, setFirstName] = useState('')
@@ -16,9 +17,12 @@ function CreateComponent(){
     const [place, setPlace] = useState('')
     const [isSubmit, setIsSubmit] = useState(false)
 
+    // phone number, picture
+
     const handleCreate = (event) => {
         setIsSubmit(true)
-        const form = event.currentTarget;
+        const form = event.currentTarget;   
+
         if (form.checkValidity() === false) {
             event.preventDefault();
             event.stopPropagation();
@@ -28,44 +32,55 @@ function CreateComponent(){
             event.preventDefault();
             event.stopPropagation();
 
-            if(password !== confirmPassword){
-                setVariant("danger")
-                setAlert('Password do not match.')
-                setIsAlertShow(true)
-                setIsSubmit(false)
-            }else if(password.length < 8){
-                setVariant("danger")
-                setAlert('Password must be atleast 8 characters long.')
-                setIsAlertShow(true)
-                setIsSubmit(false)
-            }else{
-                axios.post(`${remote}users/create-account/`, {
-                    username: email,
-                    first_name: firstName,
-                    last_name: lastName,
-                    password: password,
-                    place: place   
-                }).then(response => {
-                    setPlace(locations[0])
-                    setPassword('')
-                    setConfirmPassword('')
-                    setEmail('')
-                    setLastName('')
-                    setFirstName('')
+            if(file !== null){
+                const formData = new FormData()
 
-                    setVariant("success")
-                    setAlert('You have successfully created an account..')
-                    setIsAlertShow(true)
-                    
-                    setValidated(false)
-                    setIsSubmit(false)
-                }).catch(error => {
+                console.log(file[0])
+                if(password !== confirmPassword){
                     setVariant("danger")
-                    setAlert('User with this email already exists.')
+                    setAlert('Password do not match.')
                     setIsAlertShow(true)
                     setIsSubmit(false)
-                })
-            }
+                }else if(password.length < 8){
+                    setVariant("danger")
+                    setAlert('Password must be atleast 8 characters long.')
+                    setIsAlertShow(true)
+                    setIsSubmit(false)
+                }else{
+                    formData.append('valid_id', file[0]) 
+                    formData.append('username', email)
+                    formData.append('first_name', firstName)
+                    formData.append('last_name', lastName)
+                    formData.append('password', password)
+                    formData.append('place', place)
+                    
+                    axios.post(`${remote}/users/create-account/`, formData).then(response => {
+                        setPlace(locations[0])
+                        setPassword('')
+                        setConfirmPassword('')
+                        setEmail('')
+                        setLastName('')
+                        setFirstName('')
+    
+                        setVariant("success")
+                        setAlert('You have successfully created an account..')
+                        setIsAlertShow(true)
+                        
+                        setValidated(false)
+                        setIsSubmit(false)
+                    }).catch(error => {
+                        setVariant("danger")
+                        setAlert('User with this email already exists.')
+                        setIsAlertShow(true)
+                        setIsSubmit(false)
+                    })
+                }
+            }else{
+                setVariant("danger")
+                setAlert('Choose a correct image type.')
+                setIsAlertShow(true)
+                setIsSubmit(false)
+            }            
         }
     }
 
@@ -81,6 +96,11 @@ function CreateComponent(){
     const [isAlertShow, setIsAlertShow] = useState(false)
     const [variant, setVariant] = useState('danger')
 
+    const [file, setFile] = useState(null);
+    const handleFile = (file) => {
+        setFile(file);
+    };
+
     return (
         <React.Fragment>
             <Container className="mt-4">
@@ -89,24 +109,36 @@ function CreateComponent(){
 
             {isAlertShow === true ?  <Alert className="mt-3" variant={variant} onClose={() => setIsAlertShow(false)} dismissible>{alert}</Alert> : null
             }
-
+                
             <Form className="mt-3" noValidate validated={validated} onSubmit={handleCreate}>
-                <Row>
-                    <Col>
-                        <Form.Group className="mb-3">
-                            <Form.Control 
-                                type="email" 
-                                placeholder="Enter Email" 
-                                value={email}
-                                onChange={(event) => setEmail(event.target.value)}
+                <Form.Group className="mb-3">
+                    <Form.Control 
+                        type="email" 
+                        placeholder="Enter Email" 
+                        value={email}
+                        onChange={(event) => setEmail(event.target.value)}
+                        required
+                    />
+                    <Form.Text className="text-muted">
+                    We'll never share your email with anyone else.
+                    </Form.Text>
+                </Form.Group>
+                <div className={isPhone === false ? "row" : null}>
+                    <div className={isPhone === false ? "col" : null}>
+                        <div className="custom-file">
+                            <input 
+                                accept="image/*" 
+                                type="file" 
+                                className="custom-file-input" 
+                                id="customFile"
+                                onClick={(event) => (event.target.value = null)}
+                                onChange={(event) => handleFile(event.target.files)}
                                 required
                             />
-                            <Form.Text className="text-muted">
-                            We'll never share your email with anyone else.
-                            </Form.Text>
-                        </Form.Group>
-                    </Col>
-                    <Col>
+                            <label className="custom-file-label">{file !== null ? file[0].name.toString() : 'Choose Valid ID'}</label>
+                        </div>
+                    </div>
+                    <div className={isPhone === false ? "col" : "mt-3"}>
                         <Form.Group className="mb-3">
                             <select className="form-control" onChange={(event) => setPlace(event.target.value)} required>
                             {locations.map((location, index) => {
@@ -116,36 +148,36 @@ function CreateComponent(){
                             })}
                         </select>
                         </Form.Group>
-                    </Col>
-                </Row>
-            
-                <Row>
-                    <Col>
+                    </div>
+                </div>
+                
+                <div className={isPhone === false ? "row" : null}>
+                    <div className={isPhone === false ? "col" : "mt-3"}>
                         <Form.Group className="mb-3">
                             <Form.Control 
                                 type="text" 
                                 placeholder="Enter First Name"
                                 value={firstName}
-                                onChange={(event) => setFirstName(event.target.value)}
+                                onChange={(event) => setFirstName(event.target.value.toUpperCase())}
                                 required
                             />
                         </Form.Group>
-                    </Col>
-                    <Col>
+                    </div>
+                    <div className={isPhone === false ? "col" : "mt-3"}>
                         <Form.Group className="mb-3">
                             <Form.Control 
                                 type="text" 
                                 placeholder="Enter Last Name" 
                                 value={lastName}
-                                onChange={(event) => setLastName(event.target.value)}
+                                onChange={(event) => setLastName(event.target.value.toUpperCase())}
                                 required
                             />
                         </Form.Group>
-                    </Col>
-                </Row>
-                
-                <Row>
-                    <Col>
+                    </div>
+                </div>
+
+                <div className={isPhone === false ? "row" : null}>
+                    <div className={isPhone === false ? "col" : "mt-3"}>
                         <Form.Group className="mb-3">
                             <Form.Control 
                                 type="password" 
@@ -155,8 +187,8 @@ function CreateComponent(){
                                 required
                             />
                         </Form.Group>
-                    </Col>
-                    <Col>
+                    </div>
+                    <div className={isPhone === false ? "col" : "mt-3"}>
                         <Form.Group className="mb-3">
                             <Form.Control
                                 type="password"
@@ -166,8 +198,8 @@ function CreateComponent(){
                                 required
                               />
                         </Form.Group>
-                    </Col>
-                </Row>
+                    </div>
+                </div>
 
                 <Button style={{
                             background: '#E16D7A',

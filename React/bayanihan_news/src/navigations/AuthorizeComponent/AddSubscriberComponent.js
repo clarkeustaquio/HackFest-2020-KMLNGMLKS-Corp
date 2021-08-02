@@ -23,7 +23,7 @@ function AddSubscriberComponent({ setListNumber, setAddSubModal }){
             event.stopPropagation();
 
             if(checkPhone === false){
-                axios.post(`${remote}users/add-subscriber/`, {
+                axios.post(`${remote}/users/add-subscriber/`, {
                     phone_number: '+' + phone,
                     location: location
                 
@@ -69,7 +69,7 @@ function AddSubscriberComponent({ setListNumber, setAddSubModal }){
             const formData = new FormData();
             formData.append('file', file[0]);            
 
-            axios.post(`${remote}users/import-subscriber/`, formData, {
+            axios.post(`${remote}/users/import-subscriber/`, formData, {
                 headers: {
                     'Authorization': 'Token ' + token
                 }

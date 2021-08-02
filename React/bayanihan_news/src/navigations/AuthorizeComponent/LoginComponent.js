@@ -25,7 +25,7 @@ function LoginComponent({ setIsAuthorize }){
                 event.preventDefault();
                 event.stopPropagation();
 
-                axios.post(`${remote}users/authorize-login/`, {
+                axios.post(`${remote}/users/authorize-login/`, {
                     username: email,
                     password: password,
                 }).then(response => {
@@ -62,7 +62,7 @@ function LoginComponent({ setIsAuthorize }){
                 <Form.Group className="mb-3">
                     <Form.Control 
                         type="email" 
-                        placeholder="Enter email" 
+                        placeholder="Enter Email" 
                         value={email}
                         onChange={(event) => setEmail(event.target.value)}
                         required

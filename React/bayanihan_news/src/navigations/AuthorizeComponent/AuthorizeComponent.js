@@ -32,7 +32,7 @@ function AuthorizeComponent({ isPhone }){
                         <hr />
                         <Row>
                             <Col>
-                                <CreateComponent /> 
+                                <CreateComponent isPhone={isPhone} /> 
                             </Col>
                             <Col>
                                 <img className="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto" width="1000" height="1000" src={background} alt="Background"></img>
@@ -42,7 +42,7 @@ function AuthorizeComponent({ isPhone }){
                     </div> : <div>
                         <LoginComponent setIsAuthorize={setIsAuthorize} />
                         <hr />
-                        <CreateComponent /> 
+                        <CreateComponent isPhone={isPhone}  /> 
                     </div>
                     }
                 </div>
